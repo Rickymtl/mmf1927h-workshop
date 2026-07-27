@@ -79,15 +79,36 @@ script reads it from the environment via `python-dotenv`.
 ```
 
 Raw output lands under `data/raw/{prices,trends,news}/`, each with a
-`provenance.json` recording exactly what was pulled and when.
-**All of `data/raw/` is gitignored** — raw pulls are regenerable, can be large,
-and may be non-redistributable, so they stay local.
+`provenance.json` recording exactly what was pulled and when. The `data/`
+folder is **not tracked by git at all** — raw pulls are regenerable, can be
+large, and may be non-redistributable, so they stay local. The scripts create
+the folders they need at runtime.
+
+### Google Trends: batching and the anchor keyword
+
+Trends normalises its 0–100 index *within each request*, so series pulled in
+different batches are **not comparable as-is**. `pull_trends.py` reserves one
+of the 5 keyword slots for a shared **anchor** (default `"stock market"`) and
+saves that anchor series per batch as `_anchor_batch<N>.csv`. Rescaling each
+ticker by its batch anchor puts all 88 names on one comparable scale — do this
+in Session 2 before building features.
+
+```bash
+# Tune batching if Google pushes back:
+./.venv/bin/python code/pull_trends.py --sleep 15 --retries 5
+./.venv/bin/python code/pull_trends.py --anchor ''      # disable anchoring
+```
+
+The pull **resumes by default** — already-downloaded tickers are skipped, so an
+interrupted run can just be re-run. Use `--no-resume` to force a re-download
+(do this if you change `--timeframe`, so all files share one timeframe).
 
 ### Rate limits & gotchas
 
-- **Google Trends** returns *relative* interest (0–100), rescaled per request,
-  and Google rate-limits `pytrends` hard (HTTP 429) — pull in small batches,
-  add `--sleep`, and expect to retry (often easier from a residential IP).
+- **Google Trends** rate-limits `pytrends` hard (HTTP 429). The script retries
+  with exponential backoff and a fresh client per attempt, which clears most
+  soft blocks; persistent 429s usually mean the IP is flagged (a residential
+  connection or a longer `--sleep` helps).
 - **Alpha Vantage** free tier ≈ 25 requests/day — pull a small ticker sample
   at a time.
 

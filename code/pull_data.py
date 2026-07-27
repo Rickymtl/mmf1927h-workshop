@@ -57,7 +57,7 @@ def main(argv: list[str] | None = None) -> int:
         end = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         rc |= pull_prices.pull_prices(tickers, args.start, end, "1d").get("failures") and 1 or 0
     if "trends" in args.sources:
-        prov = pull_trends.pull_trends(tickers, args.trends_timeframe, batch_size=5, sleep=2.0)
+        prov = pull_trends.pull_trends(tickers, args.trends_timeframe)
         rc |= 1 if prov["failures"] else 0
     if "news" in args.sources:
         prov = pull_news.pull_news(tickers, limit=args.news_limit, sleep=1.0)
