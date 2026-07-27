@@ -30,3 +30,7 @@ tmp/
 
 # Course PDFs (kept local, not published)
 *.pdf
+
+# Pulled raw data (regenerable via code/pull_data.py — keep the folder, not its contents)
+data/raw/*
+!data/raw/.gitkeep
