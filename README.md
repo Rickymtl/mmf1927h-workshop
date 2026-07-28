@@ -185,6 +185,43 @@ interrupted run can just be re-run. Use `--no-resume` to force a re-download
 | GDELT | ⛔ 0/88 — code ready, but this network is 429-blocked; run `--probe` on yours |
 | AV news | ✅ 3 sample tickers (recent-window cross-check only) |
 
+## TODO
+
+Work is tracked in [**GitHub Issues**](https://github.com/Rickymtl/mmf1927h-workshop/issues)
+— claim one by assigning yourself, and open a PR that closes it. This list is
+the map; the issues have the detail, context, and acceptance criteria.
+
+### Blocking — finish sourcing first (Day 1→2)
+
+- [ ] [#1 Resume Google Trends pull — 44/88 missing](https://github.com/Rickymtl/mmf1927h-workshop/issues/1)
+      · re-run `pull_trends.py`, it resumes automatically. Best from a home network.
+- [ ] [#2 Verify GDELT and pull daily history](https://github.com/Rickymtl/mmf1927h-workshop/issues/2)
+      · ⚠️ **the GDELT code has never round-tripped live data** — run `--probe`
+      and validate one ticker before trusting it.
+
+### Session 2 — cleaning & alignment
+
+- [ ] [#3 Rescale Trends by batch anchor](https://github.com/Rickymtl/mmf1927h-workshop/issues/3)
+      · without this, tickers from different batches are **not on a comparable scale**.
+- [ ] [#4 Build the weekly Friday-to-Friday panel](https://github.com/Rickymtl/mmf1927h-workshop/issues/4)
+      · the core Session 2 deliverable. Watch the lookahead traps.
+- [ ] [#7 Adjusted prices, corporate actions, missing-data policy](https://github.com/Rickymtl/mmf1927h-workshop/issues/7)
+      · returns must come from `Adj Close`, or splits become fake signal.
+
+### Methodology & write-up
+
+- [ ] [#5 Survivorship bias in the universe](https://github.com/Rickymtl/mmf1927h-workshop/issues/5)
+      · we must disclose this before Friday Q&A asks about it.
+- [ ] [#6 Decide Alpha Vantage's role](https://github.com/Rickymtl/mmf1927h-workshop/issues/6)
+      · recent cross-check against GDELT, or fallback history on a reduced universe.
+
+### Later (Days 3–5)
+
+- [ ] Feature engineering: abnormal search interest, tone momentum, attention spikes
+- [ ] Model selection with time-series CV (no random K-fold — it leaks)
+- [ ] Signal evaluation: IC, hit-rate, long-short portfolio construction
+- [ ] Friday presentation
+
 ## What is / isn't committed
 
 - **Committed:** code, `requirements.txt`, `.env.example`, this README.
