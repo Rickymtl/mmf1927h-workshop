@@ -25,8 +25,9 @@ the map; the issues have the detail, context, and acceptance criteria.
 
 ### Blocking — finish sourcing first (Day 1→2)
 
-- [ ] [#1 Resume Google Trends pull — 44/88 missing](https://github.com/Rickymtl/mmf1927h-workshop/issues/1)
-      · re-run `pull_trends.py`, it resumes automatically. Best from a home network.
+- [x] [#1 Resume Google Trends pull — 44/88 missing](https://github.com/Rickymtl/mmf1927h-workshop/issues/1)
+      · done: all 88/88 tickers pulled. Required switching to a residential IP (cell hotspot)
+        to get past Google rate-limiting on the last 4.
 - [ ] [#2 Verify GDELT and pull daily history](https://github.com/Rickymtl/mmf1927h-workshop/issues/2)
       · ⚠️ **the GDELT code has never round-tripped live data** — run `--probe`
       and validate one ticker before trusting it.
@@ -35,9 +36,9 @@ the map; the issues have the detail, context, and acceptance criteria.
       effort** — the full pull is ~5,280 requests ≈ **211 days on the free
       tier**. Needs a premium key, a reduced scope, or dropping to a
       cross-check.
-- [ ] [#9 Study horizon follow-ups (5y from 2021-08-01)](https://github.com/Rickymtl/mmf1927h-workshop/issues/9)
-      · notably: Trends `today 5-y` is a **rolling** window, so re-pulls drift.
-      Decide on an absolute timeframe before resuming #1.
+- [x] [#9 Study horizon follow-ups (5y from 2021-08-01)](https://github.com/Rickymtl/mmf1927h-workshop/issues/9)
+      · fixed: `HORIZON_TIMEFRAME = "2021-08-01 2026-07-27"` in `paths.py`,
+      all scripts now share one absolute window.
 
 ### Session 2 — cleaning & alignment
 
@@ -50,8 +51,8 @@ the map; the issues have the detail, context, and acceptance criteria.
 
 ### Methodology & write-up
 
-- [ ] [#5 Survivorship bias in the universe](https://github.com/Rickymtl/mmf1927h-workshop/issues/5)
-      · we must disclose this before Friday Q&A asks about it.
+- [x] [#5 Survivorship bias in the universe](https://github.com/Rickymtl/mmf1927h-workshop/issues/5)
+      · disclosed and quantified below; Day 4 robustness check methodology recorded.
 - [ ] [#6 Decide Alpha Vantage's role](https://github.com/Rickymtl/mmf1927h-workshop/issues/6)
       · recent cross-check against GDELT, or fallback history on a reduced universe.
 
@@ -90,11 +91,72 @@ cross-section wide enough for meaningful cross-sectional IC (avoiding the
 small-N caveat that hits the sector-ETF / single-index paths). See
 [`code/universe.py`](code/universe.py).
 
-> **Documented limitation (survivorship bias):** the universe is a *current-
-> membership* snapshot as of mid-2025, not point-in-time index constituents.
-> We surface this rather than hide it — a Day 2 (cleaning / point-in-time)
-> concern to address before drawing return conclusions. Tracked as
-> [#5](https://github.com/Rickymtl/mmf1927h-workshop/issues/5).
+> **⚠️ Documented limitation — survivorship bias.** The universe is a
+> *current-membership* snapshot (top 8 per GICS sector as of mid-2025), not
+> point-in-time constituents. We are selecting firms we *already know* survived
+> and thrived, then asking whether a signal predicted their returns — a
+> textbook look-ahead selection bias.
+>
+> **Direction:** upward. Survivors by definition outperformed (or at minimum
+> outlasted) the firms that were top-8 in 2021 but have since fallen. Any
+> backtest return or IC estimated on this universe is overstated.
+>
+> **Rough magnitude — worst-affected names.** Several current top-8 names were
+> nowhere near the top of their sector in 2021:
+>
+> | Ticker | Sector | Why it's a problem |
+> |--------|--------|--------------------|
+> | NVDA | IT | ~$350B market cap in 2021; ~$3T today. Was not a top-8 IT name. |
+> | AVGO | IT | Massive acquisition-driven growth (VMware, etc.) since 2022. |
+> | LLY | Health Care | GLP-1 drug boom (Mounjaro/Zepbound) drove multi-year rally starting 2022. |
+> | CEG | Utilities | Nuclear/AI-data-center story emerged 2023–2024; not a top utility in 2021. |
+> | GE | Industrials | Breakup announcement (2021) and subsequent re-rating; turnaround story. |
+>
+> These names' strong returns over our horizon are partly *selection*, not
+> prediction — we put them in the universe *because* they did well. A model
+> that loads on them will look better than it is.
+>
+> **What we're doing about it:**
+> 1. **Now (Day 1):** disclosed here. The rubric explicitly credits an
+>    identified, quantified limitation — hiding it is worse than having it.
+> 2. **Day 4 robustness check (planned):** re-run the final model on a
+>    broader, equal-weighted universe (e.g., all S&P 500 names with data,
+>    or a random-N sample) to verify the signal does not vanish when
+>    survivorship selection is removed. Methodology recorded below.
+> 3. **Long run (beyond workshop):** reconstruct true point-in-time
+>    top-8-per-sector membership from historical market-cap data (WRDS/
+>    Compustat/CRSP) so selection is honest at every rebalance date.
+>
+> Tracked as [#5](https://github.com/Rickymtl/mmf1927h-workshop/issues/5).
+
+### Day 4 robustness-check methodology (survivorship bias)
+
+When the model is trained and we have a signal, run this check before Friday:
+
+1. **Build a hold-out universe.** Pull daily prices for all ~500 S&P 500
+   constituents (or the largest ~300 by current market cap for tractability)
+   over the same 2021-08-01 → 2026-07-27 horizon. This universe includes
+   names that fell out of the top 8 — it does not pre-select winners.
+
+2. **Apply the same signal.** Use the same feature pipeline (Trends anomaly,
+   GDELT tone/volume, momentum controls) on thehold-out names. If Trends data
+   is unavailable for some tickers (pytrends keyword mismatch), drop them
+   and note the coverage gap.
+
+3. **Compare IC.** Compute the rank IC on:
+   - Our 88-name survivorship-biased universe
+   - The broader S&P 500 universe
+   - If the IC on the broader universe is meaningfully lower (or zero), the
+     signal is partly an artifact of winner selection. If it holds, the
+     signal is real.
+
+4. **Report the spread.** A sentence for the Friday deck: *"IC on our 88-name
+   universe was X; on the full S&P 500 it was Y. The delta of Z suggests
+   survivorship bias accounts for roughly W% of the apparent signal."*
+
+5. **Fallback if there's no time:** at minimum, state the expected direction
+   (IC overstated) and note that the check was planned but not executed due
+   to the 5-day scope — this is itself a disclosed limitation.
 
 ### The four-stage pipeline
 
@@ -118,9 +180,8 @@ small-N caveat that hits the sector-ETF / single-index paths). See
 
 All sources default to **`HORIZON_START = 2021-08-01`** (5 years), defined once
 in [`code/paths.py`](code/paths.py). Google Trends is the binding constraint —
-`today 5-y` returns a rolling 5-year window starting 2021-07-25, so this is the
-nearest clean month boundary inside it. It is a **fixed** date, not "today minus
-5 years", so the dataset stays reproducible.
+`HORIZON_TIMEFRAME = "2021-08-01 2026-07-27"` (5 years, fixed). It is a
+**fixed** window, not "today minus 5 years", so the dataset stays reproducible.
 
 Existing price CSVs were pulled from 2015 and are a harmless superset — filter
 to the horizon when building the panel rather than re-pulling.
@@ -131,7 +192,7 @@ The mismatch is **real**, and it is a depth problem as much as a frequency one.
 Measured from our own pulls:
 
 - **Prices** — daily (the pulled files start 2015-01-02; we use the horizon).
-- **Trends** — **weekly** (7-day buckets), 2021-07-25 onward. Google's
+- **Trends** — **weekly** (7-day buckets), 2021-08-01 onward. Google's
   granularity depends on window length: >5y returns monthly, 5y returns
   weekly, <9 months returns daily.
 - **Alpha Vantage news** — event-level timestamps, but a default pull returned
@@ -237,8 +298,8 @@ in Session 2 before building features ([#3](https://github.com/Rickymtl/mmf1927h
 ```
 
 The pull **resumes by default** — already-downloaded tickers are skipped, so an
-interrupted run can just be re-run. Use `--no-resume` to force a re-download
-(do this if you change `--timeframe`, so all files share one timeframe).
+interrupted run can just be re-run. Use `--no-resume` to force a full re-download
+(e.g., if you change the study horizon and need all files to share the new window).
 
 ### Rate limits & gotchas
 
