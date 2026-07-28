@@ -34,8 +34,8 @@ import time
 
 import pandas as pd
 
-from paths import TRENDS_DIR, rel, utc_now_iso, write_provenance
-from universe import all_tickers, ticker_to_keyword
+from paths import TRENDS_DIR, HORIZON_TIMEFRAME, rel, utc_now_iso, write_provenance
+from universe import all_tickers, ticker_to_keyword, ticker_to_sector
 
 # A browser-like UA makes the scraper marginally less likely to be blocked.
 _HEADERS = {
@@ -95,6 +95,7 @@ def pull_trends(
     retries: int = 4,
     anchor: str | None = "stock market",
     resume: bool = True,
+    max_batches: int | None = None,
 ) -> dict:
     TRENDS_DIR.mkdir(parents=True, exist_ok=True)
     kw_map = ticker_to_keyword()
@@ -104,6 +105,13 @@ def pull_trends(
         skipped = len(tickers) - len(pending)
         if skipped:
             print(f"[trends] resume: skipping {skipped} already-downloaded ticker(s)")
+        if pending:
+            remaining_by_sector: dict[str, list[str]] = {}
+            _sector_map = ticker_to_sector()
+            for t in pending:
+                s = _sector_map[t]
+                remaining_by_sector.setdefault(s, []).append(t)
+            print(f"[trends] {len(pending)} remaining across {len(remaining_by_sector)} sectors")
         tickers = pending
 
     provenance = {
@@ -130,8 +138,18 @@ def pull_trends(
     max_tickers = 4 if anchor else 5
     batch_size = max(1, min(batch_size, max_tickers))
 
-    n_batches = (len(tickers) + batch_size - 1) // batch_size
+    total_batches = (len(tickers) + batch_size - 1) // batch_size
+    n_batches = min(total_batches, max_batches) if max_batches is not None else total_batches
+    if max_batches is not None:
+        print(f"[trends] limiting to {n_batches} of {total_batches} batch(es) this run")
+
+    consecutive_batch_failures = 0
     for bi, i in enumerate(range(0, len(tickers), batch_size), start=1):
+        if bi > n_batches:
+            pending_rest = max(0, len(tickers) - (bi - 1) * batch_size)
+            print(f"[trends] max-batches limit reached. {pending_rest} ticker(s) left for next run.")
+            break
+
         batch = tickers[i : i + batch_size]
         keywords = [kw_map[t] for t in batch]
         payload = keywords + [anchor] if anchor else keywords
@@ -142,7 +160,24 @@ def pull_trends(
         if df is None:
             print(f"[trends FAIL] batch {bi} gave up after {retries} attempts", file=sys.stderr)
             failures.extend(batch)
+            consecutive_batch_failures += 1
+            if consecutive_batch_failures >= 2 and len(provenance["tickers"]) > 0:
+                pending_rest = max(0, len(tickers) - i - len(batch))
+                print(
+                    f"[trends] {consecutive_batch_failures} consecutive failures after "
+                    f"successful batches — Google likely rate-limiting. "
+                    f"Skipping {pending_rest} remaining tickers.",
+                    file=sys.stderr,
+                )
+                print(
+                    "[trends] Tip: wait 30-60 min, then re-run to resume.",
+                    file=sys.stderr,
+                )
+                failures.extend(tickers[i + len(batch):])
+                break
             continue
+
+        consecutive_batch_failures = 0
 
         df = df.drop(columns=[c for c in ("isPartial",) if c in df.columns])
 
@@ -185,8 +220,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--tickers", nargs="+", default=None,
                    help="Tickers to pull (default: full universe).")
-    p.add_argument("--timeframe", default="today 5-y",
-                   help="Google Trends timeframe (default: 'today 5-y').")
+    p.add_argument("--timeframe", default=HORIZON_TIMEFRAME,
+                   help=f"Google Trends timeframe (default: study horizon, {HORIZON_TIMEFRAME}).")
     p.add_argument("--batch-size", type=int, default=4,
                    help="Tickers per request; max 4 with an anchor, 5 without (default 4).")
     p.add_argument("--sleep", type=float, default=8.0,
@@ -198,6 +233,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                         "Pass --anchor '' to disable.")
     p.add_argument("--no-resume", action="store_true",
                    help="Re-download tickers even if a CSV already exists.")
+    p.add_argument("--max-batches", type=int, default=None,
+                   help="Pull at most N batches per run (spread across sessions).")
     return p.parse_args(argv)
 
 
@@ -212,6 +249,7 @@ def main(argv: list[str] | None = None) -> int:
         retries=args.retries,
         anchor=args.anchor or None,
         resume=not args.no_resume,
+        max_batches=args.max_batches,
     )
     print(f"[trends] provenance -> {rel(TRENDS_DIR / 'provenance.json')}")
     return 1 if prov["failures"] else 0

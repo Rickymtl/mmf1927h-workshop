@@ -21,15 +21,18 @@ NEWS_DIR = RAW_DIR / "news"
 # Every source is pulled over the same 5-year window so the panel is balanced
 # and no source silently contributes extra history.
 #
-# Why 2021-08-01 specifically: Google Trends is the binding constraint. A
-# "today 5-y" request returns a *rolling* 5-year window (our pull starts
-# 2021-07-25), so this is the nearest clean month boundary that sits inside it.
+# Why 2021-08-01 → 2026-07-27: Google Trends is the binding constraint. A
+# fixed, absolute window so re-pulls are deterministic — no rolling "today 5-y"
+# drift. 2021-08-01 is the nearest clean month boundary inside the 5-year
+# lookback from mid-2026.
 #
-# Deliberately a FIXED date, not "today minus 5 years": a moving start date
-# would make the dataset non-reproducible, which defeats the point-in-time
-# discipline the rest of the pipeline is built around. Bump it explicitly if
-# the study window should move.
+# Deliberately FIXED dates, not "today minus 5 years": a moving window would
+# make the dataset non-reproducible, which defeats the point-in-time discipline
+# the rest of the pipeline is built around. Bump explicitly if the study window
+# should move.
 HORIZON_START = "2021-08-01"
+HORIZON_END = "2026-07-27"
+HORIZON_TIMEFRAME = f"{HORIZON_START} {HORIZON_END}"
 
 
 def utc_now_iso() -> str:
