@@ -70,6 +70,53 @@ SECTORS: dict[str, list[tuple[str, str]]] = {
 }
 
 
+# --- GDELT query disambiguation ---------------------------------------------
+# A Google Trends keyword is a poor news-corpus query: "Apple", "Amazon",
+# "Visa", "Target"-style names match fruit, rainforests, travel documents and
+# so on. For GDELT we build a stricter boolean query per ticker.
+#
+# Default template: the company name as an exact phrase, AND at least one
+# finance term, so we keep market coverage and drop the noise.
+_FINANCE_TERMS = '(stock OR shares OR earnings OR investors OR nasdaq OR nyse)'
+
+# Names that need a more specific phrase than the Trends keyword.
+GDELT_QUERY_OVERRIDES: dict[str, str] = {
+    "AAPL": '"Apple Inc"',
+    "AMZN": '"Amazon.com"',
+    "V": '"Visa Inc"',
+    "META": '"Meta Platforms"',
+    "GOOGL": '(Alphabet OR "Google") ',
+    "ORCL": '"Oracle Corp"',
+    "DIS": '"Walt Disney"',
+    "T": '"AT&T"',
+    "O": '"Realty Income"',
+    "D": '"Dominion Energy"',
+    "GE": '"General Electric"',
+    "DOW": '"Dow Inc"',
+    "KO": '"Coca-Cola"',
+    "PM": '"Philip Morris"',
+    "MO": '"Altria"',
+    "NKE": '"Nike Inc"',
+    "MCD": '"McDonald\'s Corp"',
+    "SO": '"Southern Company"',
+    "CAT": '"Caterpillar Inc"',
+    "UNP": '"Union Pacific"',
+    "APD": '"Air Products"',
+    "NEM": '"Newmont"',
+    "MS": '"Morgan Stanley"',
+    "GS": '"Goldman Sachs"',
+}
+
+
+def gdelt_query(ticker: str, finance_filter: bool = True) -> str:
+    """Build the GDELT DOC query string for one ticker."""
+    base = GDELT_QUERY_OVERRIDES.get(ticker)
+    if base is None:
+        base = f'"{ticker_to_keyword()[ticker]}"'
+    query = f"{base} {_FINANCE_TERMS}" if finance_filter else base
+    return f"{query} sourcelang:eng"
+
+
 def all_tickers() -> list[str]:
     """Flat list of all tickers across every sector."""
     return [t for members in SECTORS.values() for t, _ in members]

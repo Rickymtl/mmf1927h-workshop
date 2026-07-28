@@ -40,11 +40,66 @@ small-N caveat that hits the sector-ETF / single-index paths). See
 
 ## Data sources
 
-| Source | Signal | Auth | Script |
-|--------|--------|------|--------|
-| Yahoo Finance (`yfinance`) | OHLCV prices | none | [`code/pull_prices.py`](code/pull_prices.py) |
-| Google Trends (`pytrends`) | search interest | none | [`code/pull_trends.py`](code/pull_trends.py) |
-| Alpha Vantage `NEWS_SENTIMENT` | news sentiment | **API key** | [`code/pull_news.py`](code/pull_news.py) |
+| Source | Signal | Native frequency | Coverage | Auth | Script |
+|--------|--------|------------------|----------|------|--------|
+| Yahoo Finance (`yfinance`) | OHLCV prices | **daily** | 2015– | none | [`code/pull_prices.py`](code/pull_prices.py) |
+| Google Trends (`pytrends`) | search interest | **weekly** | 5y window | none | [`code/pull_trends.py`](code/pull_trends.py) |
+| GDELT DOC 2.0 | news tone + volume | **daily** | 2017– | none | [`code/pull_gdelt.py`](code/pull_gdelt.py) |
+| Alpha Vantage `NEWS_SENTIMENT` | article sentiment | **event-level** | ~1–2 days/pull | **API key** | [`code/pull_news.py`](code/pull_news.py) |
+
+## The frequency mismatch (and how we handle it)
+
+The mismatch is **real**, and it is a depth problem as much as a frequency one.
+Measured from our own pulls:
+
+- **Prices** — daily, 2,906 rows from 2015-01-02.
+- **Trends** — **weekly** (7-day buckets), 2021-07-25 onward. Google's
+  granularity depends on window length: >5y returns monthly, 5y returns
+  weekly, <9 months returns daily.
+- **Alpha Vantage news** — event-level timestamps, but a default pull returned
+  only **50 articles spanning 1–2 days per ticker**, because the endpoint
+  returns the *most recent* N articles.
+
+**Does Alpha Vantage offer aggregated news?** No — there is no pre-aggregated
+daily-sentiment endpoint. `NEWS_SENTIMENT` is article-level only; you aggregate
+to daily yourself. You *can* build history with its `time_from`/`time_to`
+parameters (coverage starts ~2022, `limit` up to 1000), but that costs roughly
+one request per ticker per month — for 88 names over 5 years that is ~1,000+
+requests against a **~25 requests/day** free tier. Not feasible in a five-day
+workshop.
+
+**So GDELT is our primary news source.** Its DOC 2.0 API returns a
+*pre-aggregated daily timeline* — no key, no meaningful quota, back to 2017:
+
+- `timelinetone` → daily average tone of matching coverage (**sentiment**)
+- `timelinevolraw` → daily count of matching articles (**attention**)
+
+That volume series is a bonus second signal: news-based attention, which
+complements and cross-checks the search-based Trends attention signal.
+
+### Our alignment decision
+
+**Model at weekly frequency, Friday-to-Friday.** Trends is the binding
+constraint at weekly, and the only honest options are to model weekly or to
+upsample Trends — and **forward-filling a weekly series to daily fabricates
+information**, which would leak into every later evaluation stage. So:
+
+| Series | Native | Aligned to weekly by |
+|--------|--------|----------------------|
+| Prices | daily | compounding to weekly returns |
+| Trends | weekly | already weekly (rescale by batch anchor first) |
+| GDELT tone | daily | mean over the week |
+| GDELT volume | daily | sum over the week |
+| AV article sentiment | event | relevance-weighted mean per week (recent only) |
+
+Aggregate using **only information available up to each Friday close**, then
+predict the *following* week's return — no lookahead. Alpha Vantage stays a
+recent-window cross-check on the GDELT tone signal rather than a history source.
+
+> If daily modelling turns out to matter, the alternative is stitching multiple
+> overlapping <9-month Trends windows (which return daily granularity) and
+> rescaling them on their overlaps. That is a real technique but meaningfully
+> more sourcing work — weekly first.
 
 ## Setup
 
@@ -72,7 +127,11 @@ script reads it from the environment via `python-dotenv`.
 # One source at a time:
 ./.venv/bin/python code/pull_prices.py                 # all 88 tickers
 ./.venv/bin/python code/pull_trends.py  --tickers AAPL MSFT NVDA
+./.venv/bin/python code/pull_gdelt.py   --tickers AAPL MSFT JPM
 ./.venv/bin/python code/pull_news.py    --tickers AAPL MSFT JPM
+
+# Check whether GDELT is reachable from your network before a long run:
+./.venv/bin/python code/pull_gdelt.py --probe
 
 # Quick smoke test (first 8 tickers, all sources):
 ./.venv/bin/python code/pull_data.py --sample 8
@@ -109,8 +168,22 @@ interrupted run can just be re-run. Use `--no-resume` to force a re-download
   with exponential backoff and a fresh client per attempt, which clears most
   soft blocks; persistent 429s usually mean the IP is flagged (a residential
   connection or a longer `--sleep` helps).
+- **GDELT** asks for **≤1 request every 5 seconds** and returns HTTP 429 with a
+  plain-text body when exceeded. Some shared/datacenter IPs appear blocked
+  outright regardless of pacing — run `--probe` first to check your network.
+  GDELT queries are disambiguated per ticker (`"Apple Inc"`, not `Apple`) plus a
+  finance-term filter; see `gdelt_query()` in [`code/universe.py`](code/universe.py).
 - **Alpha Vantage** free tier ≈ 25 requests/day — pull a small ticker sample
   at a time.
+
+### Current pull status
+
+| Source | Status |
+|--------|--------|
+| Prices | ✅ 88/88 |
+| Trends | ⚠️ 44/88 — Google cut off after 11 batches; re-run to resume the rest |
+| GDELT | ⛔ 0/88 — code ready, but this network is 429-blocked; run `--probe` on yours |
+| AV news | ✅ 3 sample tickers (recent-window cross-check only) |
 
 ## What is / isn't committed
 

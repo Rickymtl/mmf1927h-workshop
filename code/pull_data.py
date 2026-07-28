@@ -1,11 +1,17 @@
 """Session 1 — Data Sourcing orchestrator.
 
-Runs all three raw-data pulls for the project's universe (8 largest names per
-GICS sector):
+Runs the raw-data pulls for the project's universe (8 largest names per GICS
+sector):
 
-    prices   Yahoo Finance OHLCV        (code/pull_prices.py)
-    trends   Google Trends interest     (code/pull_trends.py)
-    news     Alpha Vantage sentiment    (code/pull_news.py)
+    prices   Yahoo Finance OHLCV            daily   (code/pull_prices.py)
+    trends   Google Trends interest         weekly  (code/pull_trends.py)
+    gdelt    GDELT news tone + volume       daily   (code/pull_gdelt.py)
+    news     Alpha Vantage article sentiment event  (code/pull_news.py)
+
+`gdelt` is the primary news-sentiment source: it is pre-aggregated to daily and
+covers 2017-present with no API key. `news` (Alpha Vantage) is article-level and
+only reaches back a day or two per request on the free tier — useful as a
+richer, headline-level cross-check on recent data, not as the history.
 
 Each source writes raw files + a provenance.json under data/raw/<source>/.
 Everything under data/raw/ is gitignored.
@@ -25,9 +31,10 @@ from datetime import datetime, timezone
 from universe import all_tickers, SECTORS
 import pull_prices
 import pull_trends
+import pull_gdelt
 import pull_news
 
-ALL_SOURCES = ("prices", "trends", "news")
+ALL_SOURCES = ("prices", "trends", "gdelt", "news")
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -39,6 +46,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                    help="Pull only the first N tickers of the universe (quick test).")
     p.add_argument("--start", default="2015-01-01", help="Price history start date.")
     p.add_argument("--trends-timeframe", default="today 5-y")
+    p.add_argument("--gdelt-start", default="2017-01-01",
+                   help="GDELT history start (coverage begins 2017-01-01).")
     p.add_argument("--news-limit", type=int, default=50)
     return p.parse_args(argv)
 
@@ -58,6 +67,9 @@ def main(argv: list[str] | None = None) -> int:
         rc |= pull_prices.pull_prices(tickers, args.start, end, "1d").get("failures") and 1 or 0
     if "trends" in args.sources:
         prov = pull_trends.pull_trends(tickers, args.trends_timeframe)
+        rc |= 1 if prov["failures"] else 0
+    if "gdelt" in args.sources:
+        prov = pull_gdelt.pull_gdelt(tickers, start=args.gdelt_start)
         rc |= 1 if prov["failures"] else 0
     if "news" in args.sources:
         prov = pull_news.pull_news(tickers, limit=args.news_limit, sleep=1.0)
