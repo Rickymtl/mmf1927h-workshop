@@ -1,5 +1,62 @@
 # MMF1927H — Workshop in Mathematical Finance
 
+Predicting the cross-section of weekly equity returns for the **8 largest US
+companies per GICS sector (88 names)** using two alternative-data signals —
+**Google Trends** search interest and **news sentiment** — on top of price data.
+Full project description [below](#project-alternative-data-signals-for-cross-sectional-equity-returns).
+
+---
+
+## TODO — start here
+
+Work is tracked in [**GitHub Issues**](https://github.com/Rickymtl/mmf1927h-workshop/issues)
+— claim one by assigning yourself, and open a PR that closes it. This list is
+the map; the issues have the detail, context, and acceptance criteria.
+
+### Where the data currently stands
+
+| Source | Status |
+|--------|--------|
+| Prices | ✅ 88/88 |
+| Trends | ⚠️ 44/88 — Google cut off after 11 batches; re-run to resume the rest |
+| GDELT | ⛔ 0/88 — code ready, but the pulling network was 429-blocked; run `--probe` on yours |
+| AV news | ✅ 3 sample tickers (recent-window cross-check only) |
+
+### Blocking — finish sourcing first (Day 1→2)
+
+- [ ] [#1 Resume Google Trends pull — 44/88 missing](https://github.com/Rickymtl/mmf1927h-workshop/issues/1)
+      · re-run `pull_trends.py`, it resumes automatically. Best from a home network.
+- [ ] [#2 Verify GDELT and pull daily history](https://github.com/Rickymtl/mmf1927h-workshop/issues/2)
+      · ⚠️ **the GDELT code has never round-tripped live data** — run `--probe`
+      and validate one ticker before trusting it.
+
+### Session 2 — cleaning & alignment
+
+- [ ] [#3 Rescale Trends by batch anchor](https://github.com/Rickymtl/mmf1927h-workshop/issues/3)
+      · without this, tickers from different batches are **not on a comparable scale**.
+- [ ] [#4 Build the weekly Friday-to-Friday panel](https://github.com/Rickymtl/mmf1927h-workshop/issues/4)
+      · the core Session 2 deliverable. Watch the lookahead traps.
+- [ ] [#7 Adjusted prices, corporate actions, missing-data policy](https://github.com/Rickymtl/mmf1927h-workshop/issues/7)
+      · returns must come from `Adj Close`, or splits become fake signal.
+
+### Methodology & write-up
+
+- [ ] [#5 Survivorship bias in the universe](https://github.com/Rickymtl/mmf1927h-workshop/issues/5)
+      · we must disclose this before Friday Q&A asks about it.
+- [ ] [#6 Decide Alpha Vantage's role](https://github.com/Rickymtl/mmf1927h-workshop/issues/6)
+      · recent cross-check against GDELT, or fallback history on a reduced universe.
+
+### Later (Days 3–5)
+
+- [ ] Feature engineering: abnormal search interest, tone momentum, attention spikes
+- [ ] Model selection with time-series CV (no random K-fold — it leaks)
+- [ ] Signal evaluation: IC, hit-rate, long-short portfolio construction
+- [ ] Friday presentation
+
+**New to the repo?** Jump to [Setup](#setup), then [Pulling raw data](#pulling-raw-data).
+
+---
+
 ## Project: Alternative-Data Signals for Cross-Sectional Equity Returns
 
 **Combining Topic 1 (Google Trends anomalies) + Topic 5 (news sentiment).**
@@ -9,7 +66,7 @@ We predict the cross-section of next-period equity returns using two
 
 1. **Search-interest anomalies** — abnormal Google Trends search volume for a
    company name (retail attention shocks that often lead short-horizon returns).
-2. **News-headline sentiment** — Alpha Vantage's ticker-level news sentiment
+2. **News-headline sentiment** — ticker-level news tone
    (information flow not yet fully reflected in price).
 
 Price/OHLCV data provides the return target and momentum/volatility controls;
@@ -27,7 +84,8 @@ small-N caveat that hits the sector-ETF / single-index paths). See
 > **Documented limitation (survivorship bias):** the universe is a *current-
 > membership* snapshot as of mid-2025, not point-in-time index constituents.
 > We surface this rather than hide it — a Day 2 (cleaning / point-in-time)
-> concern to address before drawing return conclusions.
+> concern to address before drawing return conclusions. Tracked as
+> [#5](https://github.com/Rickymtl/mmf1927h-workshop/issues/5).
 
 ### The four-stage pipeline
 
@@ -137,7 +195,7 @@ script reads it from the environment via `python-dotenv`.
 ./.venv/bin/python code/pull_data.py --sample 8
 ```
 
-Raw output lands under `data/raw/{prices,trends,news}/`, each with a
+Raw output lands under `data/raw/{prices,trends,gdelt,news}/`, each with a
 `provenance.json` recording exactly what was pulled and when. The `data/`
 folder is **not tracked by git at all** — raw pulls are regenerable, can be
 large, and may be non-redistributable, so they stay local. The scripts create
@@ -150,7 +208,7 @@ different batches are **not comparable as-is**. `pull_trends.py` reserves one
 of the 5 keyword slots for a shared **anchor** (default `"stock market"`) and
 saves that anchor series per batch as `_anchor_batch<N>.csv`. Rescaling each
 ticker by its batch anchor puts all 88 names on one comparable scale — do this
-in Session 2 before building features.
+in Session 2 before building features ([#3](https://github.com/Rickymtl/mmf1927h-workshop/issues/3)).
 
 ```bash
 # Tune batching if Google pushes back:
@@ -176,54 +234,8 @@ interrupted run can just be re-run. Use `--no-resume` to force a re-download
 - **Alpha Vantage** free tier ≈ 25 requests/day — pull a small ticker sample
   at a time.
 
-### Current pull status
-
-| Source | Status |
-|--------|--------|
-| Prices | ✅ 88/88 |
-| Trends | ⚠️ 44/88 — Google cut off after 11 batches; re-run to resume the rest |
-| GDELT | ⛔ 0/88 — code ready, but this network is 429-blocked; run `--probe` on yours |
-| AV news | ✅ 3 sample tickers (recent-window cross-check only) |
-
-## TODO
-
-Work is tracked in [**GitHub Issues**](https://github.com/Rickymtl/mmf1927h-workshop/issues)
-— claim one by assigning yourself, and open a PR that closes it. This list is
-the map; the issues have the detail, context, and acceptance criteria.
-
-### Blocking — finish sourcing first (Day 1→2)
-
-- [ ] [#1 Resume Google Trends pull — 44/88 missing](https://github.com/Rickymtl/mmf1927h-workshop/issues/1)
-      · re-run `pull_trends.py`, it resumes automatically. Best from a home network.
-- [ ] [#2 Verify GDELT and pull daily history](https://github.com/Rickymtl/mmf1927h-workshop/issues/2)
-      · ⚠️ **the GDELT code has never round-tripped live data** — run `--probe`
-      and validate one ticker before trusting it.
-
-### Session 2 — cleaning & alignment
-
-- [ ] [#3 Rescale Trends by batch anchor](https://github.com/Rickymtl/mmf1927h-workshop/issues/3)
-      · without this, tickers from different batches are **not on a comparable scale**.
-- [ ] [#4 Build the weekly Friday-to-Friday panel](https://github.com/Rickymtl/mmf1927h-workshop/issues/4)
-      · the core Session 2 deliverable. Watch the lookahead traps.
-- [ ] [#7 Adjusted prices, corporate actions, missing-data policy](https://github.com/Rickymtl/mmf1927h-workshop/issues/7)
-      · returns must come from `Adj Close`, or splits become fake signal.
-
-### Methodology & write-up
-
-- [ ] [#5 Survivorship bias in the universe](https://github.com/Rickymtl/mmf1927h-workshop/issues/5)
-      · we must disclose this before Friday Q&A asks about it.
-- [ ] [#6 Decide Alpha Vantage's role](https://github.com/Rickymtl/mmf1927h-workshop/issues/6)
-      · recent cross-check against GDELT, or fallback history on a reduced universe.
-
-### Later (Days 3–5)
-
-- [ ] Feature engineering: abnormal search interest, tone momentum, attention spikes
-- [ ] Model selection with time-series CV (no random K-fold — it leaks)
-- [ ] Signal evaluation: IC, hit-rate, long-short portfolio construction
-- [ ] Friday presentation
-
 ## What is / isn't committed
 
 - **Committed:** code, `requirements.txt`, `.env.example`, this README.
-- **Never committed:** `.env` (your API key), everything under `data/raw/`,
+- **Never committed:** `.env` (your API key), everything under `data/`,
   the course PDFs, and the `.venv/`.
