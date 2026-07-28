@@ -20,7 +20,7 @@ the map; the issues have the detail, context, and acceptance criteria.
 |--------|--------|
 | Prices | ✅ 88/88 (pulled from 2015 — a superset of the horizon, filter when building the panel) |
 | Trends | ⚠️ 44/88 — Google cut off after 11 batches; re-run to resume the rest |
-| GDELT | ⛔ 0/88 — code ready, but the pulling network was 429-blocked; run `--probe` on yours |
+| GDELT | ⚠️ live probe + AAPL 2024 round-trip verified; full 88-name pull still needs a stable residential connection |
 | AV news | ⚠️ 3 tickers, 2 days — a sample, not a dataset ([#8](https://github.com/Rickymtl/mmf1927h-workshop/issues/8)) |
 
 ### Blocking — finish sourcing first (Day 1→2)
@@ -29,8 +29,9 @@ the map; the issues have the detail, context, and acceptance criteria.
       · done: all 88/88 tickers pulled. Required switching to a residential IP (cell hotspot)
         to get past Google rate-limiting on the last 4.
 - [ ] [#2 Verify GDELT and pull daily history](https://github.com/Rickymtl/mmf1927h-workshop/issues/2)
-      · ⚠️ **the GDELT code has never round-tripped live data** — run `--probe`
-      and validate one ticker before trusting it.
+      · live response shape and a 366-row AAPL 2024 CSV verified. The shared
+      pulling network was subsequently throttled; run the resumable full pull
+      from a stable residential connection.
 - [ ] [#8 Pull Alpha Vantage news for all 88 tickers over the full horizon](https://github.com/Rickymtl/mmf1927h-workshop/issues/8)
       · currently a 3-ticker, 2-day sample. ⚠️ **Blocked on a decision, not
       effort** — the full pull is ~5,280 requests ≈ **211 days on the free
@@ -245,6 +246,9 @@ recent-window cross-check on the GDELT tone signal rather than a history source.
 ```bash
 python3.11 -m venv .venv
 ./.venv/bin/pip install -r requirements.txt
+
+# Parser, chunking, throttle, and output-validation tests:
+./.venv/bin/python -m unittest discover -s tests -v
 ```
 
 **API key (Alpha Vantage, free):** get one at
@@ -271,6 +275,9 @@ script reads it from the environment via `python-dotenv`.
 
 # Check whether GDELT is reachable from your network before a long run:
 ./.venv/bin/python code/pull_gdelt.py --probe
+
+# Validate the completed 88-ticker GDELT pull:
+./.venv/bin/python code/validate_gdelt.py
 
 # Quick smoke test (first 8 tickers, all sources):
 ./.venv/bin/python code/pull_data.py --sample 8
@@ -308,8 +315,11 @@ interrupted run can just be re-run. Use `--no-resume` to force a full re-downloa
   soft blocks; persistent 429s usually mean the IP is flagged (a residential
   connection or a longer `--sleep` helps).
 - **GDELT** asks for **≤1 request every 5 seconds** and returns HTTP 429 with a
-  plain-text body when exceeded. Some shared/datacenter IPs appear blocked
-  outright regardless of pacing — run `--probe` first to check your network.
+  plain-text body when exceeded. The puller enforces six-second pacing,
+  exponential retry, and at least a 60-second cooldown after an explicit
+  throttle response. Some shared/datacenter IPs are still blocked regardless
+  of pacing — run `--probe` first and use a residential connection for the
+  multi-hour full pull.
   GDELT queries are disambiguated per ticker (`"Apple Inc"`, not `Apple`) plus a
   finance-term filter; see `gdelt_query()` in [`code/universe.py`](code/universe.py).
 - **Alpha Vantage** free tier ≈ 25 requests/day — pull a small ticker sample
@@ -317,6 +327,6 @@ interrupted run can just be re-run. Use `--no-resume` to force a full re-downloa
 
 ## What is / isn't committed
 
-- **Committed:** code, `requirements.txt`, `.env.example`, this README.
+- **Committed:** code, tests, `requirements.txt`, `.env.example`, this README.
 - **Never committed:** `.env` (your API key), everything under `data/`,
   the course PDFs, and the `.venv/`.
