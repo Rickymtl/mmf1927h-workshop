@@ -35,11 +35,12 @@ import argparse
 import random
 import sys
 import time
+from collections.abc import Iterator
 
 import pandas as pd
 import requests
 
-from paths import HORIZON_START, RAW_DIR, rel, utc_now_iso, write_provenance
+from paths import HORIZON_END, HORIZON_START, RAW_DIR, rel, utc_now_iso, write_provenance
 from universe import all_tickers, gdelt_query
 
 GDELT_DIR = RAW_DIR / "gdelt"
@@ -56,11 +57,28 @@ _HEADERS = {
 }
 
 MODES = {"tone": "timelinetone", "volume": "timelinevolraw"}
+MIN_THROTTLE_COOLDOWN = 60.0
 
 
 def _fmt(ts: pd.Timestamp) -> str:
     """GDELT wants YYYYMMDDHHMMSS."""
     return ts.strftime("%Y%m%d%H%M%S")
+
+
+def _timeline_points(payload: dict, mode: str) -> list[dict]:
+    """Extract timeline points while rejecting unexpected response shapes."""
+    timeline = payload.get("timeline")
+    if timeline is None:
+        raise ValueError(f"{mode}: response has no 'timeline' field")
+    if not isinstance(timeline, list):
+        raise ValueError(f"{mode}: 'timeline' is not a list")
+    if not timeline:
+        return []
+
+    for series in timeline:
+        if isinstance(series, dict) and isinstance(series.get("data"), list):
+            return series["data"]
+    raise ValueError(f"{mode}: no timeline series contains a data list")
 
 
 def _request(query: str, mode: str, start: pd.Timestamp, end: pd.Timestamp,
@@ -74,26 +92,34 @@ def _request(query: str, mode: str, start: pd.Timestamp, end: pd.Timestamp,
         "enddatetime": _fmt(end),
     }
     for attempt in range(1, retries + 1):
+        throttled = False
         try:
             resp = requests.get(ENDPOINT, params=params, timeout=90, headers=_HEADERS)
             # GDELT signals rate limiting with a 429 *and* sometimes with a
             # 200 carrying a plain-text body, so check the content type too.
             if resp.status_code == 429 or not resp.text.lstrip().startswith("{"):
                 snippet = resp.text.strip()[:100]
+                throttled = (
+                    resp.status_code == 429
+                    or "limit requests" in snippet.lower()
+                    or "rate limit" in snippet.lower()
+                )
                 print(f"    attempt {attempt}/{retries}: throttled/non-JSON: {snippet}",
                       file=sys.stderr)
             else:
                 payload = resp.json()
-                timeline = payload.get("timeline") or []
-                if not timeline:
-                    # A valid response with no matching coverage.
-                    return []
-                return timeline[0].get("data", [])
+                return _timeline_points(payload, mode)
         except Exception as exc:  # noqa: BLE001
             print(f"    attempt {attempt}/{retries}: {exc}", file=sys.stderr)
 
         if attempt < retries:
             wait = sleep * (2 ** (attempt - 1)) + random.uniform(0, sleep)
+            if throttled:
+                retry_after = resp.headers.get("Retry-After")
+                try:
+                    wait = max(wait, float(retry_after))
+                except (TypeError, ValueError):
+                    wait = max(wait, MIN_THROTTLE_COOLDOWN)
             print(f"    backing off {wait:.1f}s", file=sys.stderr)
             time.sleep(wait)
     return None
@@ -101,20 +127,55 @@ def _request(query: str, mode: str, start: pd.Timestamp, end: pd.Timestamp,
 
 def _to_series(points: list[dict], name: str) -> pd.Series:
     """Convert GDELT timeline points into a daily-indexed Series."""
+    if name not in MODES:
+        raise ValueError(f"unknown GDELT series: {name}")
     if not points:
         return pd.Series(dtype="float64", name=name)
+
     df = pd.DataFrame(points)
-    # GDELT date strings vary in shape across modes; let pandas infer.
-    idx = pd.to_datetime(df["date"], format="mixed", utc=True).dt.tz_localize(None)
-    series = pd.Series(df["value"].astype(float).values, index=idx.dt.normalize(), name=name)
-    # Collapse any sub-daily buckets to one value per day.
-    return series.groupby(level=0).mean()
+    missing = {"date", "value"} - set(df.columns)
+    if missing:
+        raise ValueError(f"{name}: timeline points missing field(s): {', '.join(sorted(missing))}")
+
+    # GDELT currently returns values such as 20240101T000000Z. Keep mixed
+    # parsing because the API has historically varied the timestamp shape.
+    idx = pd.to_datetime(df["date"], format="mixed", utc=True, errors="coerce")
+    values = pd.to_numeric(df["value"], errors="coerce")
+    invalid = idx.isna() | values.isna()
+    if invalid.any():
+        examples = df.loc[invalid, ["date", "value"]].head(3).to_dict("records")
+        raise ValueError(f"{name}: invalid date/value point(s): {examples}")
+    if name == "volume" and (values < 0).any():
+        raise ValueError("volume: negative article count returned")
+
+    daily_index = pd.DatetimeIndex(idx).tz_localize(None).normalize()
+    series = pd.Series(values.to_numpy(dtype=float), index=daily_index, name=name)
+    # Tone is an average; volume is a count. This matters if GDELT ever returns
+    # sub-daily buckets or duplicate points inside one response.
+    aggregation = "mean" if name == "tone" else "sum"
+    return series.groupby(level=0).agg(aggregation)
+
+
+def _chunk_ranges(
+    start: pd.Timestamp, end: pd.Timestamp, chunk_months: int
+) -> Iterator[tuple[pd.Timestamp, pd.Timestamp]]:
+    """Yield inclusive, non-overlapping calendar ranges."""
+    if chunk_months < 1:
+        raise ValueError("chunk_months must be at least 1")
+    if start > end:
+        raise ValueError("start must be on or before end")
+
+    lo = start
+    while lo <= end:
+        hi = min(lo + pd.DateOffset(months=chunk_months) - pd.Timedelta(days=1), end)
+        yield lo, hi
+        lo = hi + pd.Timedelta(days=1)
 
 
 def pull_gdelt(
     tickers: list[str],
     start: str = HORIZON_START,
-    end: str | None = None,
+    end: str = HORIZON_END,
     chunk_months: int = 12,
     sleep: float = 6.0,
     retries: int = 4,
@@ -122,8 +183,14 @@ def pull_gdelt(
     resume: bool = True,
 ) -> dict:
     GDELT_DIR.mkdir(parents=True, exist_ok=True)
-    end_ts = pd.Timestamp(end) if end else pd.Timestamp.utcnow().normalize()
+    if retries < 1:
+        raise ValueError("retries must be at least 1")
+    if sleep < 0:
+        raise ValueError("sleep must be non-negative")
+
+    end_ts = pd.Timestamp(end)
     start_ts = max(pd.Timestamp(start), pd.Timestamp(EARLIEST))
+    chunks = list(_chunk_ranges(start_ts, end_ts, chunk_months))
 
     if resume:
         pending = [t for t in tickers if not (GDELT_DIR / f"{t}.csv").exists()]
@@ -136,19 +203,14 @@ def pull_gdelt(
         "source": "GDELT DOC 2.0 API (timelinetone + timelinevolraw)",
         "start": str(start_ts.date()),
         "end": str(end_ts.date()),
+        "chunk_months": chunk_months,
+        "sleep_seconds": sleep,
         "finance_filter": finance_filter,
         "note": ("tone = daily average tone of matching coverage; volume = daily "
                  "raw article count. Coverage starts 2017-01-01."),
         "tickers": {},
     }
     failures: list[str] = []
-
-    # Split the range into chunks so each response stays a manageable size.
-    bounds = list(pd.date_range(start_ts, end_ts, freq=f"{chunk_months}MS"))
-    if not bounds or bounds[0] > start_ts:
-        bounds.insert(0, start_ts)
-    if bounds[-1] < end_ts:
-        bounds.append(end_ts)
 
     for ti, ticker in enumerate(tickers, start=1):
         query = gdelt_query(ticker, finance_filter=finance_filter)
@@ -157,7 +219,7 @@ def pull_gdelt(
         ticker_failed = False
 
         for col, mode in MODES.items():
-            for lo, hi in zip(bounds[:-1], bounds[1:]):
+            for lo, hi in chunks:
                 points = _request(query, mode, lo, hi, retries, sleep)
                 if points is None:
                     print(f"  [FAIL] {ticker} {col} {lo.date()}..{hi.date()}", file=sys.stderr)
@@ -208,7 +270,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--start", default=HORIZON_START,
                    help=f"History start (default: study horizon, {HORIZON_START}). "
                         f"Clamped to GDELT coverage floor {EARLIEST}.")
-    p.add_argument("--end", default=None)
+    p.add_argument("--end", default=HORIZON_END,
+                   help=f"History end (default: fixed study horizon, {HORIZON_END}).")
     p.add_argument("--chunk-months", type=int, default=12)
     p.add_argument("--sleep", type=float, default=6.0,
                    help="Seconds between requests; GDELT asks for >=5 (default 6).")
