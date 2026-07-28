@@ -12,7 +12,7 @@ import sys
 import pandas as pd
 import yfinance as yf
 
-from paths import PRICES_DIR, rel, utc_now_iso, write_provenance
+from paths import HORIZON_START, PRICES_DIR, rel, utc_now_iso, write_provenance
 from universe import all_tickers
 
 
@@ -73,7 +73,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--tickers", nargs="+", default=None,
                    help="Tickers to pull (default: full 88-name universe).")
-    p.add_argument("--start", default="2015-01-01")
+    p.add_argument("--start", default=HORIZON_START,
+                   help=f"History start (default: study horizon, {HORIZON_START}).")
     p.add_argument("--end", default=None, help="Exclusive end date; default today.")
     p.add_argument("--interval", default="1d")
     return p.parse_args(argv)

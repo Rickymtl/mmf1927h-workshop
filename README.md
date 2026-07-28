@@ -3,6 +3,7 @@
 Predicting the cross-section of weekly equity returns for the **8 largest US
 companies per GICS sector (88 names)** using two alternative-data signals —
 **Google Trends** search interest and **news sentiment** — on top of price data.
+Study horizon: **5 years from 2021-08-01**.
 Full project description [below](#project-alternative-data-signals-for-cross-sectional-equity-returns).
 
 ---
@@ -17,10 +18,10 @@ the map; the issues have the detail, context, and acceptance criteria.
 
 | Source | Status |
 |--------|--------|
-| Prices | ✅ 88/88 |
+| Prices | ✅ 88/88 (pulled from 2015 — a superset of the horizon, filter when building the panel) |
 | Trends | ⚠️ 44/88 — Google cut off after 11 batches; re-run to resume the rest |
 | GDELT | ⛔ 0/88 — code ready, but the pulling network was 429-blocked; run `--probe` on yours |
-| AV news | ✅ 3 sample tickers (recent-window cross-check only) |
+| AV news | ⚠️ 3 tickers, 2 days — a sample, not a dataset ([#8](https://github.com/Rickymtl/mmf1927h-workshop/issues/8)) |
 
 ### Blocking — finish sourcing first (Day 1→2)
 
@@ -29,6 +30,14 @@ the map; the issues have the detail, context, and acceptance criteria.
 - [ ] [#2 Verify GDELT and pull daily history](https://github.com/Rickymtl/mmf1927h-workshop/issues/2)
       · ⚠️ **the GDELT code has never round-tripped live data** — run `--probe`
       and validate one ticker before trusting it.
+- [ ] [#8 Pull Alpha Vantage news for all 88 tickers over the full horizon](https://github.com/Rickymtl/mmf1927h-workshop/issues/8)
+      · currently a 3-ticker, 2-day sample. ⚠️ **Blocked on a decision, not
+      effort** — the full pull is ~5,280 requests ≈ **211 days on the free
+      tier**. Needs a premium key, a reduced scope, or dropping to a
+      cross-check.
+- [ ] [#9 Study horizon follow-ups (5y from 2021-08-01)](https://github.com/Rickymtl/mmf1927h-workshop/issues/9)
+      · notably: Trends `today 5-y` is a **rolling** window, so re-pulls drift.
+      Decide on an absolute timeframe before resuming #1.
 
 ### Session 2 — cleaning & alignment
 
@@ -100,17 +109,28 @@ small-N caveat that hits the sector-ETF / single-index paths). See
 
 | Source | Signal | Native frequency | Coverage | Auth | Script |
 |--------|--------|------------------|----------|------|--------|
-| Yahoo Finance (`yfinance`) | OHLCV prices | **daily** | 2015– | none | [`code/pull_prices.py`](code/pull_prices.py) |
-| Google Trends (`pytrends`) | search interest | **weekly** | 5y window | none | [`code/pull_trends.py`](code/pull_trends.py) |
-| GDELT DOC 2.0 | news tone + volume | **daily** | 2017– | none | [`code/pull_gdelt.py`](code/pull_gdelt.py) |
-| Alpha Vantage `NEWS_SENTIMENT` | article sentiment | **event-level** | ~1–2 days/pull | **API key** | [`code/pull_news.py`](code/pull_news.py) |
+| Yahoo Finance (`yfinance`) | OHLCV prices | **daily** | full horizon | none | [`code/pull_prices.py`](code/pull_prices.py) |
+| Google Trends (`pytrends`) | search interest | **weekly** | full horizon (rolling) | none | [`code/pull_trends.py`](code/pull_trends.py) |
+| GDELT DOC 2.0 | news tone + volume | **daily** | full horizon | none | [`code/pull_gdelt.py`](code/pull_gdelt.py) |
+| Alpha Vantage `NEWS_SENTIMENT` | article sentiment | **event-level** | ~2022–, quota-limited | **API key** | [`code/pull_news.py`](code/pull_news.py) |
+
+### Study horizon
+
+All sources default to **`HORIZON_START = 2021-08-01`** (5 years), defined once
+in [`code/paths.py`](code/paths.py). Google Trends is the binding constraint —
+`today 5-y` returns a rolling 5-year window starting 2021-07-25, so this is the
+nearest clean month boundary inside it. It is a **fixed** date, not "today minus
+5 years", so the dataset stays reproducible.
+
+Existing price CSVs were pulled from 2015 and are a harmless superset — filter
+to the horizon when building the panel rather than re-pulling.
 
 ## The frequency mismatch (and how we handle it)
 
 The mismatch is **real**, and it is a depth problem as much as a frequency one.
 Measured from our own pulls:
 
-- **Prices** — daily, 2,906 rows from 2015-01-02.
+- **Prices** — daily (the pulled files start 2015-01-02; we use the horizon).
 - **Trends** — **weekly** (7-day buckets), 2021-07-25 onward. Google's
   granularity depends on window length: >5y returns monthly, 5y returns
   weekly, <9 months returns daily.
@@ -122,9 +142,9 @@ Measured from our own pulls:
 daily-sentiment endpoint. `NEWS_SENTIMENT` is article-level only; you aggregate
 to daily yourself. You *can* build history with its `time_from`/`time_to`
 parameters (coverage starts ~2022, `limit` up to 1000), but that costs roughly
-one request per ticker per month — for 88 names over 5 years that is ~1,000+
-requests against a **~25 requests/day** free tier. Not feasible in a five-day
-workshop.
+one request per ticker per month — for 88 names over our 5-year horizon that is
+**5,280 requests ≈ 211 days** against a ~25 requests/day free tier. Not feasible
+without a premium key; see [#8](https://github.com/Rickymtl/mmf1927h-workshop/issues/8).
 
 **So GDELT is our primary news source.** Its DOC 2.0 API returns a
 *pre-aggregated daily timeline* — no key, no meaningful quota, back to 2017:

@@ -39,12 +39,13 @@ import time
 import pandas as pd
 import requests
 
-from paths import RAW_DIR, rel, utc_now_iso, write_provenance
+from paths import HORIZON_START, RAW_DIR, rel, utc_now_iso, write_provenance
 from universe import all_tickers, gdelt_query
 
 GDELT_DIR = RAW_DIR / "gdelt"
 ENDPOINT = "https://api.gdeltproject.org/api/v2/doc/doc"
-# GDELT DOC 2.0 coverage begins 2017-01-01.
+# GDELT DOC 2.0 coverage begins 2017-01-01 — a hard floor, clamped below.
+# We default to HORIZON_START (later than this) to match the other sources.
 EARLIEST = "2017-01-01"
 
 _HEADERS = {
@@ -112,7 +113,7 @@ def _to_series(points: list[dict], name: str) -> pd.Series:
 
 def pull_gdelt(
     tickers: list[str],
-    start: str = EARLIEST,
+    start: str = HORIZON_START,
     end: str | None = None,
     chunk_months: int = 12,
     sleep: float = 6.0,
@@ -204,7 +205,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--tickers", nargs="+", default=None)
-    p.add_argument("--start", default=EARLIEST)
+    p.add_argument("--start", default=HORIZON_START,
+                   help=f"History start (default: study horizon, {HORIZON_START}). "
+                        f"Clamped to GDELT coverage floor {EARLIEST}.")
     p.add_argument("--end", default=None)
     p.add_argument("--chunk-months", type=int, default=12)
     p.add_argument("--sleep", type=float, default=6.0,

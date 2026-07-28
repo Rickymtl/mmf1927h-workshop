@@ -28,6 +28,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 
+from paths import HORIZON_START
 from universe import all_tickers, SECTORS
 import pull_prices
 import pull_trends
@@ -44,10 +45,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                    help="Which sources to pull (default: all).")
     p.add_argument("--sample", type=int, default=None,
                    help="Pull only the first N tickers of the universe (quick test).")
-    p.add_argument("--start", default="2015-01-01", help="Price history start date.")
+    p.add_argument("--start", default=HORIZON_START,
+                   help=f"Price history start (default: study horizon, {HORIZON_START}).")
     p.add_argument("--trends-timeframe", default="today 5-y")
-    p.add_argument("--gdelt-start", default="2017-01-01",
-                   help="GDELT history start (coverage begins 2017-01-01).")
+    p.add_argument("--gdelt-start", default=HORIZON_START,
+                   help=f"GDELT history start (default: study horizon, {HORIZON_START}).")
     p.add_argument("--news-limit", type=int, default=50)
     return p.parse_args(argv)
 
