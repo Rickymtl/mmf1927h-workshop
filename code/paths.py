@@ -15,7 +15,11 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = REPO_ROOT / "data" / "raw"
 PRICES_DIR = RAW_DIR / "prices"
 TRENDS_DIR = RAW_DIR / "trends"
+GDELT_DIR = RAW_DIR / "gdelt"
 NEWS_DIR = RAW_DIR / "news"
+
+# Cleaned / analysis-ready data (Day 2+).  Like raw/, not committed.
+PROCESSED_DIR = REPO_ROOT / "data" / "processed"
 
 # --- Study horizon -----------------------------------------------------------
 # Every source is pulled over the same 5-year window so the panel is balanced

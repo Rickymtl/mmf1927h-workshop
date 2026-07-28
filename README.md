@@ -19,9 +19,9 @@ the map; the issues have the detail, context, and acceptance criteria.
 | Source | Status |
 |--------|--------|
 | Prices | ✅ 88/88 (pulled from 2015 — a superset of the horizon, filter when building the panel) |
-| Trends | ⚠️ 44/88 — Google cut off after 11 batches; re-run to resume the rest |
-| GDELT | ⚠️ live probe + AAPL 2024 round-trip verified; full 88-name pull still needs a stable residential connection |
-| AV news | ⚠️ 3 tickers, 2 days — a sample, not a dataset ([#8](https://github.com/Rickymtl/mmf1927h-workshop/issues/8)) |
+| Trends | ✅ 88/88 (all pulled across 22 batches; **rescaling done** — [#3](https://github.com/Rickymtl/mmf1927h-workshop/issues/3)) |
+| GDELT | ⚠️ 0/88 — live probe + AAPL 2024 round-trip verified; full 88-name pull still needs a stable residential connection ([#2](https://github.com/Rickymtl/mmf1927h-workshop/issues/2)) |
+| AV news | ❌ **Skipped for current scope.** Free tier is ~5,280 requests ≈ 211 days, impractical for a 5-day workshop. GDELT is the primary news source. If a premium key becomes available, revisit ([#6](https://github.com/Rickymtl/mmf1927h-workshop/issues/6), [#8](https://github.com/Rickymtl/mmf1927h-workshop/issues/8)). |
 
 ### Blocking — finish sourcing first (Day 1→2)
 
@@ -32,19 +32,20 @@ the map; the issues have the detail, context, and acceptance criteria.
       · live response shape and a 366-row AAPL 2024 CSV verified. The shared
       pulling network was subsequently throttled; run the resumable full pull
       from a stable residential connection.
-- [ ] [#8 Pull Alpha Vantage news for all 88 tickers over the full horizon](https://github.com/Rickymtl/mmf1927h-workshop/issues/8)
-      · currently a 3-ticker, 2-day sample. ⚠️ **Blocked on a decision, not
-      effort** — the full pull is ~5,280 requests ≈ **211 days on the free
-      tier**. Needs a premium key, a reduced scope, or dropping to a
-      cross-check.
 - [x] [#9 Study horizon follow-ups (5y from 2021-08-01)](https://github.com/Rickymtl/mmf1927h-workshop/issues/9)
       · fixed: `HORIZON_TIMEFRAME = "2021-08-01 2026-07-27"` in `paths.py`,
       all scripts now share one absolute window.
+- [x] [#8 Pull Alpha Vantage news for all 88 tickers](https://github.com/Rickymtl/mmf1927h-workshop/issues/8)
+      · closed in favour of [#6](https://github.com/Rickymtl/mmf1927h-workshop/issues/6) — AV dropped from scope
+      (free tier infeasible: ~5,280 requests ≈ 211 days).
 
 ### Session 2 — cleaning & alignment
 
-- [ ] [#3 Rescale Trends by batch anchor](https://github.com/Rickymtl/mmf1927h-workshop/issues/3)
-      · without this, tickers from different batches are **not on a comparable scale**.
+- [x] [#3 Rescale Trends by batch anchor](https://github.com/Rickymtl/mmf1927h-workshop/issues/3)
+      · done: 88/88 tickers rescaled via `code/cleaning/rescale_trends.py`.
+      Output in `data/processed/trends_rescaled/`. 68 tickers used an
+      average anchor (batch anchors lost to resume overwrites; the 5
+      surviving anchors are correlated at 0.9999+, so the impact is negligible).
 - [ ] [#4 Build the weekly Friday-to-Friday panel](https://github.com/Rickymtl/mmf1927h-workshop/issues/4)
       · the core Session 2 deliverable. Watch the lookahead traps.
 - [ ] [#7 Adjusted prices, corporate actions, missing-data policy](https://github.com/Rickymtl/mmf1927h-workshop/issues/7)
@@ -54,8 +55,10 @@ the map; the issues have the detail, context, and acceptance criteria.
 
 - [x] [#5 Survivorship bias in the universe](https://github.com/Rickymtl/mmf1927h-workshop/issues/5)
       · disclosed and quantified below; Day 4 robustness check methodology recorded.
-- [ ] [#6 Decide Alpha Vantage's role](https://github.com/Rickymtl/mmf1927h-workshop/issues/6)
-      · recent cross-check against GDELT, or fallback history on a reduced universe.
+- [x] [#6 Decide Alpha Vantage's role](https://github.com/Rickymtl/mmf1927h-workshop/issues/6)
+      · **Tim (suggestion): skip AV.** GDELT is the sole news source. AV free tier is
+      infeasible (~5,280 requests ≈ 211 days). If a premium key becomes
+      available, revisit. Document this limitation in the Friday write-up.
 
 ### Later (Days 3–5)
 
