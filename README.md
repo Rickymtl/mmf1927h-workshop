@@ -47,8 +47,16 @@ the map; the issues have the detail, context, and acceptance criteria.
       average anchor (batch anchors lost to resume overwrites; the 5
       surviving anchors are correlated at 0.9999+, so the impact is negligible).
 - [ ] [#4 Build the weekly Friday-to-Friday panel](https://github.com/Rickymtl/mmf1927h-workshop/issues/4)
-      · the core Session 2 deliverable. Watch the lookahead traps.
-- [ ] [#7 Adjusted prices, corporate actions, missing-data policy](https://github.com/Rickymtl/mmf1927h-workshop/issues/7)
+      · the core Session 2 deliverable — Validate → Align → Impute/Winsorize →
+        Analysis-ready.  Also covers: target definition, lineage manifest,
+        minimum-history threshold, Parquet storage, categorical encoding.
+        Watch the lookahead traps.
+- [ ] [#12 Missing-data policy & imputation](https://github.com/Rickymtl/mmf1927h-workshop/issues/12)
+      · classify missingness per Rubin (MCAR/MAR/MNAR), choose imputation
+        methods per source, set max gap lengths, prevent leakage.
+- [ ] [#13 Outlier treatment & cross-sectional standardization](https://github.com/Rickymtl/mmf1927h-workshop/issues/13)
+      · per-date winsorization at p1/p99, rank vs. z-score, sector-neutralization.
+- [x] [#7 Adjusted prices, corporate actions, missing-data policy](https://github.com/Rickymtl/mmf1927h-workshop/issues/7)
       · returns must come from `Adj Close`, or splits become fake signal.
       · **Verified:** NVDA 10-for-1 (Jun 2024): Adj Close ret 0.75%, AMZN 20-for-1
       (Jun 2022): 1.99%, GOOGL 20-for-1 (Jul 2022): -2.46% — all normal daily moves.
@@ -64,6 +72,9 @@ the map; the issues have the detail, context, and acceptance criteria.
       · **Tim (suggestion): skip AV.** GDELT is the sole news source. AV free tier is
       infeasible (~5,280 requests ≈ 211 days). If a premium key becomes
       available, revisit. Document this limitation in the Friday write-up.
+- [ ] [#14 Data-quality memo](https://github.com/Rickymtl/mmf1927h-workshop/issues/14)
+      · half-page Day 2 deliverable — imputation summary, winsorization
+        thresholds, names/dates dropped, known limitations carried forward.
 
 ### Later (Days 3–5)
 
@@ -193,7 +204,7 @@ When the model is trained and we have a signal, run this check before Friday:
 | Stage | Owning day | This repo |
 |-------|-----------|-----------|
 | **Source** | Day 1 | `code/pull_*.py` — raw prices, trends, news |
-| Clean | Day 2 | _tbd_ |
+| Clean | Day 2 | `code/cleaning/` — rescale, verify, impute, winsorize, build panel |
 | Feature / Model | Day 3 | _tbd_ |
 | Evaluate | Day 4–5 | _tbd_ |
 
