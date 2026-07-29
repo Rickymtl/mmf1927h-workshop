@@ -96,7 +96,10 @@ def _is_structural_zero(ticker: str, date: pd.Timestamp) -> bool:
 # ---------------------------------------------------------------------------
 
 
-def apply_price_policy(returns_df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+def apply_price_policy(
+    returns_df: pd.DataFrame,
+    date_col: str = "date",
+) -> tuple[pd.DataFrame, dict]:
     """Handle missing price/return data.
 
     Current state (verified by ``verify_prices.py``):
@@ -115,7 +118,9 @@ def apply_price_policy(returns_df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     Parameters
     ----------
     returns_df : pd.DataFrame
-        Long-form daily returns with columns ``[date, ticker, daily_return]``.
+        Long-form daily returns with columns ``[date_col, ticker, daily_return]``.
+    date_col : str
+        Name of the date column (default ``"date"``).
 
     Returns
     -------
@@ -131,7 +136,7 @@ def apply_price_policy(returns_df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     # but make it explicit).
     for sym, first_str, _reason in _STRUCTURAL_STARTS:
         first_date = pd.Timestamp(first_str)
-        mask = (df["ticker"] == sym) & (pd.to_datetime(df["date"]) < first_date)
+        mask = (df["ticker"] == sym) & (pd.to_datetime(df[date_col]) < first_date)
         df.loc[mask, "daily_return"] = pd.NA
 
     n_after = int(df["daily_return"].isna().sum())
@@ -157,6 +162,8 @@ def apply_price_policy(returns_df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
 
 def apply_trends_policy(
     trends_df: pd.DataFrame,
+    value_col: str = "search_interest_rescaled",
+    date_col: str = "date",
     recode_structural_zeros: bool = True,
 ) -> tuple[pd.DataFrame, dict]:
     """Handle Trends missingness.
@@ -179,7 +186,12 @@ def apply_trends_policy(
     Parameters
     ----------
     trends_df : pd.DataFrame
-        Long-form with columns ``[date, ticker, search_interest_rescaled]``.
+        Long-form with a value column (default ``search_interest_rescaled``)
+        and columns ``[date_col, ticker]``.
+    value_col : str
+        Name of the column to apply the policy to.
+    date_col : str
+        Name of the date column (default ``"date"``).
     recode_structural_zeros : bool
         If True (default), replace CEG pre-listing zeros with NaN.
 
@@ -189,7 +201,6 @@ def apply_trends_policy(
     report : dict
     """
     df = trends_df.copy()
-    value_col = "search_interest_rescaled"
 
     n_zero_before = int((df[value_col] == 0).sum())
     n_structural_replaced = 0
@@ -199,7 +210,7 @@ def apply_trends_policy(
             first_date = pd.Timestamp(first_str)
             mask = (
                 (df["ticker"] == sym)
-                & (pd.to_datetime(df["date"]) < first_date)
+                & (pd.to_datetime(df[date_col]) < first_date)
                 & (df[value_col] == 0)
             )
             n_structural_replaced = int(mask.sum())
