@@ -46,15 +46,15 @@ the map; the issues have the detail, context, and acceptance criteria.
       Output in `data/processed/trends_rescaled/`. 68 tickers used an
       average anchor (batch anchors lost to resume overwrites; the 5
       surviving anchors are correlated at 0.9999+, so the impact is negligible).
-- [ ] [#4 Build the weekly Friday-to-Friday panel](https://github.com/Rickymtl/mmf1927h-workshop/issues/4)
+- [x] [#4 Build the weekly Friday-to-Friday panel](https://github.com/Rickymtl/mmf1927h-workshop/issues/4)
       · the core Session 2 deliverable — Validate → Align → Impute/Winsorize →
         Analysis-ready.  Also covers: target definition, lineage manifest,
         minimum-history threshold, Parquet storage, categorical encoding.
         Watch the lookahead traps.
-- [ ] [#12 Missing-data policy & imputation](https://github.com/Rickymtl/mmf1927h-workshop/issues/12)
+- [x] [#12 Missing-data policy & imputation](https://github.com/Rickymtl/mmf1927h-workshop/issues/12)
       · classify missingness per Rubin (MCAR/MAR/MNAR), choose imputation
         methods per source, set max gap lengths, prevent leakage.
-- [ ] [#13 Outlier treatment & cross-sectional standardization](https://github.com/Rickymtl/mmf1927h-workshop/issues/13)
+- [x] [#13 Outlier treatment & cross-sectional standardization](https://github.com/Rickymtl/mmf1927h-workshop/issues/13)
       · per-date winsorization at p1/p99, rank vs. z-score, sector-neutralization.
 - [x] [#7 Adjusted prices, corporate actions, missing-data policy](https://github.com/Rickymtl/mmf1927h-workshop/issues/7)
       · returns must come from `Adj Close`, or splits become fake signal.
@@ -72,9 +72,11 @@ the map; the issues have the detail, context, and acceptance criteria.
       · **Tim (suggestion): skip AV.** GDELT is the sole news source. AV free tier is
       infeasible (~5,280 requests ≈ 211 days). If a premium key becomes
       available, revisit. Document this limitation in the Friday write-up.
-- [ ] [#14 Data-quality memo](https://github.com/Rickymtl/mmf1927h-workshop/issues/14)
+- [x] [#14 Data-quality memo](https://github.com/Rickymtl/mmf1927h-workshop/issues/14)
       · half-page Day 2 deliverable — imputation summary, winsorization
         thresholds, names/dates dropped, known limitations carried forward.
+- [ ] [#15 GDELT integration runbook](https://github.com/Rickymtl/mmf1927h-workshop/issues/15)
+      · step-by-step for wiring GDELT into the panel once #2 lands.
 
 ### Later (Days 3–5)
 
