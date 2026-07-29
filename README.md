@@ -50,6 +50,11 @@ the map; the issues have the detail, context, and acceptance criteria.
       · the core Session 2 deliverable. Watch the lookahead traps.
 - [ ] [#7 Adjusted prices, corporate actions, missing-data policy](https://github.com/Rickymtl/mmf1927h-workshop/issues/7)
       · returns must come from `Adj Close`, or splits become fake signal.
+      · **Verified:** NVDA 10-for-1 (Jun 2024): Adj Close ret 0.75%, AMZN 20-for-1
+      (Jun 2022): 1.99%, GOOGL 20-for-1 (Jul 2022): -2.46% — all normal daily moves.
+      · 26/88 tickers have 6–19 repeated-Close days (low-vol names, not data errors).
+      · CEG (spin-off) is the only short-history ticker; starts 2022-01-19, kept in
+      universe, flagged. Daily returns saved to `data/processed/returns/`.
 
 ### Methodology & write-up
 
@@ -132,6 +137,27 @@ small-N caveat that hits the sector-ETF / single-index paths). See
 >    Compustat/CRSP) so selection is honest at every rebalance date.
 >
 > Tracked as [#5](https://github.com/Rickymtl/mmf1927h-workshop/issues/5).
+
+> **⚠️ Documented limitation — back-adjusted prices.** Yahoo Finance restates
+> the *entire* ``Adj Close`` history whenever a new dividend or split occurs.
+> The ``Adj Close`` we pulled today is **not** what an investor would have
+> observed in real time on a given historical date — it contains the benefit
+> of hindsight for every subsequent corporate action.
+>
+> **Direction:** small for weekly returns. Splits and dividend adjustments
+> affect daily levels, but the week-over-week return impact is typically
+> immaterial compared to the signal we are looking for. NVDA's 10-for-1 split
+> (June 2024) shows a 0.75% Adj Close return on the split date — a normal
+> daily move. AMZN's 20-for-1: 1.99%. GOOGL's 20-for-1: -2.46%.
+>
+> **What we're doing about it:** stated here as a known point-in-time
+> imperfection.  We keep raw ``Close`` and ``Adj Close`` as separate columns
+> in the price CSVs (``auto_adjust=False`` at pull time).  For a production
+> pipeline the fix is storing raw price + adjustment factor as separate
+> series and computing adjusted returns on the fly, but for a 5-day workshop
+> the residual bias is acceptable.
+>
+> Tracked as [#7](https://github.com/Rickymtl/mmf1927h-workshop/issues/7).
 
 ### Day 4 robustness-check methodology (survivorship bias)
 
