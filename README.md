@@ -1,10 +1,22 @@
 # MMF1927H — Workshop in Mathematical Finance
 
 Predicting the cross-section of weekly equity returns for the **8 largest US
-companies per GICS sector (88 names)** using two alternative-data signals —
-**Google Trends** search interest and **news sentiment** — on top of price data.
+companies per GICS sector (88 names)** from **Google Trends search-interest
+anomalies**, on top of price data — course **Option 1, Trend-Driven Names**.
 Study horizon: **5 years from 2021-08-01**.
-Full project description [below](#project-alternative-data-signals-for-cross-sectional-equity-returns).
+Full project description [below](#project-trend-driven-names-google-trends-anomalies-in-the-equity-cross-section).
+
+> **Scope change (2026-07-30, Day 4).** The news-sentiment half (Option 5) is
+> **descoped**. Alpha Vantage's free tier could not fund the history
+> (~5,280 requests ≈ 211 days), and GDELT — the free alternative — was
+> reachable in a single verified probe but never completed a full 88-name pull
+> before the deadline. Rather than ship a mostly-empty sentiment column, the
+> project is now **prices + Trends only**. The sourcing analysis for both news
+> sources is retained below as a documented, defensible sourcing decision
+> ([#2](https://github.com/Rickymtl/mmf1927h-workshop/issues/2),
+> [#6](https://github.com/Rickymtl/mmf1927h-workshop/issues/6),
+> [#8](https://github.com/Rickymtl/mmf1927h-workshop/issues/8),
+> [#15](https://github.com/Rickymtl/mmf1927h-workshop/issues/15)).
 
 ---
 
@@ -20,8 +32,13 @@ the map; the issues have the detail, context, and acceptance criteria.
 |--------|--------|
 | Prices | ✅ 88/88 (pulled from 2015 — a superset of the horizon, filter when building the panel) |
 | Trends | ✅ 88/88 (all pulled across 22 batches; **rescaling done** — [#3](https://github.com/Rickymtl/mmf1927h-workshop/issues/3)) |
-| GDELT | ⚠️ 0/88 — live probe + AAPL 2024 round-trip verified; full 88-name pull still needs a stable residential connection ([#2](https://github.com/Rickymtl/mmf1927h-workshop/issues/2)) |
-| AV news | ❌ **Skipped for current scope.** Free tier is ~5,280 requests ≈ 211 days, impractical for a 5-day workshop. GDELT is the primary news source. If a premium key becomes available, revisit ([#6](https://github.com/Rickymtl/mmf1927h-workshop/issues/6), [#8](https://github.com/Rickymtl/mmf1927h-workshop/issues/8)). |
+| GDELT | 🚫 **Descoped** — code works (probe + AAPL round-trip verified), but no full pull landed before the deadline. |
+| AV news | 🚫 **Descoped** — free tier infeasible (~5,280 requests ≈ 211 days). |
+
+> ⚠️ **Trends counts are per-machine.** `data/` is gitignored, so the 88/88
+> pull lives only on the machine that ran it (plus the shared Drive folder).
+> A fresh clone has **zero** rows until someone copies the data across — see
+> [#16](https://github.com/Rickymtl/mmf1927h-workshop/issues/24).
 
 ### Blocking — finish sourcing first (Day 1→2)
 
