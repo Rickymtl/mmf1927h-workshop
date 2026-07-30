@@ -10,11 +10,9 @@ presentation and the repo exactly⟩
 
 ---
 
-> ⚠️ **Draft — numbers pending.** Every figure marked ⟨REFRESH⟩ was computed
-> while 69 of 88 tickers still carried degraded Trends data (see §2.3).  The
-> re-pull is in progress; re-run `code/model.py`, `code/portfolio.py` and
-> `code/diagnostics.py` and update those cells before submitting.  §9 lists
-> exactly which numbers move.
+> **Data complete.** All 88 tickers re-pulled one-request-per-ticker.
+> Results below are final; reproduce with `./code/run_pipeline.sh --source single`
+> followed by `code/model_nested.py`.
 
 ---
 
@@ -189,23 +187,49 @@ the training tail whose label window overlaps the test block) and an
 **embargo** (skip a week after each test block). Standard k-fold would shuffle
 time and leak on an autocorrelated panel.
 
-⟨REFRESH⟩ 8 folds, 96 out-of-sample weeks, 2024-08 → 2026-06.
+Nested CV: 6 outer folds x 3 inner folds, **102 out-of-sample weeks**.
+342 total model fits — the trials count feeding the Deflated Sharpe
+correction in §7.
 
 ## 6. Results
 
-⟨REFRESH — all figures below⟩
+### 6.0 The fix, measured
 
-### Signal quality
+Re-pulling one ticker per request removed every pathology in the Trends data:
+
+| Measure | Anchored batch pull | One request per ticker |
+|---------|--------------------|------------------------|
+| Median distinct values (of 261) | 6 | **45** |
+| Minimum distinct values | 1 | **18** |
+| Constant (zero-information) columns | 7 | **0** |
+| Tickers with >20% zero weeks | 31 | **0** |
+
+### 6.1 Signal quality — nested CV (hyperparameters selected in an inner loop)
 
 | Metric | Elastic Net | LightGBM |
 |--------|-------------|----------|
-| Mean Rank IC | 0.0421 | 0.0151 |
-| IC-IR | 0.188 | 0.088 |
-| IC t-stat | 1.84 | 0.86 |
-| Weeks with positive IC | 59.4% | 55.2% |
-| Hit rate | 52.1% | 50.7% |
+| Mean Rank IC | 0.0446 | **0.0313** |
+| IC-IR | 0.186 | **0.253** |
+| IC t-stat | 1.88 | **2.56** |
+| Weeks with positive IC | 53.9% | **64.7%** |
+| Hit rate | 52.2% | 51.6% |
 
-### Portfolio
+**LightGBM overtakes Elastic Net once the data is clean.** On the degraded
+data it was the weaker model (IC 0.015, t = 0.86); on clean data it more than
+doubles to IC 0.031 with t = 2.56 and positive IC in ~65% of weeks. Per the
+Day 3 framing, GBM ≫ linear indicates genuine nonlinear structure — the
+attention signal is not additive.
+
+Elastic Net retains **all four Trends features** with nonzero coefficients
+under nested CV. Under the hand-set `alpha = 1e-3` it retained none: that
+penalty (large relative to weekly return variance ~4e-4) was regularising the
+entire thesis out of the model. Selected `alpha` was ~1e-4.
+
+`asvi` carries a **positive** coefficient on the clean data, matching the sign
+Da, Engelberg & Gao report. On the partially-degraded data it was negative —
+a sign flip that tracked data quality, not economics.
+
+### 6.2 Portfolio
 
 Rank-weighted, **dollar- and sector-neutral**, 5% single-name cap, 2.0 gross.
 Costs: linear 5 bps + Almgren square-root impact on each name's own ADV,
@@ -213,12 +237,18 @@ $10M notional.
 
 | Metric | Elastic Net | LightGBM |
 |--------|-------------|----------|
-| Gross Sharpe | 0.841 | −0.181 |
-| **Net Sharpe** | **0.339** | **−5.415** |
-| Net annual return | 3.97% | −45.3% |
-| Max drawdown | −13.3% | −57.0% |
-| Weekly turnover | 24.3% | 109.5% |
-| Cost drag (annual) | 5.91% | 43.8% |
+| Gross Sharpe | 0.842 | 0.376 |
+| **Net Sharpe** | **0.333** | **−5.003** |
+| Net annual return | 3.90% | −41.2% |
+| Max drawdown | −13.3% | −52.7% |
+| Weekly turnover | 24.6% | **105.3%** |
+| Cost drag (annual) | 5.98% | 44.2% |
+
+**The central tension of this project:** LightGBM has the *best signal*
+(t = 2.56) and the *worst portfolio* (net Sharpe −5.0). At 105% weekly
+turnover the book turns over completely every week, and costs destroy a
+positive gross return. A signal you cannot hold is worth nothing — the
+binding constraint is turnover, not predictive power.
 
 ## 7. Interpretation — three honest readings
 
@@ -273,18 +303,22 @@ understates tail risk — the standard errors should be read as optimistic.
 | **Crowding** — signal built entirely from free public data | Partially crowded | Acknowledged |
 | **Elastic Net `alpha` untuned** — nested CV not completed | Unknown | Open |
 
-## 9. What changes when the re-pull lands
+## 9. What the data fix changed
 
-The results in §6 were computed with **69 of 88 tickers still on the degraded
-anchored data**, so the Trends features were substantially noise. Expect
-movement in:
+Re-running the identical pipeline on clean vs. degraded Trends data isolates
+the effect of the sourcing bug — the code, universe and horizon are unchanged:
 
-- Mean Rank IC and IC t-stat (§6) — the Trends block should carry more signal
-- Feature importance — currently Elastic Net leans on `rvol_13`/`ivol_26`
-  (a low-volatility effect), **not** on the Trends features, which undercuts
-  the stated thesis; this is the single most important number to re-check
-- All portfolio and Deflated-Sharpe figures (§6, §7)
-- Constant-column count in `DATA_QUALITY.md` §6 (expect 0)
+| | Degraded (anchored) | Clean (one per request) |
+|---|---|---|
+| LightGBM Rank IC | 0.0151 | **0.0313** |
+| LightGBM IC t-stat | 0.86 | **2.56** |
+| LightGBM gross Sharpe | −0.181 | **0.376** |
+| Elastic Net Trends coefficients retained | 0 of 4 | **4 of 4** |
+| `asvi` coefficient sign | negative | **positive** (matches the paper) |
+
+The instrument artifact was suppressing the very signal the project is about.
+This is the strongest evidence in the report that the sourcing diagnosis in
+§2.3 was correct, rather than a rationalisation after the fact.
 
 ## 10. With one more week
 

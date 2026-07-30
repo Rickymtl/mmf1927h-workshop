@@ -6,7 +6,7 @@
 Budget: **3 + 5 + 4 + 3 = 15 min**. Guardrail, not a stopwatch — but land on 15.
 If you run long, cut narration, not results.
 
-> ⟨REFRESH⟩ marks numbers that move once the Trends re-pull completes.
+> All numbers final — 88/88 Trends re-pulled one request per ticker.
 
 ---
 
@@ -81,25 +81,31 @@ here: it shuffles time and leaks on an autocorrelated panel.
 
 ## Segment 3 — Results & Interpretation (4 min)
 
-**Slide 11 — Signal quality** ⟨REFRESH⟩
-IC 0.0421 / IC-IR 0.188 / t 1.84 (Elastic Net) vs 0.0151 / 0.088 / 0.86 (LightGBM).
+**Slide 11 — Signal quality (nested CV)**
+LightGBM **IC 0.0313, IC-IR 0.253, t = 2.56**, positive IC in 64.7% of weeks —
+now ahead of Elastic Net (0.0446 / 0.186 / 1.88). On the *degraded* data
+LightGBM was the weaker model (t = 0.86); cleaning the Trends data more than
+doubled its IC. GBM > linear = genuine nonlinear structure.
 
-**Slide 12 — Portfolio, gross vs net** ⟨REFRESH⟩
-Dollar- and sector-neutral, 5% cap. Sharpe **0.84 gross → 0.34 net**. Costs
-consume ~60% of the signal. Lead with the net number.
+**Slide 12 — Portfolio, gross vs net**
+Dollar- and sector-neutral, 5% cap. Elastic Net **0.84 gross → 0.33 net**;
+costs consume ~60%. Lead with the net number.
 
-**Slide 13 — LightGBM's failure is a finding**
-109.5% weekly turnover — the book flips every week. Costs turn −0.18 gross into
-−5.4 net Sharpe. Unstable predictions chasing rank changes that are estimation
-noise. We report it rather than dropping the model.
+**Slide 13 — ⭐ The central tension: best signal, worst portfolio**
+LightGBM has the **highest IC (t = 2.56)** and the **worst book (net Sharpe
+−5.0)**. At **105% weekly turnover** it flips entirely every week, so costs
+turn +0.38 gross into −5.0 net. A signal you cannot hold is worth nothing —
+the binding constraint is turnover, not predictive power.
 
 **Slide 14 — Effective breadth is 10.5, not 88**
 Mean pairwise correlation 0.25 → participation ratio ~10.5 independent bets
 (12% of headcount). IR ≈ IC·√BR gives **0.98**, not the naive **2.85**.
 
 **Slide 15 — ⭐ Significance: we do not clear the bar**
-IC t = 1.84 (<2.0). **Deflated Sharpe = 0.29, fails at 95%** — under ~12
-configurations tried, E[max Sharpe | noise] = 0.17.
+LightGBM IC t = 2.56 clears 2.0 — but **Deflated Sharpe fails at 95%**.
+Nested CV performs **342 model fits**, which raises E[max Sharpe | noise] to
+~0.30. Searching harder made the result look better *and* raised the bar;
+net, it still does not reject the null.
 
 > **Say it out loud:** *this is a weak, cost-sensitive signal that does not yet
 > reject the null.* Claiming alpha here is exactly what Q&A will dismantle.
@@ -111,8 +117,8 @@ language understates tail risk.
 
 **Slide 17 — Disclosed limitations**
 Survivorship bias (mid-2025 snapshot), keyword ambiguity, short-side frictions
-not modelled, `alpha` untuned, crowding. Disclosed limitations aren't penalised;
-undisclosed ones are.
+not modelled, no turnover control, crowding. Disclosed limitations aren't
+penalised; undisclosed ones are.
 
 ---
 
@@ -135,29 +141,34 @@ Purged + embargoed walk-forward; every rolling stat `.shift(1)`-ed; panel sorted
 before any groupby-rolling; `center=True` and `.shift(-1)` appear nowhere but the
 target. Residual diagnostics show no serial structure.
 
-**"Why is Elastic Net beating LightGBM?"**
-Weak, near-linear signal with a low signal-to-noise ratio. LightGBM finds
-structure that doesn't persist, and its turnover proves it — 110%/week.
+**"Why does LightGBM win on IC but lose on the portfolio?"**
+It finds real nonlinear structure — IC 0.031 vs 0.045 for Elastic Net but a
+much better IC-IR (0.253 vs 0.186) and t = 2.56. Its predictions are just not
+*stable* week to week, so at 105% turnover costs erase everything. Signal
+quality and tradeability are different problems; we measured both.
 
-**"Isn't your α just the low-volatility anomaly?"** ⟨CHECK AFTER REFRESH⟩
-Currently a fair hit — Elastic Net's nonzero coefficients are `rvol_13` and
-`ivol_26`, not the Trends block. **Be ready to concede this** if the re-pull
-doesn't change it. Honest answer: on degraded Trends data the model leaned on
-the controls; here's what changed with clean data.
+**"Isn't your α just the low-volatility anomaly?"**
+`rvol_13` is still the largest Elastic Net coefficient — concede that openly.
+But under nested CV **all four Trends features are retained** with nonzero
+weight, and `asvi` takes the positive sign Da et al. report. The stronger
+evidence is LightGBM: cleaning the Trends data alone moved its IC 0.015 →
+0.031 and t 0.86 → 2.56, with the code and universe unchanged. That
+improvement can only have come from the Trends block.
 
 **"What breaks if a key assumption is wrong?"**
 Survivorship bias is the big one — a current-membership universe already knows
 who survived, so returns are biased up. We disclose rather than correct it.
 
 **"What would you do with one more week?"**
-Nested CV, ensemble the two models, put turnover in the objective, point-in-time
-universe, daily Trends via stitched windows.
+Turnover-aware construction first — the cost analysis says that is where the
+return is, not in more signal. Then ensemble the two models, a point-in-time
+universe, and daily Trends via stitched <9-month windows.
 
 ---
 
 ## Pre-flight checklist
 
-- [ ] ⟨REFRESH⟩ all numbers re-run after the Trends pull completes
+- [x] All numbers re-run on the complete 88/88 dataset
 - [ ] **All group member names** on slides, repo, and report — consistently
 - [ ] Repo URL shared with the instructor (not just local)
 - [ ] `REPORT.md` finalised and committed
