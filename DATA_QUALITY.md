@@ -47,9 +47,20 @@ every week where they have valid price data.
 |------------|-----------------|---------|
 | Survivorship bias (current-membership snapshot) | Overstates backtest returns | #5 |
 | Back-adjusted prices (Yahoo restates history) | Small for weekly returns | #7 |
-| No GDELT data (pull blocked) | Panel currently prices+trends only | #2 |
+| No GDELT data (pull blocked) | Panel currently prices+trends only; **Day 3 feature set halved** — no news-tone or news-volume features until #2 lands | #2, #15 |
 | No true point-in-time universe membership | Survivorship bias variant | #5 |
 | Single anchor keyword for Trends rescaling | 68/88 tickers used average anchor; impact negligible (r=0.9999+) | #3 |
+
+## 6. Day 3 — feature-level cleaning note
+
+Feature engineering introduces a **second layer of cleaning** distinct from
+the panel-level work documented above (see Day 3 slides p23):
+- Feature-specific winsorization at construction time (a ratio feature like
+  ASVI can produce extreme values even from a clean panel)
+- Decay weighting for momentum-style features
+- Standardization at construction vs. inherited from Day 2
+- Every derived feature can reintroduce problems Day 2 fixed — each one
+  must be checked again after construction
 
 ---
 

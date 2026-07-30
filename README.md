@@ -78,11 +78,62 @@ the map; the issues have the detail, context, and acceptance criteria.
 - [ ] [#15 GDELT integration runbook](https://github.com/Rickymtl/mmf1927h-workshop/issues/15)
       · step-by-step for wiring GDELT into the panel once #2 lands.
 
-### Later (Days 3–5)
+### Session 3 — feature engineering & modeling
 
-- [ ] Feature engineering: abnormal search interest, tone momentum, attention spikes
-- [ ] Model selection with time-series CV (no random K-fold — it leaks)
-- [ ] Signal evaluation: IC, hit-rate, long-short portfolio construction
+- [ ] [#16 Build feature engineering module (core features)](https://github.com/Rickymtl/mmf1927h-workshop/issues/16)
+      · every feature tagged internal/external + risk-model bucket
+        (fundamental/statistical/macro). Feature-level cleaning distinct
+        from Day 2. Feature log of everything tried, not just survivors.
+- [ ] [#17 Paper-derived feature — Da, Engelberg & Gao (2011) ASVI](https://github.com/Rickymtl/mmf1927h-workshop/issues/17)
+      · implement the Abnormal Search Volume Index (ASVI) from "In Search
+        of Attention." Formula: log deviation of current Trends interest
+        from its 8-week rolling median. Cite the paper, reproduce the
+        construction, not just the abstract.
+- [ ] [#18 Statistical risk model — PCA on returns](https://github.com/Rickymtl/mmf1927h-workshop/issues/18)
+      · eigen-decompose weekly return covariance matrix, extract top-k
+        PCs. Document loading instability (sign flips, rotation ambiguity
+        across refits). Use as diagnostic / risk hedge, not alpha source.
+- [ ] [#19 Penalized regression — Elastic Net](https://github.com/Rickymtl/mmf1927h-workshop/issues/19)
+      · time-series CV (no random K-fold). Standardize features before
+        penalizing. Lasso zeros correlated features. Report coefficients
+        as literal β estimates — the interpretable model.
+- [ ] [#20 Gradient boosting — LightGBM](https://github.com/Rickymtl/mmf1927h-workshop/issues/20)
+      · time-series CV. SHAP summary + dependence plots. Compare GBM vs.
+        Elastic Net gap — large gap suggests nonlinear structure. Watch
+        lookahead bugs: no center=True, no shift(-1).
+- [ ] [#21 Signal evaluation — IC, hit rate, IC-IR](https://github.com/Rickymtl/mmf1927h-workshop/issues/21)
+      · rank IC (Spearman) per week — not one pooled snapshot. IC time
+        series: mean, std, IC-IR (t-stat). Hit rate. By sub-period
+        (2021–22, 2023, 2024–25, 2026 YTD).
+- [ ] [#22 Target definition & cross-validation design](https://github.com/Rickymtl/mmf1927h-workshop/issues/22)
+      · raw return vs. factor-neutral return — a named modeling decision.
+        Design purged time-series CV splits (no future leak). Justify
+        pooled model across all 88 tickers.
+- [ ] [#23 Feature selection report](https://github.com/Rickymtl/mmf1927h-workshop/issues/23)
+      · five criteria per feature: economic rationale, stability across
+        sub-periods, turnover cost, orthogonality (VIF), OOS IC persistence.
+        Keep/drop summary table. Multicollinearity clustering.
+
+### Day 3 — data coverage constraints
+
+⚠️ **GDELT still blocked** ([#2](https://github.com/Rickymtl/mmf1927h-workshop/issues/2)) —
+news-based features (tone momentum, volume spikes, attention proxies) are
+not buildable until the full 88-name GDELT pull lands. The Day 3 feature
+set is **prices + Trends only**. This limitation is:
+- flagged in the feature log ([#16](https://github.com/Rickymtl/mmf1927h-workshop/issues/16))
+- carried forward in the data-quality memo ([#14](https://github.com/Rickymtl/mmf1927h-workshop/issues/14))
+- a disclosed limitation in the Friday write-up
+
+A `# TODO(#2)` block is in `code/build_panel.py` for wiring GDELT tone/volume
+into the panel; [#15](https://github.com/Rickymtl/mmf1927h-workshop/issues/15) is
+the integration runbook. Once #2 lands, re-run the panel build and feature
+construction to add the news-derived features.
+
+### Later (Days 4–5)
+
+- [ ] Survivorship-bias robustness check (S&P 500 hold-out — see [#5](https://github.com/Rickymtl/mmf1927h-workshop/issues/5))
+- [ ] Portfolio construction (long-short decile sort, mean-variance-lite)
+- [ ] Implementation shortfall: paper vs. realized Sharpe
 - [ ] Friday presentation
 
 **New to the repo?** Jump to [Setup](#setup), then [Pulling raw data](#pulling-raw-data).
@@ -201,13 +252,135 @@ When the model is trained and we have a signal, run this check before Friday:
    (IC overstated) and note that the check was planned but not executed due
    to the 5-day scope — this is itself a disclosed limitation.
 
+### Day 3 — Feature engineering methodology
+
+We follow the Day 3 framework (slides p9–30): every feature is tagged along two
+axes — **provenance** (internal vs. external) and **risk-model bucket**
+(statistical, fundamental, macroeconomic). The five feature-selection criteria
+from slide 22 gate what makes the final set.
+
+#### Feature axes
+
+**Internal / endogenous** — derived from the asset's own data (returns, Trends
+interest). These answer "what is this asset doing?"
+
+**External / exogenous** — derived from outside the asset (macro rates, regime
+indicators). These answer "what is happening to this asset?"
+
+#### Three risk-model buckets (slides 12–15)
+
+| Model | Factor source | Interpretability | Our use |
+|-------|--------------|-----------------|---------|
+| **Fundamental** (Barra-style) | Pre-specified characteristics (momentum, ASVI, idiosyncratic vol) | High — every factor has an economic label | Primary alpha source — most features live here |
+| **Statistical** (PCA) | Eigen-decomposition of return covariance | Low — no a priori label, loadings unstable across refits | Diagnostic / risk-hedging complement, not alpha |
+| **Macroeconomic** | Observable series applied identically to all names (rate level, term spread) | High — tied to named macro regimes | Conditioning overlay; rate-sensitivity beta |
+
+#### Feature table
+
+| # | Feature | Axis | Risk-model bucket | Construction |
+|---|---------|------|-------------------|-------------|
+| 1 | momentum_12_1 | Internal | Fundamental | ret(t−12, t−1), most recent month skipped (Jegadeesh–Titman) |
+| 2 | momentum_6_1 | Internal | Fundamental | ret(t−6, t−1), shorter-horizon variant |
+| 3 | idiosyncratic_vol | Internal | Statistical | Std dev of rolling 52-week market-model residuals |
+| 4 | trends_abnormal (ASVI) | Internal | Fundamental | log(Trends_t) − log(median(Trends_{t−1…t−8})) — Da, Engelberg & Gao (2011) |
+| 5 | trends_momentum_4w | Internal | Fundamental | Δ Trends interest, 4-week |
+| 6 | trends_volatility_12w | Internal | Fundamental | Std dev of Trends over trailing 12 weeks |
+| 7 | rate_sensitivity_beta | External | Macro | Rolling 52-week β of return on ΔUST10Y |
+| 8 | pca_1 … pca_k | Internal | Statistical | Top-k PCs of weekly return covariance |
+
+⚠️ **GDELT features blocked** (tone momentum, volume spikes, news+tone
+composite) — pending [#2](https://github.com/Rickymtl/mmf1927h-workshop/issues/2).
+Logged as "planned, blocked" in the feature log.
+
+#### Feature-level cleaning (slide 23)
+
+Feature construction introduces a second layer of cleaning **distinct from
+Day 2's panel-level work**:
+- Feature-specific winsorization at construction time (a ratio feature like
+  ASVI can produce extreme values from clean raw inputs)
+- Decay weighting for momentum-style features
+- Standardization at construction vs. inherited from Day 2
+
+Every derived feature is checked again after construction — they can
+reintroduce the exact problems Day 2 fixed at the panel level.
+
+#### Feature selection: five criteria (slide 22)
+
+A feature makes the final set only if it passes most of these:
+
+1. **Economic rationale** — a story for *why* it should predict, not just
+   that it happens to correlate
+2. **Stability over time** — signal persists across sub-periods, not
+   concentrated in one regime
+3. **Turnover cost** — a feature that flips fast generates trading costs
+   that can erase an on-paper IC
+4. **Orthogonality** — low correlation with features already in the set
+   (VIF = 1/(1−R²)). Redundancy adds noise, not information
+5. **OOS IC persistence** — computed on data the feature-search process
+   never touched
+
+#### Feature-search discipline (slide 27)
+
+Searching many candidates and keeping only the ones that "work" in-sample is
+a multiple-comparisons problem. Our guardrails:
+- **Every feature tried is logged**, not just the survivors
+- Features with ex-ante economic rationale are preferred over those found
+  by trawling
+- A feature that fails most of the five criteria is dropped with a
+  documented reason — showing negative results is itself rigor
+
+#### Paper-derived feature (slide 19)
+
+**Da, Engelberg & Gao (2011) — "In Search of Attention"** (Journal of Finance).
+The Abnormal Search Volume Index (ASVI) captures retail attention shocks as
+log deviations of search volume from an 8-week rolling median. Implemented as
+`trends_abnormal` in the feature table above (feature #4). The paper's finding
+— that high ASVI predicts short-term reversals — is testable with our data.
+
+#### Target definition (slide 8)
+
+**We predict raw weekly return.** Chosen over factor-neutral return because
+our thesis is factor-timing: retail attention and news sentiment are
+systematic drivers, and factor-neutralising the target would discard the
+variance we are modelling. This is a named, defensible decision — the rubric
+(20%) explicitly credits identifying whether α is idiosyncratic or factor
+risk.
+
+#### Model strategy (slides 29–30)
+
+Two models are fit on the same feature set and compared:
+
+| Model | Strength | Weakness | Diagnostic value |
+|-------|----------|----------|-----------------|
+| **Elastic Net** (penalized regression) | Interpretable coefficients = literal β estimates | Assumes linearity/additivity | Maps directly to β'F in the thesis equation |
+| **LightGBM** (gradient boosting) | Captures nonlinearities/interactions automatically | Less interpretable without SHAP | The gap vs. Elastic Net tells us whether nonlinear structure exists |
+
+- GBM ≫ linear → real nonlinear structure in the features
+- GBM ≈ linear → simpler story works, prefer the interpretable model
+
+Both use **time-series cross-validation** — purged splits, no random shuffle,
+no future information in training folds. Random K-fold leaks temporal
+structure and silently inflates OOS performance.
+
+#### Evaluation metrics (slides 5–7)
+
+| Metric | What it measures | Caveat |
+|--------|-----------------|--------|
+| **Rank IC** (Spearman ρ) | Cross-sectional ranking quality per week | A single-period number is noisy — look at the IC time series |
+| **Hit rate** | Share of predictions with correct sign | Blind to magnitude |
+| **IC-IR** (t-stat of IC series) | Whether the IC is stable enough to trade | mean(IC) / std(IC) × √n_weeks |
+
+All three are reported by sub-period (2021–22, 2023, 2024–25, 2026 YTD).
+An IC that is only strong pooled across the whole sample may be carried by
+one regime.
+
 ### The four-stage pipeline
 
 | Stage | Owning day | This repo |
 |-------|-----------|-----------|
 | **Source** | Day 1 | `code/pull_*.py` — raw prices, trends, news |
 | Clean | Day 2 | `code/cleaning/` — rescale, verify, impute, winsorize, build panel |
-| Feature / Model | Day 3 | _tbd_ |
+| Feature / Model | Day 3 | `code/features/`, `code/models/`, `code/evaluate/` — feature construction, Elastic Net, LightGBM, IC |
 | Evaluate | Day 4–5 | _tbd_ |
 
 ## Data sources
