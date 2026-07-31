@@ -443,8 +443,11 @@ found them.</b> Disclosed limitations are not penalised; undisclosed ones are.</
 slide("", "Disclosed limitations — scope & method", "SEGMENT 3", """
 <table class="t">
 <tr><th>Limitation</th><th>Direction</th><th>Status</th></tr>
-<tr><td><b>Beta-neutrality not applied</b> — 2 of Day 4's 3 constraints; residual
-beta unmeasured</td><td>unknown</td><td>disclosed</td></tr>
+<tr class="hl"><td><b>Beta-neutrality not applied</b> — 2 of Day 4's 3
+constraints. Measured residual β = <b>+0.35</b>; ~37% of gross return is market
+exposure, not α</td><td class="no">overstates α</td><td>measured &amp; disclosed</td></tr>
+<tr><td><b>5% name cap not binding</b> — gross rescale runs after the clip, so
+realised max is 6.9%</td><td>minor</td><td>disclosed, one-line fix</td></tr>
 <tr><td><b>Macro &amp; PCA risk-model buckets empty</b>; no VIF / keep-drop report</td>
 <td>narrows F</td><td>open</td></tr>
 <tr><td><b>Short-side frictions</b> — borrow &amp; recall not modelled; capacity

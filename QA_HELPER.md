@@ -153,6 +153,54 @@ Print this. Keep it face-up during Q&A.
 > Only relative ordering drives a long-short book. Out-of-sample R² in finance
 > is near zero or negative and would tell us little.
 
+### How the portfolio is actually built  *(Nick — know this cold)*
+
+**The five steps, in order, every Friday:**
+
+| # | Step | What the code does |
+|---|------|--------------------|
+| 1 | **Smooth** | Average each name's predicted return over the trailing **4 weeks** (this is the turnover fix — it happens *before* ranking) |
+| 2 | **Rank** | Percentile-rank the smoothed prediction across that Friday's cross-section |
+| 3 | **Weight** | `w = rank − mean(rank)`, scaled so Σ\|w\| = 2.0. Weights are **linear in demeaned rank** — every name gets a position, best-ranked most long, worst most short |
+| 4 | **Neutralise** | Subtract the within-**sector** mean, then subtract the overall mean (**dollar**-neutral) |
+| 5 | **Limit** | Clip to ±5%, re-demean, rescale to gross 2.0 |
+
+**What the book looks like in practice** (measured, not intended):
+
+| | |
+|---|---|
+| Positions held | **88** — every name, every week (rank-weighted, not a decile book) |
+| Gross exposure | **2.0** (1.0 long + 1.0 short) |
+| Net exposure | **0.0** — exact to machine precision |
+| Largest position | **5.9%** median, 6.9% worst |
+| Sector neutrality | worst sector nets to **0.8% of gross**, median 0.2% |
+
+**Costs**, applied to the weight *change* each week:
+`cost = |Δw|·5bp  +  |Δw|·c·σ·√(|Δw|·AUM / ADV)` — a linear spread term plus the
+Almgren square-root impact law, using each name's own average daily dollar
+volume. Turnover is Σ|Δw|/2. At $10M notional on 88 mega-caps, participation
+is tiny, so **the linear term dominates**.
+
+**Two things to volunteer before you're asked:**
+
+**"Your slide says a 5% cap but positions reach 6.9%."**
+> Correct, and it's our bug. We clip at 5%, but the final step rescales weights
+> to hit gross 2.0 — and that rescale happens *after* the clip, so it pushes the
+> largest names back above it. The realised cap is ~6.9%. It's a one-line
+> reorder to fix; we found it late and are reporting the realised number rather
+> than the intended one.
+
+**"Is the book actually market-neutral?"**
+> No — dollar-neutral is not beta-neutral, and we only apply two of Day 4's
+> three constraints. We measured the residual: **beta +0.35 to an equal-weight
+> market, and 13% of portfolio variance is market-explained.** Over this window
+> the market returned ~14% a year, so **beta contributed ~4.9% of our 13.1%
+> gross return — about 37%.** The regression intercept, the part that is
+> genuinely alpha, is ~8.3% a year.
+>
+> We should have measured this earlier. Turning on beta-neutrality needs a
+> rolling market beta per name, which is on the next-week list.
+
 ### On the portfolio
 
 **"Why does LightGBM win on IC but lose on the portfolio?"** *(Nick)*

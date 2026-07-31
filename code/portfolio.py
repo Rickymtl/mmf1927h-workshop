@@ -19,12 +19,15 @@ two of the three.**
 * **Sector-neutral** — always, by demeaning within GICS sector each date.
 * **Beta-neutral** — **not applied.**  ``beta_neutral`` defaults to ``False``
   and the panel carries no ``beta`` column, so the branch in ``_neutralise``
-  never executes.  The rationale: the universe is 88 US mega-caps whose betas
-  cluster tightly around 1, so a dollar-neutral rank-weighted book already has
-  small residual market beta.  This is a **stated simplification, not a claim
-  that residual beta is zero** — we have not measured it.  Wiring in a rolling
-  52-week market beta and switching the flag on is the correct fix and is
-  listed under "with one more week" in ``REPORT.md``.
+  never executes.  The original rationale was that 88 US mega-caps have betas
+  clustered near 1, so a dollar-neutral book would carry little residual market
+  exposure.  **That was measured and it is wrong.**  The presented book has
+  beta **+0.35** to an equal-weight market, market movement explains ~13% of its
+  variance, and over the backtest window beta contributed roughly **4.9 pp of
+  the 13.1% gross annual return — about 37%**.  Dollar-neutral is not
+  beta-neutral.  Wiring in a rolling 52-week market beta and switching the flag
+  on is the correct fix; until then the reported return is not a clean estimate
+  of alpha.
 
 Two constructions live in this repo
 -----------------------------------
@@ -163,6 +166,15 @@ def _neutralise(w: pd.Series, g: pd.DataFrame, sector_neutral: bool,
 
 
 def _apply_limits(w: pd.Series, max_weight: float, gross: float) -> pd.Series:
+    """Cap single names, restore dollar-neutrality, normalise gross exposure.
+
+    KNOWN ISSUE: ``max_weight`` is **not binding**. The gross rescale on the
+    last line runs after the clip, so it scales the largest names back above
+    the cap — the realised maximum position is ~6.9% against a nominal 5%.
+    Fixing it means iterating clip/rescale to a fixed point (or solving with a
+    constraint). Found too late to re-run the reported numbers, so the realised
+    figure is disclosed rather than the intended one.
+    """
     w = w.clip(-max_weight, max_weight)
     w = w - w.mean()                      # capping can break dollar-neutrality
     s = w.abs().sum()
