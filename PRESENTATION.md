@@ -1,6 +1,6 @@
 # Day 5 Presentation Plan — 15 minutes
 
-**Group members:** ⟨FILL: all names — must match REPORT.md and the repo⟩
+**Group members:** Ricky Mao, Saier Ma, Tim Yuan, Nick Sun, Aaron Hou
 **Repo:** <https://github.com/Rickymtl/mmf1927h-workshop>
 
 Budget: **3 + 5 + 4 + 3 = 15 min**. Guardrail, not a stopwatch — but land on 15.
@@ -169,7 +169,7 @@ universe, and daily Trends via stitched <9-month windows.
 ## Pre-flight checklist
 
 - [x] All numbers re-run on the complete 88/88 dataset
-- [ ] **All group member names** on slides, repo, and report — consistently
+- [x] **All group member names** on slides, repo, and report — consistently
 - [ ] Repo URL shared with the instructor (not just local)
 - [ ] `REPORT.md` finalised and committed
 - [ ] Static PDF export of slides on the machine as a backup

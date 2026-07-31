@@ -1,10 +1,46 @@
-"""Generate the self-contained Day 5 slide deck."""
-import json
+"""Generate the self-contained Day 5 slide deck.
+
+Reads the backtest equity curves produced by ``code/strategy.py`` and renders
+them as inline SVG, so the deck needs no network and no external assets.
+
+    ./code/run_pipeline.sh && python code/model_nested.py \
+        && python code/strategy.py && python code/build_slides.py
+"""
 import pathlib
 
-SCRATCH = pathlib.Path(__file__).parent
-P = json.loads((SCRATCH / "paths.json").read_text())
-OUT = pathlib.Path("/Users/mao/Library/Mobile Documents/com~apple~CloudDocs/school/courses_mmf/workshop/slides.html")
+import pandas as pd
+
+REPO = pathlib.Path(__file__).resolve().parent.parent
+STRAT = REPO / "data" / "processed" / "strategy"
+OUT = REPO / "slides.html"
+
+
+def _svg_path(vals, w=760, h=200, lo=None, hi=None):
+    lo = min(vals) if lo is None else lo
+    hi = max(vals) if hi is None else hi
+    rng = (hi - lo) or 1
+    n = len(vals)
+    return "M" + " L".join(
+        f"{i / (n - 1) * w:.1f},{h - (v - lo) / rng * h:.1f}" for i, v in enumerate(vals))
+
+
+def _chart_paths():
+    sm = pd.read_parquet(STRAT / "equity_elasticnet_signal_smooth.parquet")
+    base = pd.read_parquet(STRAT / "equity_elasticnet_baseline.parquet")
+    allv = (list(sm.net_equity) + list(base.net_equity) + list(sm.gross_equity))
+    lo, hi = min(allv) * 0.995, max(allv) * 1.005
+    dd = list(sm.net_drawdown * 100)
+    return {
+        "smooth_net": _svg_path(list(sm.net_equity), lo=lo, hi=hi),
+        "base_net": _svg_path(list(base.net_equity), lo=lo, hi=hi),
+        "smooth_gross": _svg_path(list(sm.gross_equity), lo=lo, hi=hi),
+        "dd": _svg_path(dd, h=110, lo=min(dd) * 1.05, hi=0),
+        "lo": lo, "hi": hi,
+        "first": str(sm.index.min().date()), "last": str(sm.index.max().date()),
+    }
+
+
+P = _chart_paths()
 
 SLIDES = []
 
@@ -20,7 +56,7 @@ slide("title", "", "", """
 <p class="course">MMF1927H · Workshop in Mathematical Finance</p>
 <h1>Trend-Driven Names</h1>
 <p class="sub">Google Trends attention anomalies in the equity cross-section</p>
-<p class="names">⟨GROUP MEMBER NAMES⟩</p>
+<p class="names">Ricky Mao · Saier Ma · Tim Yuan · Nick Sun · Aaron Hou</p>
 <p class="repo">github.com/Rickymtl/mmf1927h-workshop</p>
 <p class="foot">Instructor: Shawn Unger · 31 July 2026</p>""")
 

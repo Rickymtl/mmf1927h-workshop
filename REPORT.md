@@ -3,8 +3,7 @@
 **MMF1927H · Workshop in Mathematical Finance · Summer 2026**
 **Instructor:** Shawn Unger
 
-**Group members:** ⟨FILL: full names of all group members — must match the
-presentation and the repo exactly⟩
+**Group members:** Ricky Mao, Saier Ma, Tim Yuan, Nick Sun, Aaron Hou
 
 **Repository:** <https://github.com/Rickymtl/mmf1927h-workshop>
 

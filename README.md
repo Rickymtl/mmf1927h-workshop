@@ -1,5 +1,7 @@
 # MMF1927H — Workshop in Mathematical Finance
 
+**Group:** Ricky Mao, Saier Ma, Tim Yuan, Nick Sun, Aaron Hou
+
 Predicting the cross-section of weekly equity returns for the **8 largest US
 companies per GICS sector (88 names)** from **Google Trends search-interest
 anomalies**, on top of price data — course **Option 1, Trend-Driven Names**.
