@@ -24,11 +24,36 @@ Policy (per source)
      - ∞ (never forward-fill prices)
    * - Trends (search_interest_rescaled)
      - CEG: zeros before 2022-01-19 (no search interest for a firm that didn't
-       exist).  All other zeros (rare) are genuine low-interest weeks.
-     - MNAR-adjacent (zero = genuinely low interest, not a feed outage)
-     - Treat zero as real signal.  CEG pre-listing zeros are structural —
-       recode to NaN so they don't get treated as "zero interest."
-     - N/A (zeros are signal, not missingness)
+       exist).  Under the **legacy anchored pull** a third of the cross-section
+       was additionally zero every week — see the correction note below.
+     - **Structural only.**  The bulk zeros were an *instrument artifact*, not
+       a missingness mechanism (see ``DATA_QUALITY.md`` §6).
+     - Fixed at the source by re-pulling one ticker per request.  No
+       imputation.  CEG pre-listing zeros remain structural — recode to NaN
+       so they are not read as "zero interest."
+     - N/A (no imputation applied)
+
+.. warning::
+
+   **Retracted diagnosis.**  Earlier versions of this module classified the
+   Trends zeros as *MNAR-adjacent — "zeros are genuinely low interest, and
+   therefore real signal."*  **That diagnosis was wrong and is retracted.**
+
+   Every batch was pulled alongside the anchor keyword ``"stock market"``,
+   which peaks at 100 in every request and carries roughly 50x the search
+   volume of a typical company name.  Google normalises the 0-100 index
+   *within* each request, so the smaller names were quantised into {0, 1, 2}
+   and, for the smallest, to a constant 0.  The zeros were a property of the
+   measuring instrument, not of the world — so no missingness mechanism in
+   the Rubin taxonomy applies to them at all.
+
+   The fix was procedural rather than statistical: re-measure the same
+   quantity with the instrument changed (one ticker per request, each series
+   normalised to its own peak).  See ``REPORT.md`` §2.3.
+
+   This note is deliberately kept in the source, and in the imputation report
+   written to the lineage manifest, so that any panel built by an older commit
+   can be identified as carrying the retracted classification.
    * - GDELT (tone, volume)
      - Days where no articles match the query → tone=NaN, volume=NaN.
        Scope unknown until #2 completes.
@@ -220,20 +245,32 @@ def apply_trends_policy(
 
     report = {
         "source": "trends",
-        "mechanism": "MNAR-adjacent (zeros = genuinely low interest, structural zeros recoded)",
-        "method": (
-            "zeros treated as real signal; structural pre-listing zeros "
-            "replaced with NaN"
+        "mechanism": (
+            "Structural only. The bulk zeros in the legacy anchored pull were "
+            "an instrument artifact (within-request normalisation against a "
+            "~50x-larger anchor keyword), NOT a missingness mechanism — no "
+            "Rubin category applies. Fixed at source by re-pulling one ticker "
+            "per request. Only CEG's pre-listing zeros are genuinely structural."
         ),
-        "max_gap": "N/A (zeros are signal, not missingness)",
+        "retracted_mechanism": (
+            "MNAR-adjacent (zeros = genuinely low interest, real signal) — "
+            "RETRACTED, see DATA_QUALITY.md §6 and REPORT.md §2.3. Panels built "
+            "by commits carrying this classification should be regenerated."
+        ),
+        "method": (
+            "no imputation; structural pre-listing zeros replaced with NaN"
+        ),
+        "max_gap": "N/A (no imputation applied)",
         "n_zero_before": n_zero_before,
         "n_zero_after": n_zero_after,
         "n_structural_replaced": n_structural_replaced,
         "structural_tickers": [s for s, _, _ in _STRUCTURAL_STARTS],
         "caveat": (
-            "Treating genuine search-interest zeros as signal is a modeling "
-            "assumption — there is no way to distinguish 'nobody searched' "
-            "from 'data not collected' in the raw Trends index."
+            "Residual zeros in the one-request-per-ticker series are genuine "
+            "low-interest weeks. Distinguishing 'nobody searched' from 'data "
+            "not collected' remains impossible in the raw Trends index, but "
+            "the re-pull removed the systematic component: 0 of 88 tickers now "
+            "exceed 20% zero weeks, against 31 of 88 under the anchored pull."
         ),
     }
     return df, report

@@ -337,21 +337,49 @@ Advance slides with → or click. Timings are cumulative from zero.
 
 ### [SLIDE 20 — Limitations] 12:10
 
-> Disclosed, not discovered in Q&A: survivorship bias — our universe is a
-> current-membership snapshot, which biases returns up. Keyword ambiguity.
-> Short-side borrow and recall aren't modelled. The smoothing window was chosen
-> over five candidates. And the signal is built from entirely free public data,
-> so **assume it's at least partially crowded.**
+> Two of these we'd rather you heard from us than found yourselves.
+>
+> **First — we have a look-ahead.** Google Trends weekly buckets run Sunday to
+> Saturday, and we map each bucket to the Friday *inside* it. So week *t*'s
+> search value contains Saturday — one day out of seven that wasn't knowable at
+> that Friday's close, and it falls inside the window we're predicting. Our
+> rolling baselines are all lagged, but the current-week level isn't, so it
+> reaches ASVI directly. Direction is plausibly favourable: Friday-night news
+> lifts both weekend search and Monday's open. **The fix is one line — align the
+> bucket to the Friday after it's fully observable — and it invalidates every
+> number on these slides. We found it too late to re-run and re-rehearse, so we
+> disclosed it instead. It's item one on what we'd do next.**
+>
+> **Second — our sector labels aren't point-in-time.** Visa and Mastercard moved
+> from Information Technology to Financials in March 2023. We label them
+> Financials for all sixty months, so the sector-neutrality constraint and two
+> rows of the sector-IC table are wrong for about a third of the sample.
+>
+> Then the ones you'd expect: survivorship bias — our universe is a
+> current-membership snapshot, which biases returns up. Beta-neutrality isn't
+> applied, so that's two of the three Day 4 constraints. The macro and PCA
+> risk-model buckets are empty. Short-side borrow and recall aren't modelled and
+> we haven't stated a capacity number. The smoothing window was chosen over five
+> candidates. And the signal is built from entirely free public data, so
+> **assume it's at least partially crowded.**
+>
+> Keyword ambiguity is the one item on this list we *did* close — Saier will
+> have covered that.
 
 ### [SLIDE 21 — Close] 12:20
 
-> With another week: turnover **inside** the objective rather than as a
-> post-hoc filter, ensemble the two models, a point-in-time universe, and daily
-> Trends via stitched windows.
+> With another week: fix the Trends bucket alignment first — it's the only open
+> item that could change whether the result is real. Then meta-labelling for the
+> turnover problem — a *learned* sizing layer rather than the three heuristics
+> we have now. Then a point-in-time universe **and** sector membership, an
+> ensemble of the two models, and daily Trends via stitched windows.
 >
-> **What we'd defend tonight: a pipeline that's point-in-time correct end to
-> end, a bug we found by testing our own assumption instead of trusting it, and
-> a result we're reporting as a null.**
+> **What we'd defend tonight: a sourcing bug we found by testing our own
+> assumption instead of trusting it, a cost analysis that says turnover — not
+> predictive power — is the binding constraint, and a result we're reporting as
+> a null. What we wouldn't claim is that the pipeline is point-in-time correct
+> end to end. It isn't. We found one look-ahead late and put it on the
+> limitations slide rather than hope nobody asked.**
 >
 > Thank you — happy to take questions.
 

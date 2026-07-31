@@ -63,9 +63,44 @@ Print this. Keep it face-up during Q&A.
 > and we don't clear it.
 
 **"So what did you actually achieve?"**
-> A pipeline that's point-in-time correct end to end, a sourcing bug we found by
-> testing our own assumption, and a result we're reporting honestly as a null.
-> We'd rather that than a Sharpe we can't defend.
+> A sourcing bug we found by testing our own assumption rather than trusting it,
+> a cost analysis showing turnover — not predictive power — is the binding
+> constraint, and a result we're reporting honestly as a null. We'd rather that
+> than a Sharpe we can't defend. What we're *not* claiming is a pipeline that's
+> point-in-time correct end to end — we have one disclosed look-ahead in the
+> Trends alignment.
+
+**"Walk me through that look-ahead."** *(Aaron)*
+> Google Trends weekly buckets are labelled with the week-start Sunday and cover
+> Sunday through Saturday. We map a bucket to Sunday plus five days — the Friday
+> inside it. So week *t*'s search value includes Saturday, one day past that
+> Friday's close, and that Saturday sits inside the return window we're
+> predicting. Every rolling baseline is `.shift(1)`-ed, but the current-week
+> level isn't, so it goes straight into ASVI.
+>
+> Magnitude is one day in seven. Direction is plausibly favourable — Friday-night
+> or weekend news would lift both weekend search volume and Monday's move.
+>
+> The fix is `+12 days` instead of `+5`, aligning each bucket to the first Friday
+> by which it's fully observable. That costs a week of signal freshness and
+> invalidates every number in the deck, which is why we disclosed rather than
+> rushed it the night before. It's item one on our next-week list.
+
+**"Why is `mom_12_1` a twelve-week feature with a twelve-month name?"** *(Aaron)*
+> Legacy naming — every window in our panel is in weeks. `mom_12_1` is about
+> three months; the twelve-month Jegadeesh-Titman factor is `mom_52_4`. The
+> four-week rung is deliberately empty: Day 3 warns momentum variants are
+> correlated by construction and destabilise penalised-regression coefficients,
+> and the price block already outnumbers the Trends block carrying our thesis.
+> Properly that should be settled by a VIF table, which we owe and don't have.
+
+**"Is ASVI just short-term reversal in disguise?"** *(Aaron)*
+> Fair challenge, and we can't fully rule it out. High-attention weeks tend to be
+> high-|return| weeks, and at a one-week horizon reversal dominates the
+> cross-section. We carry `rev_1` as a control and the Elastic Net keeps all four
+> Trends coefficients alongside it — but we did **not** orthogonalise ASVI against
+> reversal and volatility and re-measure the IC. That's the test that would
+> settle it, and we haven't run it.
 
 **"Isn't your signal just the low-volatility anomaly?"** *(Nick)*
 > `rvol_13` is our largest Elastic Net coefficient — fair hit. But under nested

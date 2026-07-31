@@ -26,6 +26,21 @@ Three blocks:
    the probability the true Sharpe exceeds it, adjusted for the skew and
    kurtosis of the actual return series rather than assuming Gaussian.
 
+   **What N should be, and why we report the conservative choice.**  The
+   default is ``--trials 342``, the total number of model fits performed by
+   ``model_nested.py``: (15 Elastic Net configs + 4 LightGBM configs) x inner
+   folds x outer folds.  Strictly, those 342 fits are *not* 342 independent
+   strategy trials — they are 19 distinct configurations, each refitted many
+   times inside nested cross-validation.  A defensible lower bound is
+   therefore N = 19.
+
+   We report the larger number deliberately.  A larger N raises E[max SR |
+   noise] and so raises the bar the strategy must clear; since our conclusion
+   is that the signal **does not** clear it, using the stricter number only
+   makes that conclusion more robust.  Re-run with ``--trials 19`` to see the
+   lower bound — the conclusion does not change, and reporting both is more
+   honest than picking whichever N produces the preferred verdict.
+
 3. **The Fundamental Law** — IR ≈ IC · √breadth.  Breadth counts *independent*
    bets, not names: 88 large-caps in 11 sectors are heavily correlated, so
    effective breadth is far below 88.  We estimate it from the eigenvalue
@@ -191,8 +206,11 @@ def fundamental_law(mean_ic: float, n_eff: float, rebalances_per_year: int = 52)
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--trials", type=int, default=12,
-                   help="configurations tried, for the Deflated Sharpe correction")
+    p.add_argument("--trials", type=int, default=342,
+                   help="trials for the Deflated Sharpe correction. Default 342 "
+                        "= total nested-CV model fits (the conservative choice); "
+                        "pass 19 for the distinct-configuration lower bound. See "
+                        "the module docstring for why we report the larger N.")
     args = p.parse_args(argv)
 
     preds = pd.read_parquet(PRED_PATH)

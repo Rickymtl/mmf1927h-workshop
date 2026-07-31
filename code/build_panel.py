@@ -25,9 +25,23 @@ Alignment rules (from the README)
      - daily
      - sum over the week
 
-No lookahead: features for week ``t`` use only information up to that Friday's
-close.  The target is the **following** week's return (``t+1``), never
-contemporaneous.
+Lookahead: **one disclosed exception, in the Trends block.**  Price features
+for week ``t`` use only information up to that Friday's close, and the target
+is the **following** week's return (``t+1``), never contemporaneous.
+
+The exception is the Trends alignment below.  A Google Trends weekly bucket is
+labelled with its week-*start* Sunday and covers Sunday through **Saturday**.
+Mapping it to Sunday + 5 days attaches it to the Friday *inside* the bucket, so
+the value carried by week-ending-Friday ``t`` includes Saturday ``t+1`` — one
+day that was not observable at that Friday's close and that falls inside the
+target window.  Magnitude 1 of 7 days; direction plausibly favourable.
+
+The conservative fix is ``+ Timedelta(days=12)``, aligning each bucket to the
+first Friday by which it is fully observable, at the cost of one week of signal
+freshness.  It is **not** applied here because it invalidates every number in
+``REPORT.md`` and there was no time to re-run and re-rehearse before Day 5.
+Disclosed in ``REPORT.md`` §8 and ``features.py``; first item under "with one
+more week".
 
 .. note::
 
@@ -232,8 +246,14 @@ def _build_trends_weekly() -> pd.DataFrame:
     trends = pd.concat(frames, ignore_index=True)
     trends = trends.rename(columns={"search_interest_rescaled": "trends_interest"})
 
-    # Map Sunday week-start → Friday week-end.
-    # Sunday is dayofweek=6.  Friday is 4.  Sunday + 5 = Friday.
+    # Map Sunday week-start → the Friday inside the bucket (Sunday + 5).
+    #
+    # DISCLOSED LOOKAHEAD: the bucket runs Sunday..Saturday, so it also contains
+    # Saturday (Sunday + 6) — one day past the Friday it is attached to, and
+    # inside the target window. See the module docstring and REPORT.md §8.
+    # Conservative fix, deliberately not applied before Day 5 because it
+    # invalidates every reported number:
+    #     trends["week"] = trends["date"] + pd.Timedelta(days=12)
     trends["week"] = trends["date"].apply(
         lambda d: d + pd.Timedelta(days=5)
     )

@@ -64,12 +64,31 @@ and after the re-pull.
 
 | Limitation | Impact direction | Tracked |
 |------------|-----------------|---------|
+| **Trends bucket look-ahead** — Google Trends weekly buckets run Sun→Sat; `build_panel.py` maps a bucket to the Friday *inside* it (Sunday + 5), so week `t` carries Saturday `t+1` — 1 of 7 days not observable at that Friday's close, falling inside the target window. Rolling baselines are `.shift(1)`-ed; the current-week level is not, so it reaches `asvi` | Plausibly overstates — weekend search and the following Monday's move share a common news cause | `REPORT.md` §8 item 1 |
+| **Sector classification is not as-of-date** — `universe.py` is a static mid-2025 GICS snapshot. Visa and Mastercard moved IT → Financials on **2023-03-17**, so ~20 of 60 months are mislabelled. Day 2's cleaning checklist asks for as-of-date classification; we do not have it | Affects sector-neutrality and the Financials / IT rows of the sector-IC table | `REPORT.md` §8 item 3 |
 | Survivorship bias (current-membership snapshot) | Overstates backtest returns | #5 |
 | Back-adjusted prices (Yahoo restates history) | Small for weekly returns | #7 |
 | No news-sentiment features | Feature set is Trends + price only; original two-signal thesis reduced to one | #2, #6, #8 |
 | No true point-in-time universe membership | Survivorship-bias variant | #5 |
 | Trends levels not comparable across tickers | By design — features are within-ticker anomalies (§3) | — |
-| Trends keyword ambiguity | "Apple", "Amazon", "Visa" capture non-company searches; unquantified | — |
+| Trends keyword ambiguity | **Quantified, not open** — mechanism identified (consumer-brand search intent, t = −4.03, p = 0.0008) and acted on for 16 names; no model impact | `REPORT.md` §7.5.2–7.5.4 |
+
+### Day 2 cleaning checklist — how the panel scores
+
+Day 2 lists six checks for a cross-sectional equity panel. Stated plainly:
+
+| Check | Status |
+|---|---|
+| Point-in-time universe (membership file, incl. delisted) | ❌ current-membership snapshot — disclosed |
+| Delisting returns applied | ➖ not applicable — no delisted names in universe |
+| Fundamentals joined on filing date | ➖ not applicable — no fundamentals used |
+| Prices split/dividend-adjusted, raw retained | ✅ `auto_adjust=False`; raw `Close` and `Adj Close` both kept; verified on three splits |
+| Sector classification as-of date | ❌ static mid-2025 snapshot — disclosed above |
+| Winsorization applied per date, cross-sectionally | ✅ p1/p99 per Friday, before ranking |
+
+Four of six are either passed or not applicable; the two failures are the two
+disclosed above. We would rather state this table than let a reader assume all
+six were met.
 
 ## 6. Correction: the Trends missingness diagnosis was wrong
 

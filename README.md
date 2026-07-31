@@ -99,39 +99,42 @@ the map; the issues have the detail, context, and acceptance criteria.
 
 ### Session 3 — feature engineering & modeling
 
-- [ ] [#16 Build feature engineering module (core features)](https://github.com/Rickymtl/mmf1927h-workshop/issues/16)
-      · every feature tagged internal/external + risk-model bucket
-        (fundamental/statistical/macro). Feature-level cleaning distinct
-        from Day 2. Feature log of everything tried, not just survivors.
-- [ ] [#17 Paper-derived feature — Da, Engelberg & Gao (2011) ASVI](https://github.com/Rickymtl/mmf1927h-workshop/issues/17)
-      · implement the Abnormal Search Volume Index (ASVI) from "In Search
-        of Attention." Formula: log deviation of current Trends interest
-        from its 8-week rolling median. Cite the paper, reproduce the
-        construction, not just the abstract.
+- [x] [#16 Build feature engineering module (core features)](https://github.com/Rickymtl/mmf1927h-workshop/issues/16)
+      · done: `code/features.py`, 9 features, each tagged internal/external
+        and mapped to a risk-model bucket. **All windows are in weeks** —
+        `mom_12_1` is a 12-*week* (~3-month) feature, not the 12-month
+        Jegadeesh-Titman factor; that one is `mom_52_4`.
+- [x] [#17 Paper-derived feature — Da, Engelberg & Gao (2011) ASVI](https://github.com/Rickymtl/mmf1927h-workshop/issues/17)
+      · done: `asvi` in `code/features.py`. Construction reproduced from the
+        paper's methodology; the median baseline is the authors' own choice
+        and is load-bearing. Coefficient comes out **positive**, matching
+        the paper.
 - [ ] [#18 Statistical risk model — PCA on returns](https://github.com/Rickymtl/mmf1927h-workshop/issues/18)
-      · eigen-decompose weekly return covariance matrix, extract top-k
-        PCs. Document loading instability (sign flips, rotation ambiguity
-        across refits). Use as diagnostic / risk hedge, not alpha source.
-- [ ] [#19 Penalized regression — Elastic Net](https://github.com/Rickymtl/mmf1927h-workshop/issues/19)
-      · time-series CV (no random K-fold). Standardize features before
-        penalizing. Lasso zeros correlated features. Report coefficients
-        as literal β estimates — the interpretable model.
-- [ ] [#20 Gradient boosting — LightGBM](https://github.com/Rickymtl/mmf1927h-workshop/issues/20)
-      · time-series CV. SHAP summary + dependence plots. Compare GBM vs.
-        Elastic Net gap — large gap suggests nonlinear structure. Watch
-        lookahead bugs: no center=True, no shift(-1).
-- [ ] [#21 Signal evaluation — IC, hit rate, IC-IR](https://github.com/Rickymtl/mmf1927h-workshop/issues/21)
-      · rank IC (Spearman) per week — not one pooled snapshot. IC time
-        series: mean, std, IC-IR (t-stat). Hit rate. By sub-period
-        (2021–22, 2023, 2024–25, 2026 YTD).
-- [ ] [#22 Target definition & cross-validation design](https://github.com/Rickymtl/mmf1927h-workshop/issues/22)
-      · raw return vs. factor-neutral return — a named modeling decision.
-        Design purged time-series CV splits (no future leak). Justify
-        pooled model across all 88 tickers.
+      · **not done — a disclosed gap, not an oversight.** No PCA factors are
+        in the feature set, so the statistical risk-model bucket is not
+        genuinely populated (`rvol_13`/`ivol_26` are volatility features, not
+        PC loadings). Carried in `REPORT.md` §8.
+- [x] [#19 Penalized regression — Elastic Net](https://github.com/Rickymtl/mmf1927h-workshop/issues/19)
+      · done: `code/model.py` + `code/model_nested.py`. Features standardised
+        before penalising; walk-forward CV, no random K-fold. Under nested CV
+        all four Trends coefficients are retained.
+- [x] [#20 Gradient boosting — LightGBM](https://github.com/Rickymtl/mmf1927h-workshop/issues/20)
+      · done: same two modules. `center=True` and `shift(-1)` appear nowhere
+        outside the target. **SHAP plots not produced** — gain-based
+        importance only; noted in `REPORT.md` §8.
+- [x] [#21 Signal evaluation — IC, hit rate, IC-IR](https://github.com/Rickymtl/mmf1927h-workshop/issues/21)
+      · done: per-week Spearman IC series, mean/std/IC-IR/t-stat, hit rate.
+        Sector-level IC in `code/sector_analysis.py` with Benjamini-Hochberg
+        FDR control across the 11 sectors.
+- [x] [#22 Target definition & cross-validation design](https://github.com/Rickymtl/mmf1927h-workshop/issues/22)
+      · done: target is **raw** next-week return (factor-timing framing, a
+        named decision — `REPORT.md` §1). Expanding-window walk-forward,
+        purged + embargoed; nested CV for hyperparameters. Pooled across all
+        88 tickers, justified by universe size and homogeneity.
 - [ ] [#23 Feature selection report](https://github.com/Rickymtl/mmf1927h-workshop/issues/23)
-      · five criteria per feature: economic rationale, stability across
-        sub-periods, turnover cost, orthogonality (VIF), OOS IC persistence.
-        Keep/drop summary table. Multicollinearity clustering.
+      · **not done.** No VIF / correlation-cluster table and no keep/drop
+        summary against the five criteria. The one substantive Day 3
+        deliverable still outstanding; disclosed rather than implied complete.
 
 ### Day 3 — data coverage constraints
 
@@ -150,10 +153,21 @@ construction to add the news-derived features.
 
 ### Later (Days 4–5)
 
-- [ ] Survivorship-bias robustness check (S&P 500 hold-out — see [#5](https://github.com/Rickymtl/mmf1927h-workshop/issues/5))
-- [ ] Portfolio construction (long-short decile sort, mean-variance-lite)
-- [ ] Implementation shortfall: paper vs. realized Sharpe
-- [ ] Friday presentation
+- [x] Portfolio construction — `code/portfolio.py` (rank-weighted, dollar- and
+      sector-neutral, 5% single-name cap, 2.0 gross) plus `code/strategy.py`
+      (three turnover-aware variants). **Beta-neutrality is not applied** — a
+      disclosed simplification, see the `portfolio.py` docstring.
+- [x] Implementation shortfall: paper vs. realized Sharpe — gross and net
+      reported side by side, Almgren square-root impact on each name's own ADV.
+- [x] Residual diagnostics + Deflated Sharpe + effective breadth —
+      `code/diagnostics.py`.
+- [ ] **Survivorship-bias robustness check** (S&P 500 hold-out — see
+      [#5](https://github.com/Rickymtl/mmf1927h-workshop/issues/5)).
+      **Not executed.** Methodology is recorded below; the bias is disclosed
+      and its direction stated, but the check itself was not run before the
+      deadline. Reported as a limitation rather than implied complete.
+- [ ] Friday presentation — plan in [`PRESENTATION.md`](PRESENTATION.md),
+      script in [`SCRIPT.md`](SCRIPT.md), deck built by `code/build_slides.py`.
 
 ## Getting started (fresh clone)
 
@@ -327,22 +341,40 @@ indicators). These answer "what is happening to this asset?"
 | **Statistical** (PCA) | Eigen-decomposition of return covariance | Low — no a priori label, loadings unstable across refits | Diagnostic / risk-hedging complement, not alpha |
 | **Macroeconomic** | Observable series applied identically to all names (rate level, term spread) | High — tied to named macro regimes | Conditioning overlay; rate-sensitivity beta |
 
-#### Feature table
+#### Feature table — as built
+
+Source of truth is `code/features.py`. **Every window is in WEEKS.**
 
 | # | Feature | Axis | Risk-model bucket | Construction |
 |---|---------|------|-------------------|-------------|
-| 1 | momentum_12_1 | Internal | Fundamental | ret(t−12, t−1), most recent month skipped (Jegadeesh–Titman) |
-| 2 | momentum_6_1 | Internal | Fundamental | ret(t−6, t−1), shorter-horizon variant |
-| 3 | idiosyncratic_vol | Internal | Statistical | Std dev of rolling 52-week market-model residuals |
-| 4 | trends_abnormal (ASVI) | Internal | Fundamental | log(Trends_t) − log(median(Trends_{t−1…t−8})) — Da, Engelberg & Gao (2011) |
-| 5 | trends_momentum_4w | Internal | Fundamental | Δ Trends interest, 4-week |
-| 6 | trends_volatility_12w | Internal | Fundamental | Std dev of Trends over trailing 12 weeks |
-| 7 | rate_sensitivity_beta | External | Macro | Rolling 52-week β of return on ΔUST10Y |
-| 8 | pca_1 … pca_k | Internal | Statistical | Top-k PCs of weekly return covariance |
+| 1 | `asvi` **(paper)** | External | Alt-data | log SVI − log median(SVI, prior 8w) — Da, Engelberg & Gao (2011) |
+| 2 | `trends_z_26` | External | Alt-data | z-score of log SVI vs. own trailing 26w |
+| 3 | `trends_chg_4` | External | Alt-data | log change in SVI over 4w |
+| 4 | `trends_vol_13` | External | Statistical | std. dev. of weekly ΔlogSVI, trailing 13w |
+| 5 | `mom_52_4` | Internal | Fundamental | cum. return t−51w → t−4w (~11 months, skips ~1 month) |
+| 6 | `mom_12_1` | Internal | Fundamental | cum. return t−11w → t−1w (**~3 months, not 12**) |
+| 7 | `rvol_13` | Internal | Statistical | std. dev. of weekly returns, trailing 13w |
+| 8 | `ivol_26` | Internal | Statistical | std. dev. of market-model residuals, trailing 26w |
+| 9 | `rev_1` | Internal | Fundamental | prior week's return (short-term reversal control) |
+
+⚠️ **Two of the three risk-model buckets are not genuinely populated.**
+An earlier draft of this table listed `rate_sensitivity_beta` (External ·
+Macro) and `pca_1 … pca_k` (Statistical). **Neither was ever built.** The
+Trends block is tagged *Alt-data*, not *Macro-analog*, because a macro factor
+takes the same value for every name on a date and per-ticker search interest
+does not — relabelling it would have hidden the gap rather than closed it.
+So the feature set covers the **fundamental** bucket plus an alt-data block;
+macro and statistical (PCA) are disclosed gaps, carried in `REPORT.md` §8.
 
 ⚠️ **GDELT features blocked** (tone momentum, volume spikes, news+tone
-composite) — pending [#2](https://github.com/Rickymtl/mmf1927h-workshop/issues/2).
-Logged as "planned, blocked" in the feature log.
+composite) — descoped on Day 4, see the scope-change note at the top of this
+file and `REPORT.md` §2.2.
+
+⚠️ **One disclosed look-ahead in the Trends block.** Google Trends weekly
+buckets run Sunday→Saturday and are mapped to the Friday inside the bucket, so
+week `t`'s search value includes Saturday `t+1` — 1 of 7 days that was not
+observable at that Friday's close. Not corrected before Day 5 because the fix
+invalidates every reported number; see `REPORT.md` §8 and `code/build_panel.py`.
 
 #### Feature-level cleaning (slide 23)
 
@@ -383,11 +415,20 @@ a multiple-comparisons problem. Our guardrails:
 
 #### Paper-derived feature (slide 19)
 
-**Da, Engelberg & Gao (2011) — "In Search of Attention"** (Journal of Finance).
-The Abnormal Search Volume Index (ASVI) captures retail attention shocks as
-log deviations of search volume from an 8-week rolling median. Implemented as
-`trends_abnormal` in the feature table above (feature #4). The paper's finding
-— that high ASVI predicts short-term reversals — is testable with our data.
+**Da, Engelberg & Gao (2011) — "In Search of Attention"** (Journal of Finance
+66(5), 1461–1499). The Abnormal Search Volume Index (ASVI) captures retail
+attention shocks as log deviations of search volume from an 8-week rolling
+median. Implemented as `asvi` in the feature table above (feature #1).
+
+The paper's finding is that **high ASVI predicts *higher* returns over the
+following two weeks**, consistent with retail attention driving buying
+pressure — with reversal only over a longer horizon (within the year). At our
+one-week horizon the sign expectation is therefore **positive**, and that is
+what the fitted coefficient comes out as.
+
+> An earlier version of this line said the paper finds "short-term reversals."
+> That was a misreading and is corrected here; `REPORT.md` §4,
+> `code/features.py` and `PRESENTATION.md` always stated it correctly.
 
 #### Target definition (slide 8)
 

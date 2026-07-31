@@ -107,7 +107,25 @@ class TestTrendsPolicy(unittest.TestCase):
     def test_report_caveat(self):
         _, report = apply_trends_policy(self.df)
         self.assertIn("caveat", report)
-        self.assertIn("modeling assumption", report["caveat"])
+        # The caveat should still acknowledge that 'nobody searched' and 'data
+        # not collected' are indistinguishable in the raw index.
+        self.assertIn("not collected", report["caveat"])
+
+    def test_report_retracts_the_mnar_diagnosis(self):
+        """The bulk Trends zeros were an instrument artifact, not MNAR.
+
+        The original classification ("zeros are genuinely low interest, and
+        therefore real signal") was retracted once the anchor keyword was
+        identified as the cause — see DATA_QUALITY.md §6 and REPORT.md §2.3.
+        This test pins the retraction so the discredited framing cannot
+        silently reappear in the lineage manifest.
+        """
+        _, report = apply_trends_policy(self.df)
+        self.assertIn("retracted_mechanism", report)
+        self.assertIn("RETRACTED", report["retracted_mechanism"])
+        # The live mechanism field must no longer assert an MNAR diagnosis.
+        self.assertIn("instrument artifact", report["mechanism"])
+        self.assertNotIn("MNAR-adjacent (zero", report["mechanism"])
 
 
 class TestGdeltPolicy(unittest.TestCase):
