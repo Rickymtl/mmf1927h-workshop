@@ -436,9 +436,7 @@ DSR does not</td><td>—</td><td>stated plainly; 342 fits / 19 configs, both rep
 <tr><td><b>Sector labels not point-in-time</b> — V and MA moved IT → Financials
 on 2023-03-17; labelled Financials throughout</td>
 <td>hits neutralisation, not the raw signal</td><td>disclosed, not corrected</td></tr>
-</table>
-<div class="callout">Disclosed limitations are not penalised; undisclosed ones
-are.</div>""")
+</table>""")
 
 slide("", "Disclosed limitations — scope & method", "SEGMENT 3", """
 <table class="t">
