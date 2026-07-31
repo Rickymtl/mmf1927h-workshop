@@ -316,6 +316,57 @@ threshold. Net, it still does not reject the null.</p></div>
 that survives a correctly-built pipeline — <b>not alpha</b>. We would rather
 report an honest null than a Sharpe we cannot defend.</div>""")
 
+# 15b sector analysis
+slide("", "Does it work in particular sectors?", "SEGMENT 3 · FOLLOW-UP", """
+<p class="lead">We ranked within each sector separately, to see whether a
+sector-specific strategy was hiding inside a weak aggregate.</p>
+<div class="split">
+<table class="t compact">
+<tr><th>Sector</th><th>Mean IC</th><th>t</th><th>p</th></tr>
+<tr><td>Materials</td><td>0.072</td><td>1.82</td><td>0.071</td></tr>
+<tr><td>Consumer Discretionary</td><td>0.051</td><td>1.40</td><td>0.164</td></tr>
+<tr><td>Consumer Staples</td><td>0.049</td><td>1.29</td><td>0.199</td></tr>
+<tr class="dim"><td>… five more between</td><td>0.03 / 0.02</td><td>&lt;1</td><td>ns</td></tr>
+<tr><td>Energy</td><td class="no">−0.025</td><td>−0.65</td><td>0.518</td></tr>
+<tr><td>Information Technology</td><td class="no">−0.025</td><td>−0.68</td><td>0.498</td></tr>
+</table>
+<div class="stats">
+<div class="stat"><span class="big no">0 of 11</span><span>sectors reach |t| &gt; 2</span></div>
+<div class="stat"><span class="big no">0 of 11</span><span>survive Benjamini-Hochberg at q = 0.10</span></div>
+<div class="stat"><span class="big">N = 8</span><span>names per sector per week — Spearman is very weak here</span></div>
+</div></div>
+<div class="callout"><b>No sector-specific strategy is supported.</b> Materials
+looks best, but across eleven simultaneous tests a p of 0.071 is about what the
+null produces on its own — and the <i>maximum</i> t across eleven tests is
+upward-biased by construction. <b>We applied FDR control precisely so we
+couldn't cherry-pick it.</b></div>""")
+
+# 15c keyword ambiguity
+slide("hero", "Our own hypothesis was wrong", "SEGMENT 3 · FOLLOW-UP", """
+<p class="lead">Do ambiguous keywords add noise? We measured it:
+<code>corr(Δlog search, Δlog dollar volume)</code> — a keyword that tracks the
+<i>firm</i> should co-move with trading in it.</p>
+<div class="split">
+<table class="t compact">
+<tr><th>Weakest</th><th>corr</th><th>Strongest</th><th>corr</th></tr>
+<tr><td>Walmart</td><td class="no">−0.336</td><td>AbbVie</td><td class="ok">0.656</td></tr>
+<tr><td>Costco</td><td class="no">−0.316</td><td>Broadcom</td><td class="ok">0.620</td></tr>
+<tr><td>McDonald&rsquo;s</td><td class="no">−0.308</td><td>Nvidia</td><td class="ok">0.595</td></tr>
+<tr><td>Home Depot</td><td class="no">−0.222</td><td>Nucor</td><td class="ok">0.593</td></tr>
+<tr><td>Starbucks</td><td class="no">−0.159</td><td>NextEra</td><td class="ok">0.580</td></tr>
+</table>
+<div class="stats">
+<div class="stat"><span class="big">0.043</span><span>mean corr — Consumer sectors</span></div>
+<div class="stat"><span class="big">0.340</span><span>mean corr — all others</span></div>
+<div class="stat"><span class="big ok">p = 0.0008</span><span>t = −4.03</span></div>
+</div></div>
+<div class="callout"><b>We predicted homonyms — “Apple” the fruit, “Amazon” the
+river. That prior failed (p = 0.30).</b> The real channel is
+<b>shopping intent</b>: people search “Walmart” to shop, not to invest, and
+that traffic swamps the attention signal. B2B and industrial names have no
+consumer-search channel, so their search <i>is</i> investor attention.
+<b>Fix: 16 contaminated names re-pulled as “&lt;name&gt; stock”.</b></div>""")
+
 # 16 residuals
 slide("", "ε under interrogation", "SEGMENT 3", """
 <table class="t">

@@ -1,6 +1,10 @@
 # Presentation Script — Trend-Driven Names
 
-**MMF1927H · Day 5 · 15 minutes (12 speaking + 3 Q&A)**
+**MMF1927H · Day 5 · 15 minutes (12–13 speaking + Q&A)**
+
+> 20 slides. Aaron carries the two follow-up analyses (sector, keyword
+> ambiguity) — if you are running long, **slide 16 is the one to cut**; the
+> keyword finding is stronger and more memorable.
 
 | # | Speaker | Slides | Time | Owns |
 |---|---------|--------|------|------|
@@ -8,7 +12,7 @@
 | 2 | **Saier Ma** | 4–5 | 2:30 | The anchor bug & the panel |
 | 3 | **Tim Yuan** | 6–9 | 2:30 | Features, ASVI, validation design |
 | 4 | **Nick Sun** | 10–13 | 2:45 | Results, turnover, the strategy |
-| 5 | **Aaron Hou** | 14–18 | 2:15 | Honest reading & close |
+| 5 | **Aaron Hou** | 14–20 | 2:45 | Honest reading, follow-ups & close |
 | — | all | — | 3:00 | Q&A |
 
 **How to use this.** The prose is what to say, not what to read aloud
@@ -273,7 +277,39 @@ Advance slides with → or click. Timings are cumulative from zero.
 > to beat. Net of both, we do not reject the null.** We'd rather report that
 > than a Sharpe ratio we can't defend.
 
-### [SLIDE 16 — Residual diagnostics] 11:00
+### [SLIDE 16 — Sector analysis] 10:55
+
+> Two follow-ups we were asked about. First: **does it work in particular
+> sectors?**
+>
+> We ranked within each sector separately. Materials looks best at t of 1.82 —
+> **and no sector reaches t of 2, and none survives false-discovery control.**
+>
+> **With eleven simultaneous tests, a p of 0.07 is about what the null gives you
+> anyway.** We ran Benjamini-Hochberg specifically so we couldn't talk ourselves
+> into the best-looking one. And at eight names per sector, the correlation is a
+> very weak statistic to begin with.
+
+### [SLIDE 17 — Keyword ambiguity] 11:20
+
+> Second: **do ambiguous keywords add noise?**
+>
+> We predicted homonyms — "Apple" the fruit, "Amazon" the river. **That
+> prediction was wrong, p of 0.30.**
+>
+> What actually drives it is **shopping intent.** Walmart, Costco, McDonald's,
+> Home Depot — people search those to shop, not to invest, and that traffic
+> swamps the attention signal. Consumer sectors average a correlation of 0.04
+> with their own trading volume; everything else averages 0.34. **t of −4.03,
+> p of 0.0008.**
+>
+> AbbVie, Broadcom, Nucor — B2B names with no consumer channel — are the
+> cleanest at 0.6 and above.
+>
+> **We've re-pulled the 16 contaminated names as "name plus stock" to force
+> investor intent.**
+
+### [SLIDE 18 — Residual diagnostics] 11:45
 
 > Quickly on ε. Durbin-Watson 2.21, Ljung-Box p of 0.25 — **no autocorrelation
 > left, so nothing obvious we failed to model.**
@@ -282,7 +318,7 @@ Advance slides with → or click. Timings are cumulative from zero.
 > −1.45, kurtosis 8.9. **Fat tails mean our Sharpe and drawdown language
 > understates tail risk — our standard errors should be read as optimistic.**
 
-### [SLIDE 17 — Limitations] 11:25
+### [SLIDE 19 — Limitations] 12:00
 
 > Disclosed, not discovered in Q&A: survivorship bias — our universe is a
 > current-membership snapshot, which biases returns up. Keyword ambiguity.
@@ -290,7 +326,7 @@ Advance slides with → or click. Timings are cumulative from zero.
 > over five candidates. And the signal is built from entirely free public data,
 > so **assume it's at least partially crowded.**
 
-### [SLIDE 18 — Close] 11:40
+### [SLIDE 20 — Close] 12:15
 
 > With another week: turnover **inside** the objective rather than as a
 > post-hoc filter, ensemble the two models, a point-in-time universe, and daily

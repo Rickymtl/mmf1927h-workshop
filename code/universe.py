@@ -132,5 +132,50 @@ def ticker_to_keyword() -> dict[str, str]:
     return {t: kw for members in SECTORS.values() for t, kw in members}
 
 
+
+# --- Disambiguated keywords for decoupled names ------------------------------
+# Measured finding (code/sector_analysis.py): search interest for
+# consumer-facing brands is dominated by *shopping* intent rather than investor
+# attention, so it decouples from — and sometimes inverts against — the firm's
+# own trading activity.  Consumer sectors averaged corr(Δlog SVI, Δlog dollar
+# volume) = 0.043 versus 0.340 elsewhere (t = -4.03, p = 0.0008).
+#
+# Rule, fixed before re-pulling: any ticker whose coupling is below 0.15 is
+# re-pulled with " stock" appended, which forces investor intent.  Da,
+# Engelberg & Gao (2011) use ticker symbols for the same reason; we use
+# "<name> stock" because several of our tickers are themselves ambiguous
+# single letters (T, D, O).
+#
+# Trade-off to verify after pulling: "<name> stock" has far lower search volume
+# than the bare brand, so it risks reintroducing the low-resolution problem the
+# one-request-per-ticker fix solved.  Check distinct-value counts before use.
+AMBIGUITY_COUPLING_THRESHOLD = 0.15
+
+DISAMBIGUATED_KEYWORDS: dict[str, str] = {
+    "WMT": "Walmart stock",
+    "COST": "Costco stock",
+    "MCD": "McDonalds stock",
+    "HD": "Home Depot stock",
+    "SBUX": "Starbucks stock",
+    "NKE": "Nike stock",
+    "LOW": "Lowes stock",
+    "BKNG": "Booking Holdings stock",
+    "NFLX": "Netflix stock",
+    "ABT": "Abbott stock",
+    "DE": "Deere stock",
+    "AAPL": "Apple stock",
+    "DIS": "Disney stock",
+    "T": "AT&T stock",
+    "AMZN": "Amazon stock",
+    "VZ": "Verizon stock",
+}
+
+
+def disambiguated_keyword(ticker: str) -> str:
+    """Investor-intent keyword where the plain brand name is contaminated."""
+    return DISAMBIGUATED_KEYWORDS.get(ticker, ticker_to_keyword()[ticker])
+
+
 if __name__ == "__main__":
     print(f"{len(SECTORS)} sectors, {len(all_tickers())} tickers total")
+    print(f"{len(DISAMBIGUATED_KEYWORDS)} tickers use a disambiguated keyword")

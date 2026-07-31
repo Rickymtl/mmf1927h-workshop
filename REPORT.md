@@ -289,6 +289,92 @@ No momentum or reversal was left on the table. But the residual is strongly
 heteroskedastic and fat-tailed, so Sharpe- and drawdown-based language
 understates tail risk — the standard errors should be read as optimistic.
 
+## 7.5 Two follow-up questions we tested
+
+### 7.5.1 Does the signal work in particular sectors?
+
+We computed Rank IC **within** each GICS sector — ranking only that sector's
+eight names each week — to see whether a sector-specific strategy is hiding
+inside a weak aggregate result.
+
+| Sector | Mean IC | t | p |
+|--------|---------|------|-------|
+| Materials | 0.072 | 1.82 | 0.071 |
+| Consumer Discretionary | 0.051 | 1.40 | 0.164 |
+| Consumer Staples | 0.049 | 1.29 | 0.199 |
+| Real Estate | 0.032 | 0.93 | 0.353 |
+| Financials | 0.030 | 0.79 | 0.429 |
+| Communication Services | 0.025 | 0.68 | 0.498 |
+| Industrials | 0.016 | 0.44 | 0.663 |
+| Health Care | −0.001 | −0.02 | 0.985 |
+| Utilities | −0.008 | −0.21 | 0.832 |
+| Energy | −0.025 | −0.65 | 0.518 |
+| Information Technology | −0.025 | −0.68 | 0.498 |
+
+**No sector reaches |t| > 2, and none survives Benjamini-Hochberg FDR control
+at q = 0.10.** Materials is the strongest, but with eleven simultaneous tests a
+p of 0.071 is roughly what the null produces on its own, and the *maximum*
+t-statistic across eleven tests is upward-biased by construction. We applied BH
+precisely so this could not be cherry-picked.
+
+A second caveat compounds it: at **N = 8 names per sector per week**, Spearman
+correlation is a very weak statistic — Day 1's small-N warning, relocated from
+the universe to the sub-universe.
+
+**Conclusion: no sector-specific strategy is supported by this data.** Reported
+as a null, not as "Materials looks promising."
+
+### 7.5.2 Do ambiguous keywords add noise?
+
+Our keywords are company names, several of which are ordinary words. We
+measured contamination rather than asserting it: for a keyword that genuinely
+tracks attention to the *firm*, weekly changes in search interest should
+co-move with weekly changes in that firm's **dollar trading volume**.
+
+    ambiguity proxy = corr( Δ log SVI , Δ log dollar-volume )
+
+**Our first hypothesis was wrong.** We flagged homonyms a priori — "Apple" the
+fruit, "Amazon" the river, "Caterpillar" the insect. That list does **not**
+explain the variation (t = −1.04, **p = 0.30**).
+
+The actual mechanism is **consumer-brand search intent**:
+
+| Weakest coupling | corr | | Strongest coupling | corr |
+|---|---|---|---|---|
+| Walmart | −0.336 | | AbbVie | 0.656 |
+| Costco | −0.316 | | Broadcom | 0.620 |
+| McDonald's | −0.308 | | Nvidia | 0.595 |
+| Home Depot | −0.222 | | Nucor | 0.593 |
+| Starbucks | −0.159 | | NextEra Energy | 0.580 |
+
+By sector, Consumer Discretionary averages **−0.047** and Consumer Staples
+**0.133**, against **0.28–0.43** everywhere else:
+
+    Consumer sectors  mean corr = 0.043
+    All other sectors mean corr = 0.340      t = −4.03, p = 0.0008
+
+People search "Walmart" in order to *shop*, not to invest. That traffic swamps
+the investor-attention component and decouples the series from trading
+activity — sometimes inverting it. B2B, industrial and pharmaceutical names
+have no consumer-search channel, so for them search interest genuinely *is*
+investor attention.
+
+**This is a sharper finding than the homonym theory we set out to test**, and
+it is directly actionable.
+
+### 7.5.3 Acting on it: disambiguated keywords
+
+Rule fixed **before** re-pulling: every ticker with coupling below **0.15** is
+re-pulled with `" stock"` appended, forcing investor intent — 16 names.
+Da, Engelberg & Gao use ticker symbols for the same purpose; we use
+`"<name> stock"` because several of our tickers are themselves ambiguous single
+letters (T, D, O).
+
+The trade-off, and it is a real one: `"Walmart stock"` has far less search
+volume than `"Walmart"`, so it risks reintroducing the low-resolution problem
+that one-request-per-ticker solved. **Resolution must be checked before the
+disambiguated series is used** — see §7.5.4.
+
 ## 8. Disclosed limitations
 
 | Limitation | Direction | Status |
