@@ -437,8 +437,8 @@ DSR does not</td><td>—</td><td>stated plainly; 342 fits / 19 configs, both rep
 on 2023-03-17; labelled Financials throughout</td>
 <td>hits neutralisation, not the raw signal</td><td>disclosed, not corrected</td></tr>
 </table>
-<div class="callout"><b>The top two are ours to volunteer — nobody in the room
-found them.</b> Disclosed limitations are not penalised; undisclosed ones are.</div>""")
+<div class="callout">Disclosed limitations are not penalised; undisclosed ones
+are.</div>""")
 
 slide("", "Disclosed limitations — scope & method", "SEGMENT 3", """
 <table class="t">
