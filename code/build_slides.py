@@ -421,7 +421,7 @@ risk</b>. Our standard errors should be read as optimistic.</p></div>
 </div>""")
 
 # 17 limitations
-slide("", "Disclosed limitations", "SEGMENT 3", """
+slide("", "Disclosed limitations — could change the result", "SEGMENT 3", """
 <table class="t">
 <tr><th>Limitation</th><th>Direction</th><th>Status</th></tr>
 <tr class="hl"><td><b>Trends bucket look-ahead</b> — Google's weekly bucket runs
@@ -429,20 +429,34 @@ Sun→Sat; we map it to the Friday <i>inside</i> it, so week <i>t</i> carries
 Saturday <i>t+1</i>. 1 of 7 days, and it reaches <code>asvi</code> directly</td>
 <td>plausibly overstates</td><td>disclosed, not corrected — one-line fix,
 invalidates every number here</td></tr>
-<tr class="hl"><td><b>Sector labels not point-in-time</b> — V and MA moved
-IT → Financials on 2023-03-17; we label them Financials for all 60 months</td>
+<tr class="hl"><td><b>Deflated Sharpe fails at 95%</b> — IC t = 2.56 clears 2.0,
+DSR does not</td><td>—</td><td>stated plainly; 342 fits / 19 configs, both reported</td></tr>
+<tr><td><b>Survivorship bias</b> — mid-2025 membership snapshot</td>
+<td>overstates returns</td><td>disclosed; robustness check designed, not run</td></tr>
+<tr><td><b>Sector labels not point-in-time</b> — V and MA moved IT → Financials
+on 2023-03-17; labelled Financials throughout</td>
 <td>hits neutralisation, not the raw signal</td><td>disclosed, not corrected</td></tr>
-<tr><td><b>Survivorship bias</b> — mid-2025 membership snapshot</td><td>overstates returns</td><td>disclosed; robustness check designed, not run</td></tr>
-<tr><td><b>Deflated Sharpe fails at 95%</b> — IC t = 2.56 clears 2.0, DSR does not</td><td>—</td><td>stated plainly; N = 342 fits / 19 configs, both reported</td></tr>
-<tr><td><b>Beta-neutrality not applied</b> — 2 of Day 4's 3 constraints; residual beta unmeasured</td><td>unknown</td><td>disclosed</td></tr>
-<tr><td><b>Macro &amp; PCA risk-model buckets empty</b>; no VIF / keep-drop report</td><td>narrows F</td><td>open</td></tr>
-<tr><td><b>Short-side frictions</b> — borrow &amp; recall not modelled; capacity not estimated</td><td>overstates net</td><td>disclosed</td></tr>
-<tr><td><b>Keyword ambiguity</b> — “Apple”, “Amazon”, “Visa”</td><td>adds noise</td><td><b>quantified &amp; acted on</b> — t = −4.03, 16 names re-pulled, no model impact</td></tr>
-<tr><td><b>Smoothing window k=4</b> searched over 5 values · <b>Crowding</b> — free public data</td><td>mild optimism</td><td>full curve reported · acknowledged</td></tr>
 </table>
-<div class="note">Disclosed limitations are not penalised; undisclosed ones
-are. The top two rows are ours to volunteer — nobody in the room found them.
-Every number above is reproducible from the repo:
+<div class="callout"><b>The top two are ours to volunteer — nobody in the room
+found them.</b> Disclosed limitations are not penalised; undisclosed ones are.</div>""")
+
+slide("", "Disclosed limitations — scope & method", "SEGMENT 3", """
+<table class="t">
+<tr><th>Limitation</th><th>Direction</th><th>Status</th></tr>
+<tr><td><b>Beta-neutrality not applied</b> — 2 of Day 4's 3 constraints; residual
+beta unmeasured</td><td>unknown</td><td>disclosed</td></tr>
+<tr><td><b>Macro &amp; PCA risk-model buckets empty</b>; no VIF / keep-drop report</td>
+<td>narrows F</td><td>open</td></tr>
+<tr><td><b>Short-side frictions</b> — borrow &amp; recall not modelled; capacity
+not estimated</td><td>overstates net</td><td>disclosed</td></tr>
+<tr class="hl"><td><b>Keyword ambiguity</b> — “Apple”, “Amazon”, “Visa”</td>
+<td>adds noise</td><td class="ok"><b>quantified &amp; acted on</b> — t = −4.03,
+16 names re-pulled, no model impact</td></tr>
+<tr><td><b>Smoothing window k=4</b> searched over 5 values ·
+<b>Crowding</b> — free public data</td><td>mild optimism</td>
+<td>full curve reported · acknowledged</td></tr>
+</table>
+<div class="note">Every number in this deck is reproducible from the repo:
 <code>./code/run_pipeline.sh</code></div>""")
 
 # 18 close

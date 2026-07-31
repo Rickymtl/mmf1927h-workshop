@@ -55,66 +55,64 @@ strong { color: #000; }
 """
 
 # Slides: force every section onto its own landscape page.
-SLIDE_PRINT_CSS = """
-@page { size: 280mm 157mm; margin: 0; }
-html, body { background: #0d1117 !important; }
-#nav, #bar { display: none !important; }
-.slide { display: block !important; width: 280mm; height: 157mm;
-         padding: 9mm 13mm; overflow: hidden;
-         page-break-after: always; page-break-inside: avoid; }
-/* WeasyPrint has no flex layout: forcing display:flex leaves .inner
-   unconstrained and lets a dense slide spill onto a second page. Block
-   layout with a hard height and overflow:hidden keeps one slide = one page. */
-/* :last-child fails here — <div id='nav'> follows the final
-   <section>, so the last slide still emitted a trailing blank
-   page. :last-of-type matches the section correctly. */
-.slide:last-of-type { page-break-after: auto; }
-.inner { width: 100%; }
+#
+# NOTE ON SCALING: the typography below is emitted through slide_css(scale)
+# rather than as a fixed string. An earlier version shrank overflowing slides
+# with `.slide{font-size:X%}`, which did nothing — every rule here uses
+# absolute `pt`, so the percentage had no effect and dense slides were silently
+# clipped instead of shrunk. Multiplying the pt values is what actually works.
+def slide_css(s: float = 1.0) -> str:
+    return f"""
+@page {{ size: 280mm 157mm; margin: 0; }}
+html, body {{ background: #0d1117 !important; }}
+#nav, #bar {{ display: none !important; }}
+.slide {{ display: block !important; width: 280mm; height: 157mm;
+         padding: {9*s:.1f}mm {13*s:.1f}mm; overflow: hidden;
+         page-break-after: always; page-break-inside: avoid; }}
+.slide:last-of-type {{ page-break-after: auto; }}
+.inner {{ width: 100%; }}
 
-/* Dense slides (notably the anchor-bug slide) overflow onto a second page at
-   screen sizing. Tighten print typography so every slide fits on exactly one
-   page — clipping with overflow:hidden would silently drop content instead. */
-.slide h2 { font-size: 26pt; margin-bottom: .3em; }
-.slide .lead { font-size: 11pt; margin-bottom: .6em; }
-.slide .kicker { margin-bottom: .5em; }
-.slide p, .slide li, .slide .card p { font-size: 10.5pt; }
-.slide table.t { font-size: 10pt; margin: .25em 0; }
-.slide table.t td, .slide table.t th { padding: 4px 7px; }
-.slide table.t.compact td, .slide table.t.compact th { padding: 3px 6px; font-size: 9.5pt; }
-.slide .callout { font-size: 10pt; padding: 8px 12px; margin-top: .5em; }
-.slide .note { font-size: 9.5pt; padding: 8px 11px; }
-.slide .strip { font-size: 9.5pt; padding: 6px 11px; }
-.slide .stat { padding: 8px 12px; }
-.slide .stat .big { font-size: 22pt; }
-.slide .stat span:last-child { font-size: 9pt; }
-.slide .card { padding: 11px 13px; }
-.slide .cols2, .slide .cols3, .slide .split { margin: .45em 0; }
-.slide .eq { font-size: 30pt; margin: .2em 0 .45em; }
-.slide .eq.small { font-size: 19pt; }
-.slide ul.tick li { padding: 4px 0 4px 18px; font-size: 10.5pt; }
-.slide ol.big-list li { font-size: 11pt; padding: 5px 0; }
-.slide .eq-svg { height: 120pt; }
+.slide h2 {{ font-size: {26*s:.1f}pt; margin-bottom: .3em; }}
+.slide .lead {{ font-size: {11*s:.1f}pt; margin-bottom: .6em; }}
+.slide .kicker {{ margin-bottom: .5em; font-size: {8*s:.1f}pt; }}
+.slide p, .slide li, .slide .card p {{ font-size: {10.5*s:.1f}pt; }}
+.slide table.t {{ font-size: {10*s:.1f}pt; margin: .25em 0; }}
+.slide table.t td, .slide table.t th {{ padding: {4*s:.1f}px {7*s:.1f}px; }}
+.slide table.t th {{ font-size: {8*s:.1f}pt; }}
+.slide table.t.compact td, .slide table.t.compact th {{
+    padding: {3*s:.1f}px {6*s:.1f}px; font-size: {9.5*s:.1f}pt; }}
+.slide .callout {{ font-size: {10*s:.1f}pt; padding: {8*s:.1f}px {12*s:.1f}px; margin-top: .5em; }}
+.slide .note {{ font-size: {9.5*s:.1f}pt; padding: {8*s:.1f}px {11*s:.1f}px; }}
+.slide .strip {{ font-size: {9.5*s:.1f}pt; padding: {6*s:.1f}px {11*s:.1f}px; }}
+.slide .stat {{ padding: {8*s:.1f}px {12*s:.1f}px; }}
+.slide .stat .big {{ font-size: {22*s:.1f}pt; line-height: 1.1; white-space: nowrap; }}
+.slide .stat span:last-child {{ font-size: {9*s:.1f}pt; }}
+.slide .card {{ padding: {11*s:.1f}px {13*s:.1f}px; }}
+.slide .card h3 {{ font-size: {10*s:.1f}pt; }}
+.slide .cols2, .slide .cols3, .slide .split {{ margin: .45em 0; }}
+.slide .eq {{ font-size: {30*s:.1f}pt; margin: .2em 0 .45em; }}
+.slide .eq.small {{ font-size: {19*s:.1f}pt; }}
+.slide ul.tick li {{ padding: {4*s:.1f}px 0 {4*s:.1f}px {18*s:.1f}px; font-size: {10.5*s:.1f}pt; }}
+.slide ol.big-list li {{ font-size: {11*s:.1f}pt; padding: {5*s:.1f}px 0; }}
+.slide .eq-svg {{ height: {120*s:.0f}pt; }}
+.slide .chart.dd .eq-svg {{ height: {62*s:.0f}pt; }}
+.slide .legend, .slide .axis-lbl {{ font-size: {8*s:.1f}pt; }}
 
 /* WeasyPrint's CSS Grid support is partial: display:grid silently degrades to
-   block, so the two- and three-column layouts stacked vertically and pushed
-   dense slides onto a second page. Table layout is fully supported and gives
-   the same visual result in a fixed-size page. */
-.slide .cols2, .slide .cols3, .slide .split {
-    display: table !important; width: 100%; border-spacing: 7pt 0; }
-.slide .cols2 > *, .slide .cols3 > *, .slide .split > * {
-    display: table-cell !important; vertical-align: top; }
-.slide .cols2 > * { width: 50%; }
-.slide .cols3 > * { width: 33.33%; }
-.slide .split > *:first-child { width: 58%; }
-.slide .split > *:last-child  { width: 42%; }
-/* .stats is itself a .split child, so it must stay table-cell — an earlier
-   `display:block` here silently collapsed the whole right-hand column. Only
-   the boxes inside it become blocks, and their spans too, since .stat relied
-   on flex-direction:column which WeasyPrint ignores. */
-.slide .stats > .stat { display: block !important; margin-bottom: 5pt; }
-.slide .stat > span { display: block; }
-.slide .stat .big { line-height: 1.1; white-space: nowrap; }
-.slide .chart.dd .eq-svg { height: 62pt; }
+   block, so the multi-column layouts stacked vertically. Table layout is fully
+   supported and reproduces the intended side-by-side result. */
+.slide .cols2, .slide .cols3, .slide .split {{
+    display: table !important; width: 100%; border-spacing: {7*s:.1f}pt 0; }}
+.slide .cols2 > *, .slide .cols3 > *, .slide .split > * {{
+    display: table-cell !important; vertical-align: top; }}
+.slide .cols2 > * {{ width: 50%; }}
+.slide .cols3 > * {{ width: 33.33%; }}
+.slide .split > *:first-child {{ width: 58%; }}
+.slide .split > *:last-child  {{ width: 42%; }}
+/* .stats is itself a .split child, so it must stay table-cell — setting it to
+   block collapses the whole right-hand column. */
+.slide .stats > .stat {{ display: block !important; margin-bottom: {5*s:.1f}pt; }}
+.slide .stat > span {{ display: block; }}
 """
 
 
@@ -146,9 +144,9 @@ def slides_to_pdf(src: Path, pdf: Path) -> bool:
     writer = PdfWriter()
     shrunk = []
     for i, sec in enumerate(sections, 1):
-        for scale in (1.0, 0.92, 0.84, 0.76, 0.68, 0.6):
+        for scale in (1.0, 0.94, 0.88, 0.82, 0.76, 0.70, 0.64, 0.58):
             doc = f"{head}{sec}</body></html>"
-            css = CSS(string=SLIDE_PRINT_CSS + f"\n.slide{{font-size:{scale*100:.0f}%}}")
+            css = CSS(string=slide_css(scale))
             buf = io.BytesIO()
             HTML(string=doc, base_url=str(REPO)).write_pdf(buf, stylesheets=[css])
             buf.seek(0)

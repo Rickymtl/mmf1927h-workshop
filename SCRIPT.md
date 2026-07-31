@@ -2,7 +2,7 @@
 
 **MMF1927H · Day 5 · 15 minutes (12–13 speaking + Q&A)**
 
-> 21 slides. Aaron carries the two follow-up analyses (sector, keyword
+> 22 slides. Aaron carries the two follow-up analyses (sector, keyword
 > ambiguity) — if you are running long, **slide 16 is the one to cut**; the
 > keyword finding is stronger and more memorable.
 
@@ -12,7 +12,7 @@
 | 2 | **Saier Ma** | 4–5 | 2:30 | The anchor bug & the panel |
 | 3 | **Tim Yuan** | 6–9 | 2:30 | Features, ASVI, validation design |
 | 4 | **Nick Sun** | 10–13 | 2:45 | Results, turnover, the strategy |
-| 5 | **Aaron Hou** | 14–21 | 3:00 | Honest reading, follow-ups & close |
+| 5 | **Aaron Hou** | 14–22 | 3:00 | Honest reading, follow-ups & close |
 | — | all | — | 3:00 | Q&A |
 
 **How to use this.** The prose is what to say, not what to read aloud
@@ -335,7 +335,7 @@ Advance slides with → or click. Timings are cumulative from zero.
 > −1.45, kurtosis 8.9. **Fat tails mean our Sharpe and drawdown language
 > understates tail risk — our standard errors should be read as optimistic.**
 
-### [SLIDE 20 — Limitations] 12:10
+### [SLIDE 20–21 — Limitations, two slides] 12:10
 
 > Two of these we'd rather you heard from us than found yourselves.
 >
@@ -366,7 +366,7 @@ Advance slides with → or click. Timings are cumulative from zero.
 > Keyword ambiguity is the one item on this list we *did* close — Saier will
 > have covered that.
 
-### [SLIDE 21 — Close] 12:20
+### [SLIDE 22 — Close] 12:20
 
 > With another week: fix the Trends bucket alignment first — it's the only open
 > item that could change whether the result is real. Then meta-labelling for the
