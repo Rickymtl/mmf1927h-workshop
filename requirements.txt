@@ -17,3 +17,9 @@ statsmodels==0.14.6
 
 # Testing
 pytest==9.1.1
+
+# PDF export of slides / script / Q&A sheet (code/build_pdfs.py)
+# macOS also needs the cairo+pango stack:  brew install pango
+weasyprint==69.0
+markdown==3.10.3
+pypdf==6.4.0

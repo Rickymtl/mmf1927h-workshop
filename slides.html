@@ -78,7 +78,15 @@ code{font-family:ui-monospace,Menlo,monospace;background:#21262d;padding:1px 5px
 .thanks{margin-top:1.3em;font-size:clamp(17px,2vw,26px);font-weight:700;color:#f0b72f}
 #nav{position:fixed;bottom:14px;right:18px;font-size:12px;color:#6e7681;font-family:ui-monospace,Menlo,monospace;z-index:9}
 #bar{position:fixed;top:0;left:0;height:2.5px;background:#f0b72f;transition:width .18s;z-index:9}
-@media print{.slide{display:flex!important;page-break-after:always;height:100vh}#nav,#bar{display:none}}
+@media print{
+ @page{size:1280px 720px;margin:0}
+ html,body{background:#0d1117!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .slide{display:flex!important;page-break-after:always;break-after:page;
+        width:1280px;height:720px;padding:34px 52px;overflow:hidden}
+ .slide:last-child{page-break-after:auto}
+ #nav,#bar{display:none}
+ .inner{max-width:1176px}
+}
 </style></head><body>
 <div id="bar"></div><section class="slide title"><div class="inner">
 <p class="course">MMF1927H · Workshop in Mathematical Finance</p>
