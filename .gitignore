@@ -34,6 +34,16 @@ tmp/
 # Pulled data (regenerable via code/pull_data.py; created at runtime by the scripts)
 data/
 
+# EXCEPTION: the Trends pull is committed. It is only ~350 KB, but it cost
+# hours of rate-limited pulling to obtain (Google caps ~19 requests per ~2.5h
+# window per IP) and cannot be casually regenerated. Prices are NOT committed —
+# they are 26 MB and re-pull from yfinance in about two minutes, unthrottled.
+!data/
+!data/raw/
+!data/raw/trends_single/
+!data/raw/trends_single/*.csv
+!data/raw/trends_single/manifest.json
+
 # ── GSD baseline (auto-generated) ──
 .gsd
 .gsd-worktrees/

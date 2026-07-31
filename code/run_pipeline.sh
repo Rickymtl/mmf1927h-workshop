@@ -24,6 +24,35 @@ while [[ $# -gt 0 ]]; do
 done
 
 cd "$REPO"
+
+# --- preconditions, with actionable errors -------------------------------
+fail() { echo; echo "ERROR: $1" >&2; echo; exit 1; }
+
+[ -x "$PY" ] || fail "No virtualenv at .venv/
+  Create it:
+    python3.11 -m venv .venv
+    ./.venv/bin/pip install -r requirements.txt
+  On macOS LightGBM also needs the OpenMP runtime:  brew install libomp"
+
+"$PY" -c "import pandas, sklearn, lightgbm, scipy, statsmodels, pyarrow" 2>/dev/null \
+  || fail "Missing Python dependencies.
+    ./.venv/bin/pip install -r requirements.txt
+  If lightgbm fails to import on macOS:  brew install libomp"
+
+if [ -z "$(ls -A "$REPO/data/raw/prices" 2>/dev/null)" ]; then
+    fail "No price data in data/raw/prices/ (not committed — 26 MB, regenerable).
+  Pull it (~2 minutes, no rate limit):
+    ./.venv/bin/python code/pull_prices.py"
+fi
+
+if [ -z "$(ls -A "$REPO/data/raw/trends_single" 2>/dev/null)" ] \
+   && [ -z "$(ls -A "$REPO/data/raw/trends" 2>/dev/null)" ]; then
+    fail "No Trends data found.
+  data/raw/trends_single/ ships with the repo — if it is missing, re-clone.
+  To re-pull from scratch (slow: Google caps ~19 requests per ~2.5h per IP):
+    ./.venv/bin/python code/pull_trends.py"
+fi
+
 echo "==================================================================="
 echo " MMF1927H pipeline — Trends source: $SOURCE"
 echo "==================================================================="

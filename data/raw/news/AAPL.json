@@ -1,0 +1,2518 @@
+{
+  "items": "50",
+  "sentiment_score_definition": "x <= -0.35: Bearish; -0.35 < x <= -0.15: Somewhat-Bearish; -0.15 < x < 0.15: Neutral; 0.15 <= x < 0.35: Somewhat_Bullish; x >= 0.35: Bullish",
+  "relevance_score_definition": "0 < x <= 1, with a higher score indicating higher relevance.",
+  "feed": [
+    {
+      "title": "Form 144 Edwards Lifesciences Corp For: 27 July By Investing.com",
+      "url": "https://ca.investing.com/news/stock-market-news/form-144-edwards-lifesciences-corp-for-27-july-93CH-4755221",
+      "time_published": "20260727T205041",
+      "authors": [
+        "Investing.com"
+      ],
+      "summary": "This article reports on a Form 144 filing for Edwards Lifesciences Corp (EW) on July 27. A Form 144 indicates an intent to sell restricted securities. The brief notice highlights the company and date of the filing.",
+      "banner_image": "https://i-invdn-com.investing.com/news/moved_LYNXMPEM4519D_1200_L.jpg",
+      "source": "Investing.com Canada",
+      "category_within_source": "General",
+      "source_domain": "Investing.com Canada",
+      "topics": [
+        {
+          "topic": "life_sciences",
+          "relevance_score": "0.911215"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.819164"
+        }
+      ],
+      "overall_sentiment_score": 0.064649,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "EW",
+          "relevance_score": "0.913643",
+          "ticker_sentiment_score": "0.045767",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AVGO",
+          "relevance_score": "0.645049",
+          "ticker_sentiment_score": "0.181494",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.637335",
+          "ticker_sentiment_score": "0.161712",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "TSLA",
+          "relevance_score": "0.647736",
+          "ticker_sentiment_score": "-0.191991",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Apple Regains Spot Over Nvidia as Most Valuable Public Company",
+      "url": "https://www.nytimes.com/2026/07/27/technology/apple-valuation.html",
+      "time_published": "20260727T202600",
+      "authors": [
+        "Kalley Huang"
+      ],
+      "summary": "Apple has once again surpassed Nvidia to become the world's most valuable publicly traded company, closing with a market valuation of $4.9 trillion. This shift occurred as Nvidia's stock declined due to concerns over AI-related costs, while investors moved towards Apple as a \"flight to safety\" amid volatility in the AI market. Apple's return to the top comes after a period where it lagged in the AI race and had previously lost its crown to Microsoft in 2024.",
+      "banner_image": "https://static01.nyt.com/images/2026/07/27/multimedia/27biz-apple-valuation-2-mkpz/27biz-apple-valuation-2-mkpz-articleLarge.jpg?quality=75&auto=webp&disable=upscale",
+      "source": "The New York Times",
+      "category_within_source": "General",
+      "source_domain": "The New York Times",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.917700"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.819993"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.720386"
+        }
+      ],
+      "overall_sentiment_score": 0.030537,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "NVDA",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.384599",
+          "ticker_sentiment_label": "Bearish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.965716",
+          "ticker_sentiment_score": "0.371930",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "MSFT",
+          "relevance_score": "0.631849",
+          "ticker_sentiment_score": "0.115178",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Balchem Corp (BCPC) Earnings Forecast: Future EPS & Revenue Growth Estimates",
+      "url": "https://www.tradingkey.com/markets/stocks/bcpc/earnings",
+      "time_published": "20260727T183938",
+      "authors": [],
+      "summary": "This article provides an earnings forecast for Balchem Corp (BCPC), noting its current earnings forecast score of 7.33, ranking 33rd in the Chemicals industry. Analysts have assigned an average price target of $191.00, with a \"Buy\" trend based on ratings from 3 analysts. Key financial expectations include an anticipated revenue of $268.50M for the next quarter and an expected EPS of $1.40.",
+      "banner_image": "https://resource.tradingkey.com/cdn/images/tools/empty.png",
+      "source": "TradingKey",
+      "category_within_source": "General",
+      "source_domain": "TradingKey",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.920380"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.722136"
+        }
+      ],
+      "overall_sentiment_score": 0.158946,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "BCPC",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.490750",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.649021",
+          "ticker_sentiment_score": "0.182943",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "GEV",
+          "relevance_score": "0.644910",
+          "ticker_sentiment_score": "0.025277",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "TPR",
+          "relevance_score": "0.647332",
+          "ticker_sentiment_score": "0.030165",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "VRSK",
+          "relevance_score": "0.632204",
+          "ticker_sentiment_score": "0.000714",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Apple overtakes Nvidia as world's most valuable company",
+      "url": "https://qz.com/apple-reclaims-most-valuable-company-nvidia-072726",
+      "time_published": "20260727T175301",
+      "authors": [
+        "Cris Tolomia"
+      ],
+      "summary": "Apple has reclaimed its title as the world's most valuable public company, with its market capitalization reaching $4.94 trillion, surpassing Nvidia's $4.83 trillion. This shift reflects investor sentiment favoring companies with more controlled AI spending, a strategy Apple has maintained by declining capital expenditures in recent quarters. The article also notes upcoming changes in Apple's leadership, with Tim Cook stepping down as CEO on September 1st, to be replaced by John Ternus.",
+      "banner_image": "https://qz.com/cdn-cgi/image/width=1920,quality=85,format=auto/https://assets.qz.com/media/GettyImages-2228262902-1920x1280.jpg",
+      "source": "Quartz",
+      "category_within_source": "General",
+      "source_domain": "Quartz",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.923314"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.635207"
+        }
+      ],
+      "overall_sentiment_score": 0.097182,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.455323",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": "0.924451",
+          "ticker_sentiment_score": "0.141654",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "GOOGL",
+          "relevance_score": "0.706386",
+          "ticker_sentiment_score": "0.132613",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "TSLA",
+          "relevance_score": "0.609236",
+          "ticker_sentiment_score": "-0.311084",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "MSFT",
+          "relevance_score": "0.640638",
+          "ticker_sentiment_score": "0.100371",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Amazon files FCC application for 5,105 direct-to-device satellites",
+      "url": "https://qz.com/amazon-leo-fcc-direct-to-device-satellites-5105-072726",
+      "time_published": "20260727T164118",
+      "authors": [
+        "Cris Tolomia"
+      ],
+      "summary": "Amazon has filed an application with the FCC to launch 5,105 low Earth orbit satellites for direct-to-device connectivity, with deployment expected to begin in 2028. This system, part of the Amazon Leo Direct-to-Device initiative, aims to provide voice, messaging, data, and emergency services to areas outside cellular coverage, leveraging spectrum from its planned acquisition of Globalstar. The service will partner with mobile network operators and operate alongside existing Globalstar and Amazon Leo broadband constellations.",
+      "banner_image": "https://qz.com/cdn-cgi/image/width=1920,quality=85,format=auto/https://assets.qz.com/media/GettyImages-2195802149-1920x1281.jpg",
+      "source": "Quartz",
+      "category_within_source": "General",
+      "source_domain": "Quartz",
+      "topics": [
+        {
+          "topic": "mergers_and_acquisitions",
+          "relevance_score": "0.849863"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "retail_wholesale",
+          "relevance_score": "0.628293"
+        }
+      ],
+      "overall_sentiment_score": 0.23955,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "GSAT",
+          "relevance_score": "0.800786",
+          "ticker_sentiment_score": "0.348511",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.321377",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.701286",
+          "ticker_sentiment_score": "0.279064",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "TMUS",
+          "relevance_score": "0.640304",
+          "ticker_sentiment_score": "0.126218",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Why market volatility may be part of the bull case",
+      "url": "https://www.invesco.com/us/en/insights/volatility-bull-market-ai-tech.html",
+      "time_published": "20260727T160816",
+      "authors": [
+        "Brian Levitt"
+      ],
+      "summary": "Market volatility, while often seen negatively, can actually be a component of a healthy bull market. Periods of doubt and pullbacks can reset and extend market cycles, as evidenced by the \"Magnificent 7\" stocks and the broader S&P 500, which have seen highs continue to get higher despite setbacks. Skepticism surrounding AI investments is natural but doesn't signify a deteriorating investment thesis, as the structural bull market remains intact, supported by early-stage investment themes and a resilient economy.",
+      "banner_image": "https://www.invesco.com/content/dam/invesco/us/en/images/insights/ARTCL-HRO-volatility-bull-market-ai-tech.jpg",
+      "source": "Invesco",
+      "category_within_source": "General",
+      "source_domain": "Invesco",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.937936"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.817931"
+        },
+        {
+          "topic": "economy_monetary",
+          "relevance_score": "0.708324"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.734074"
+        }
+      ],
+      "overall_sentiment_score": 0.271591,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "IVZ",
+          "relevance_score": "0.348486",
+          "ticker_sentiment_score": "0.005717",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "GOOGL",
+          "relevance_score": "0.701426",
+          "ticker_sentiment_score": "0.338939",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "GOOG",
+          "relevance_score": "0.746825",
+          "ticker_sentiment_score": "0.305692",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": "0.610248",
+          "ticker_sentiment_score": "0.335938",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.646429",
+          "ticker_sentiment_score": "0.321993",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "27th July \u2013 Threat Intelligence Report",
+      "url": "https://research.checkpoint.com/2026/27th-july-threat-intelligence-report/",
+      "time_published": "20260727T154152",
+      "authors": [],
+      "summary": "This Threat Intelligence Report for July 27, 2026, details recent cybersecurity incidents including ransomware attacks on Nichirei and Stadler Rail, data breaches at Origin Energy and Romania's land registry, and emerging AI-related threats. It also covers critical vulnerabilities patched by Check Point, Oracle, and Microsoft, highlighting Check Point's research on brand impersonation in phishing and the growing use of infostealer logs.",
+      "banner_image": "https://research.checkpoint.com/wp-content/uploads/2022/02/cpr_socialTWITTER_WeeklyIntelligenceReportHero.jpg",
+      "source": "Check Point Research",
+      "category_within_source": "General",
+      "source_domain": "Check Point Research",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "1.000000"
+        }
+      ],
+      "overall_sentiment_score": -0.091996,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "CHKP",
+          "relevance_score": "0.914665",
+          "ticker_sentiment_score": "0.345878",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "MSFT",
+          "relevance_score": "0.748988",
+          "ticker_sentiment_score": "-0.296361",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "ORCL",
+          "relevance_score": "0.649636",
+          "ticker_sentiment_score": "-0.211939",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": "0.576479",
+          "ticker_sentiment_score": "-0.138256",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.560270",
+          "ticker_sentiment_score": "-0.122846",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Apple stock he record to outperform 'Mag 7' as iPhone maker avoids 'capex pitfalls'",
+      "url": "https://finance.yahoo.com/markets/article/apple-overtakes-nvidia-as-most-valuable-company-as-iphone-maker-avoids-capex-pitfalls-150316032.html",
+      "time_published": "20260727T150341",
+      "authors": [
+        "Ines Ferr\u00e9"
+      ],
+      "summary": "Apple has reclaimed its position as the world's most valuable company, surpassing Nvidia, with its stock heading towards a record close. The company's shares have risen over 22% year to date, outperforming other \"Magnificent Seven\" stocks, as investors favor its restrained AI spending approach. This strategy has allowed Apple to avoid \"capex pitfalls\" that have affected competitors investing heavily in AI infrastructure, and the market anticipates Apple's upcoming earnings report for updates on its \"Apple Intelligence\" features.",
+      "banner_image": "https://s.yimg.com/lo/mysterio/api/AA96C863D68987BBAD674B140BAA79D0982FE74E9440BAC150FD578A9E15CA60/subgraphmysterio/resizefill_w232_h48;quality_100;format_webp/https:%2F%2Fs.yimg.com%2Fos%2Fcreatr-uploaded-images%2F2020-12%2F02246f50-3412-11eb-bfdd-de89f8b3b8b8",
+      "source": "Yahoo Finance",
+      "category_within_source": "General",
+      "source_domain": "Yahoo Finance",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.903243"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.946864"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.823001"
+        }
+      ],
+      "overall_sentiment_score": -0.107458,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "NVDA",
+          "relevance_score": "0.952369",
+          "ticker_sentiment_score": "-0.427295",
+          "ticker_sentiment_label": "Bearish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.461156",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "GOOGL",
+          "relevance_score": "0.665084",
+          "ticker_sentiment_score": "-0.264641",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "GOOG",
+          "relevance_score": "0.623873",
+          "ticker_sentiment_score": "0.125844",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "TSLA",
+          "relevance_score": "0.584773",
+          "ticker_sentiment_score": "-0.405506",
+          "ticker_sentiment_label": "Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Incyte Corporation stock hits 52-week high at 119.6 USD",
+      "url": "https://www.investing.com/news/company-news/incyte-corporation-stock-hits-52week-high-at-1196-usd-93CH-4814395",
+      "time_published": "20260727T142408",
+      "authors": [
+        "Investing.com"
+      ],
+      "summary": "Incyte Corporation's stock reached a 52-week high of $119.60, reflecting a 68.7% increase over the past year and investor confidence in its performance. The company, with a market cap of $23.74 billion, boasts a P/E ratio of 16.68 and 21.48% revenue growth. Recent positive developments include a global license agreement with Halozyme Therapeutics and upcoming presentations of oncology program data at ESMO 2026, alongside reiterated \"Buy\" ratings and raised price targets from various analysts.",
+      "banner_image": "https://i-invdn-com.investing.com/news/LYNXMPEM431CY_1200_L.jpg",
+      "source": "Investing.com",
+      "category_within_source": "General",
+      "source_domain": "Investing.com",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.931248"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.938305"
+        },
+        {
+          "topic": "life_sciences",
+          "relevance_score": "0.826240"
+        }
+      ],
+      "overall_sentiment_score": 0.271079,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INCY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.537732",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "HAL",
+          "relevance_score": "0.575218",
+          "ticker_sentiment_score": "0.346904",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.694756",
+          "ticker_sentiment_score": "0.229395",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": "0.648300",
+          "ticker_sentiment_score": "0.181150",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "GOOGL",
+          "relevance_score": "0.657910",
+          "ticker_sentiment_score": "0.225943",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Apple overtakes Nvidia as world\u2019s most valuable company as it barrels toward $5T",
+      "url": "https://9to5mac.com/2026/07/27/apple-reclaims-most-valuable-company-title-from-nvidia-as-it-barrels-toward-5t/",
+      "time_published": "20260727T141335",
+      "authors": [
+        "Zac Hall"
+      ],
+      "summary": "Apple has once again become the world's most valuable company by market capitalization, surpassing Nvidia during intraday trading. The company's stock is approaching a $5 trillion valuation, having already touched $4.9 trillion. This milestone follows a recovery from a brief dip caused by price increases during a global RAM shortage, and comes as Apple prepares for a CEO transition from Tim Cook to John Ternus.",
+      "banner_image": "https://9to5mac.com/wp-content/uploads/sites/6/2026/05/tim-cook-wwdc26-keynote-wave.jpg?quality=82&strip=all&w=1600",
+      "source": "9to5Mac",
+      "category_within_source": "General",
+      "source_domain": "9to5Mac",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.934652"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.819996"
+        }
+      ],
+      "overall_sentiment_score": 0.331159,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "NVDA",
+          "relevance_score": "0.862397",
+          "ticker_sentiment_score": "0.294017",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.422240",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Gabelli Dividend & Income stock hits all-time high at 30.09 USD",
+      "url": "https://www.investing.com/news/company-news/gabelli-dividend--income-stock-hits-alltime-high-at-3009-usd-93CH-4814410",
+      "time_published": "20260727T141112",
+      "authors": [
+        "Investing.com"
+      ],
+      "summary": "Gabelli Dividend & Income Trust (GDV) stock has reached an all-time high of $30.09 USD, boasting an 18.61% total return over the past year. This milestone reflects strong investor confidence in the trust's strategy of providing a consistent dividend income, with a current yield of 6.05% and 23 consecutive years of dividend payments. The company also recently increased its annual distribution by 7% to $1.80 per share, effective January 2026.",
+      "banner_image": "https://i-invdn-com.investing.com/news/LYNXMPEM502AK_1200_L.jpg",
+      "source": "Investing.com",
+      "category_within_source": "General",
+      "source_domain": "Investing.com",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.905270"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.835335"
+        }
+      ],
+      "overall_sentiment_score": -0.076597,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "GDV-P-H",
+          "relevance_score": "0.300259",
+          "ticker_sentiment_score": "0.038259",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": "0.606542",
+          "ticker_sentiment_score": "-0.437542",
+          "ticker_sentiment_label": "Bearish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.623300",
+          "ticker_sentiment_score": "0.211863",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Will NVIDIA or Apple Be the Largest Company By Year\u2019s End? \u2014 Here\u2019s the Name I\u2019m Putting My Chips On",
+      "url": "https://247wallst.com/investing/2026/07/27/will-nvidia-or-apple-be-the-largest-company-by-years-end-heres-the-name-im-putting-my-chips-on/",
+      "time_published": "20260727T140932",
+      "authors": [
+        "Joey Frenette"
+      ],
+      "summary": "The article discusses whether NVIDIA or Apple will hold the title of the world's largest company by the end of the year. The author argues that Apple, with its upcoming CEO transition to John Ternus, new device-leasing program, and hybrid AI strategy focused on the customer, is a stronger contender. Despite NVIDIA's strong performance, Apple's ability to monetize AI without the massive capital expenditure of hyperscalers and potential for a \"platform-shifting megatrend\" with iOS 27 are highlighted as key advantages.",
+      "banner_image": "https://247wallst.com/wp-content/uploads/2025/01/GettyImages-2173355716-scaled.jpg",
+      "source": "24/7 Wall St.",
+      "category_within_source": "General",
+      "source_domain": "24/7 Wall St.",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.916778"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.831778"
+        }
+      ],
+      "overall_sentiment_score": -0.094894,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "NVDA",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.239339",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.415117",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AMAT",
+          "relevance_score": "0.627178",
+          "ticker_sentiment_score": "-0.208257",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "LRCX",
+          "relevance_score": "0.636272",
+          "ticker_sentiment_score": "-0.201966",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "AMD",
+          "relevance_score": "0.617835",
+          "ticker_sentiment_score": "-0.232334",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Will NVIDIA or Apple Be the Largest Company By Year\u2019s End? \u2014 Here\u2019s the Name I\u2019m Putting My Chips On",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-apple-largest-company-end-134419034.html",
+      "time_published": "20260727T140702",
+      "authors": [
+        "Joey Frenette"
+      ],
+      "summary": "This article debates whether NVIDIA or Apple will be the largest company by the end of the year, ultimately favoring Apple. The author points to Apple's new device-leasing program, hybrid AI strategy, the incoming CEO John Ternus, and the potential for iOS 27 as key advantages. While NVIDIA is still performing well, the author suggests it faces greater risk from a semiconductor sell-off, whereas Apple's customer-first AI approach monetizes the revolution without excessive capital expenditure.",
+      "banner_image": "https://s.yimg.com/lo/mysterio/api/BCA3855AF66CDCD9FEAD73A20A26AE693CDECF7CE4F63ADD3B2FC1969DAF7165/subgraphmysterio/resizefill_w48_h48;quality_100;format_webp/https:%2F%2Fs.yimg.com%2Fos%2Fcreatr-uploaded-images%2F2025-10%2F4c1b1d40-ab89-11f0-8fcd-756508880954",
+      "source": "Yahoo Finance",
+      "category_within_source": "General",
+      "source_domain": "Yahoo Finance",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.858821"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.814823"
+        }
+      ],
+      "overall_sentiment_score": 0.149965,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.475420",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": "0.976075",
+          "ticker_sentiment_score": "-0.252740",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Amazon files for 5,105-satellite direct-to-device network using Globalstar spectrum",
+      "url": "https://mlq.ai/news/amazon-files-for-5105-satellite-direct-to-device-network-using-globalstar-spectrum/",
+      "time_published": "20260727T133700",
+      "authors": [
+        "MLQ Agent"
+      ],
+      "summary": "Amazon's Kuiper Systems has applied to the FCC for permission to launch a new 5,105-satellite low Earth orbit constellation designed for direct-to-device connectivity using Globalstar's mobile-satellite spectrum. This network, separate from Amazon's Gen1 broadband system, would support voice, messaging, and data services and begin deployment in 2028. The approach differs from Starlink and AST SpaceMobile by utilizing spectrum already allocated for mobile-satellite service, rather than relying on the FCC's Supplemental Coverage from Space framework.",
+      "banner_image": "https://mlq.ai/media/news_images/amazon-sattelite.png",
+      "source": "MLQ.ai",
+      "category_within_source": "General",
+      "source_domain": "MLQ.ai",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.836643"
+        },
+        {
+          "topic": "mergers_and_acquisitions",
+          "relevance_score": "0.730471"
+        }
+      ],
+      "overall_sentiment_score": 0.202666,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "GSAT",
+          "relevance_score": "0.984827",
+          "ticker_sentiment_score": "0.323440",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": "0.930697",
+          "ticker_sentiment_score": "0.332027",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.717361",
+          "ticker_sentiment_score": "0.202286",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "TMUS",
+          "relevance_score": "0.640694",
+          "ticker_sentiment_score": "0.133924",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "TSLA",
+          "relevance_score": "0.582688",
+          "ticker_sentiment_score": "-0.124779",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Capital One\u2019s MLB partnership is turning fan experiences into long-term customer value",
+      "url": "https://fortune.com/2026/07/27/capital-one-mlb-partnership-turning-fan-experiences-into-long-term-customer-value/",
+      "time_published": "20260727T124239",
+      "authors": [
+        "Sheryl Estrada"
+      ],
+      "summary": "Capital One's MLB partnership leverages exclusive experiences and cardholder perks to attract and retain customers, exemplified by the successful All-Star Village event that drew over 111,000 attendees. This sponsorship is a long-duration customer acquisition strategy for Capital One, tying card perks directly to MLB and mapping fan journeys to customer lifetime value. The initiative comes as Capital One integrates Discover Financial Services and reports strong financial results, underscoring its capital deployment for long-term growth.",
+      "banner_image": "https://fortune.com/img-assets/wp-content/uploads/2026/07/SQ_80597.jpg?format=webp&w=1440&q=100",
+      "source": "Fortune",
+      "category_within_source": "General",
+      "source_domain": "Fortune",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.913347"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.843833"
+        },
+        {
+          "topic": "mergers_and_acquisitions",
+          "relevance_score": "0.700199"
+        },
+        {
+          "topic": "retail_wholesale",
+          "relevance_score": "0.632690"
+        }
+      ],
+      "overall_sentiment_score": 0.215922,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "COF",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.487109",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "BAC",
+          "relevance_score": "0.644674",
+          "ticker_sentiment_score": "0.130476",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.574231",
+          "ticker_sentiment_score": "0.065294",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Precision Optics Corporation Inc (POCI) Earnings Forecast: Future EPS & Revenue Growth Estimates",
+      "url": "https://www.tradingkey.com/markets/stocks/poci/earnings",
+      "time_published": "20260727T124119",
+      "authors": [],
+      "summary": "Precision Optics Corporation Inc (POCI) currently holds an earnings forecast score of 8.00, placing it 68th in the Healthcare Equipment & Supplies industry. Based on analysis from one analyst, the company's stock has a \"Buy\" rating with an 86.05% upside space target price. The article highlights analyst ratings and peer comparisons but notes that specific financial forecasting data for EPS, Revenue, and Net Profit has not yet been disclosed by the company.",
+      "banner_image": "https://resource.tradingkey.com/static/lseg/stocks/POCI.png",
+      "source": "TradingKey",
+      "category_within_source": "General",
+      "source_domain": "TradingKey",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.927702"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.827024"
+        },
+        {
+          "topic": "life_sciences",
+          "relevance_score": "0.610852"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.645272"
+        }
+      ],
+      "overall_sentiment_score": 0.26016,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "POCI",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.531042",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.709943",
+          "ticker_sentiment_score": "0.308804",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "GEV",
+          "relevance_score": "0.606984",
+          "ticker_sentiment_score": "0.100583",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "TPR",
+          "relevance_score": "0.637750",
+          "ticker_sentiment_score": "0.134091",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "VRSK",
+          "relevance_score": "0.640825",
+          "ticker_sentiment_score": "0.101132",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "How Amazon Leo plans to connect mobile devices from space",
+      "url": "https://www.aboutamazon.com/news/amazon-leo/amazon-leo-direct-to-device-satellite-service-explained",
+      "time_published": "20260727T124118",
+      "authors": [
+        "Amazon Staff"
+      ],
+      "summary": "Amazon Leo has filed with the FCC to launch up to 5,105 new satellites to provide direct-to-device (D2D) connectivity, including voice, data, messaging, and emergency services, directly to mobile devices from space. The deployment is set to begin in 2028 and will utilize Globalstar\u2019s spectrum through a definitive merger agreement. This D2D system will complement Leo's existing broadband services, expanding connectivity to underserved areas globally and partnering with mobile network operators.",
+      "banner_image": "https://assets.aboutamazon.com/74/25/1ea4aa42490d9e8e6d64e1708579/about-amazon-hero-leo-d2d-camping-with-aurora.jpg",
+      "source": "About Amazon",
+      "category_within_source": "General",
+      "source_domain": "About Amazon",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.904402"
+        }
+      ],
+      "overall_sentiment_score": 0.478126,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "GSAT",
+          "relevance_score": "0.905639",
+          "ticker_sentiment_score": "0.743047",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": "0.804174",
+          "ticker_sentiment_score": "0.625912",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.742242",
+          "ticker_sentiment_score": "0.443870",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "DAL",
+          "relevance_score": "0.600332",
+          "ticker_sentiment_score": "0.230881",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Veeco Instruments Inc (VECO) Earnings Forecast: Future EPS & Revenue Growth Estimates",
+      "url": "https://www.tradingkey.com/markets/stocks/veco/earnings",
+      "time_published": "20260727T124045",
+      "authors": [],
+      "summary": "Veeco Instruments Inc (VECO) has an earnings forecast score of 7.00, ranking 76th in the Semiconductors & Semiconductor Equipment industry. Analysts have an average price target of $30.00, with a consensus indicating a \"Buy\" trend. The company's expected revenue for the next quarter is $180.11M, and its next quarter EPS is projected at $0.26.",
+      "banner_image": "https://resource.tradingkey.com/static/lseg/stocks/VECO.png",
+      "source": "TradingKey",
+      "category_within_source": "General",
+      "source_domain": "TradingKey",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.932466"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.807417"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.714332"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.622941"
+        }
+      ],
+      "overall_sentiment_score": 0.141082,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "VECO",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.216835",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "GEV",
+          "relevance_score": "0.615186",
+          "ticker_sentiment_score": "0.141180",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.630607",
+          "ticker_sentiment_score": "0.146254",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "TPR",
+          "relevance_score": "0.605868",
+          "ticker_sentiment_score": "0.121352",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "VRSK",
+          "relevance_score": "0.642640",
+          "ticker_sentiment_score": "0.113467",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Norwegian Cruise Line Holdings (NCLH) Q2 2026 Preview: EPS Est. $0.39, Reports July 30",
+      "url": "https://news.alphastreet.com/norwegian-cruise-line-holdings-nclh-q2-2026-preview-eps-est-0-39-reports-july-30/amp/",
+      "time_published": "20260727T120840",
+      "authors": [
+        "AlphaStreet Newsdesk"
+      ],
+      "summary": "Norwegian Cruise Line Holdings (NCLH) is expected to report Q2 2026 earnings on July 30, with analysts forecasting an EPS of $0.39 and revenue of $2.64B. This represents a significant decline in EPS from the previous year, despite projected revenue growth, indicating margin compression. Investors will be closely watching for operational metrics, management commentary on costs, and updated guidance to assess whether profitability pressures are transitory or structural.",
+      "banner_image": "https://cdn.news.alphastreet.com/wp-content/uploads/2026/07/27062509/NCLH-earnings_preview-chart-1024x538.png",
+      "source": "AlphaStreet",
+      "category_within_source": "General",
+      "source_domain": "AlphaStreet",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.939581"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.741841"
+        }
+      ],
+      "overall_sentiment_score": -0.072356,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "NCLH",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.298718",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": "0.626200",
+          "ticker_sentiment_score": "0.012731",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.622773",
+          "ticker_sentiment_score": "0.034082",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "TROW",
+          "relevance_score": "0.553388",
+          "ticker_sentiment_score": "0.037001",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Higher retention, low subsidies at Verizon negative for Apple: UBS",
+      "url": "https://seekingalpha.com/news/4618845-higher-retention-lower-subsidies-at-verizon-slight-negative-for-apple-ubs",
+      "time_published": "20260727T120400",
+      "authors": [
+        "Ravikash Bakolia"
+      ],
+      "summary": "UBS analysts have indicated that higher customer retention rates and reduced subsidies at Verizon (VZ) are likely to have a slight negative impact on Apple (AAPL). Verizon's second-quarter postpaid upgrade metrics were more subdued compared to AT&T and T-Mobile, suggesting a potential challenge for Apple's device sales through the carrier.",
+      "banner_image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/1705316992/image_1705316992.jpg?io=getty-c-w630",
+      "source": "Seeking Alpha",
+      "category_within_source": "General",
+      "source_domain": "Seeking Alpha",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.949820"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.645371"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.706642"
+        }
+      ],
+      "overall_sentiment_score": 0.066361,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.999665",
+          "ticker_sentiment_score": "-0.238798",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "VZ",
+          "relevance_score": "0.806383",
+          "ticker_sentiment_score": "0.231603",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "T",
+          "relevance_score": "0.622050",
+          "ticker_sentiment_score": "0.141661",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "TMUS",
+          "relevance_score": "0.621528",
+          "ticker_sentiment_score": "0.142160",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "237,000 Shares in Globalstar, Inc. $GSAT Purchased by Sculptor Capital LP",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-237000-shares-in-globalstar-inc-gsat-purchased-by-sculptor-capital-lp-2026-07-27/",
+      "time_published": "20260727T114118",
+      "authors": [
+        "MarketBeat"
+      ],
+      "summary": "Sculptor Capital LP acquired 237,000 shares of Globalstar (NASDAQ:GSAT) in the first quarter, valued at approximately $15.7 million, giving it a 0.18% stake. Despite this acquisition and other institutional investor activity, analyst sentiment remains cautious with a consensus \"Hold\" rating and a $69 target price. Globalstar reported a 16.7% year-over-year revenue increase to $70.06 million but missed EPS expectations with a loss of $0.16 per share.",
+      "banner_image": "https://www.marketbeat.com/logos/globalstar-inc-logo-1200x675.png?v=20250616053136",
+      "source": "MarketBeat",
+      "category_within_source": "General",
+      "source_domain": "MarketBeat",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.914829"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.834124"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.739584"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.638493"
+        }
+      ],
+      "overall_sentiment_score": 0.059609,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "GSAT",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.094213",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": "0.618413",
+          "ticker_sentiment_score": "0.118948",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.553142",
+          "ticker_sentiment_score": "0.139688",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Apple's smart glasses are delayed as company wrestles with privacy concerns",
+      "url": "https://www.techspot.com/news/113246-apple-smart-glasses-may-delayed-company-wrestles-privacy.html",
+      "time_published": "20260727T113659",
+      "authors": [
+        "Rob Thubron"
+      ],
+      "summary": "Apple's smart glasses, codenamed N50, are reportedly delayed until late 2027 due to the company's efforts to address significant privacy concerns. Apple is exploring hardware and software solutions, including on-device data processing, camera restrictions, and preventing usage for AI training, to differentiate its product from previous controversial smart glasses and align with its privacy-focused brand. This delay aims to prevent the glasses from becoming a privacy nightmare, a problem that has plagued similar devices from other companies like Meta and Google.",
+      "banner_image": "https://www.techspot.com/images2/news/bigimage/2026/07/2026-07-27-image-9.jpg",
+      "source": "TechSpot",
+      "category_within_source": "General",
+      "source_domain": "TechSpot",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "1.000000"
+        }
+      ],
+      "overall_sentiment_score": -0.140484,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.246874",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "META",
+          "relevance_score": "0.706399",
+          "ticker_sentiment_score": "0.017193",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Welch & Forbes LLC Sells 22,288 Shares of Apple Inc. $AAPL",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-welch-forbes-llc-sells-22288-shares-of-apple-inc-aapl-2026-07-27/",
+      "time_published": "20260727T103657",
+      "authors": [
+        "MarketBeat"
+      ],
+      "summary": "Welch & Forbes LLC reduced its stake in Apple Inc. by 1.3% in the first quarter, selling 22,288 shares but still retaining 1.68 million shares valued at $426.3 million. Apple remains the firm's second-largest holding, representing about 5.5% of its portfolio. The article highlights Apple's strong quarterly results, increased dividend, broadly positive analyst sentiment, and outlines recent institutional investor activities and key news impacting the company.",
+      "banner_image": "https://www.marketbeat.com/logos/apple-inc-logo-1200x675.png",
+      "source": "MarketBeat",
+      "category_within_source": "General",
+      "source_domain": "MarketBeat",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.907443"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.845039"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.701594"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.601503"
+        }
+      ],
+      "overall_sentiment_score": 0.270817,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.287029",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "European Fund Returns to Nio with $19M Stake in First Major Q2 2026 Filing",
+      "url": "https://eletric-vehicles.com/nio/european-fund-returns-to-nio-with-19m-stake-in-first-major-q2-2026-filing/",
+      "time_published": "20260727T101252",
+      "authors": [
+        "Cl\u00e1udio Afonso"
+      ],
+      "summary": "Assenagon Asset Management, a European fund managing approximately \u20ac83 billion, has re-established a significant position in Nio, acquiring 3,756,576 American depositary shares valued at over $19 million as of June 30, 2026. This move marks Assenagon's largest investment in Nio to date, 55 times greater than its previous peak holding, following a complete exit in late 2024. The filing provides the first insight into institutional investment activity in Nio for Q2 2026, with more updates expected from other major holders in the coming weeks.",
+      "banner_image": "https://eletric-vehicles.com/cdn-cgi/image/format=auto,quality=82/https://eletric-vehicles.com/wp-content/uploads/2026/07/006c7s6wgy1iey4y6nmbtj33uw2kce82-1600x1064.jpg",
+      "source": "Electric Vehicles",
+      "category_within_source": "General",
+      "source_domain": "Electric Vehicles",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.913533"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.802165"
+        }
+      ],
+      "overall_sentiment_score": 0.364928,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "NIO",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.258073",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "MSFT",
+          "relevance_score": "0.590345",
+          "ticker_sentiment_score": "0.399165",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.580307",
+          "ticker_sentiment_score": "0.362653",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": "0.600203",
+          "ticker_sentiment_score": "0.367466",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "GOOGL",
+          "relevance_score": "0.591253",
+          "ticker_sentiment_score": "0.374543",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Flex Union Busting Malaysia: Voting Controversy Explained",
+      "url": "https://www.industriall-union.org/flex-investor-scrutiny-malaysia-union-busting-agm",
+      "time_published": "20260727T100932",
+      "authors": [],
+      "summary": "Institutional investors are being urged to pressure Flex Ltd. regarding union suppression tactics at its Penang, Malaysia plant ahead of its annual general meeting. Workers at a Flex subsidiary in Malaysia attempted to unionize in July 2025, but the ballot failed to meet the required threshold due to alleged company interference, despite 92% of voters supporting recognition. IndustriALL Global Union has filed a formal complaint with the ILO and is calling for a re-run ballot free from employer influence.",
+      "banner_image": "https://www.industriall-union.org/wp-content/uploads/2026/07/WhatsApp-Image-2025-07-25-at-16.08.52.jpeg",
+      "source": "industriall-union",
+      "category_within_source": "General",
+      "source_domain": "industriall-union",
+      "topics": [
+        {
+          "topic": "manufacturing",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.700351"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.628829"
+        }
+      ],
+      "overall_sentiment_score": -0.165912,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "FLEX",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.409919",
+          "ticker_sentiment_label": "Bearish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.708686",
+          "ticker_sentiment_score": "0.105917",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "FEUS ETF Profile: Dividends, Returns (BOATS:FEUS)",
+      "url": "https://www.tradingview.com/symbols/BOATS-FEUS/profile/",
+      "time_published": "20260727T094021",
+      "authors": [],
+      "summary": "The FEUS ETF (FlexShares ESG & Climate US Large Cap Core Index Fund) provides exposure to US companies with strong environmental, social, and governance attributes. It tracks the Northern Trust ESG & Climate US Large Cap Core Index and invests primarily in stocks, with major holdings in Electronic Technology and Technology Services. The ETF has an expense ratio of 0.09% and pays quarterly dividends, with its last dividend showing a 23.59% increase.",
+      "banner_image": "https://s3-symbol-logo.tradingview.com/flexshares-core-select-bond-fund--big.svg",
+      "source": "TradingView",
+      "category_within_source": "General",
+      "source_domain": "TradingView",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.913812"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.833183"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.633180"
+        }
+      ],
+      "overall_sentiment_score": 0.215589,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "FEUS",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.145594",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "NTRS",
+          "relevance_score": "0.621457",
+          "ticker_sentiment_score": "0.115981",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.713795",
+          "ticker_sentiment_score": "0.307166",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": "0.731148",
+          "ticker_sentiment_score": "0.312638",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Apple Inc. $AAPL is International Assets Investment Management LLC's 5th Largest Position",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-apple-inc-aapl-is-international-assets-investment-management-llcs-5th-largest-position-2026-07-27/",
+      "time_published": "20260727T093700",
+      "authors": [
+        "MarketBeat"
+      ],
+      "summary": "International Assets Investment Management LLC (IAIM) has maintained Apple Inc. as its fifth-largest holding despite a slight reduction in its stake, valuing its position at $81.4 million. Other major institutional investors have also significantly increased their holdings in Apple. The article highlights Apple's strong financial performance, positive analyst sentiment, and recent dividend increase, alongside a discussion of both positive and negative news impacting the company.",
+      "banner_image": "https://www.marketbeat.com/logos/apple-inc-logo-1200x675.png",
+      "source": "MarketBeat",
+      "category_within_source": "General",
+      "source_domain": "MarketBeat",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.946680"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.913119"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.832464"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.706843"
+        }
+      ],
+      "overall_sentiment_score": 0.261891,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.334503",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "F",
+          "relevance_score": "0.635757",
+          "ticker_sentiment_score": "0.219436",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Apple Inc. (NASDAQ:AAPL) Shares Approach High Ahead of July 30 Earnings as Focus Turns to Lean AI Approach",
+      "url": "https://ts2.tech/en/apple-inc-nasdaqaapl-shares-approach-high-ahead-of-july-30-earnings-as-focus-turns-to-lean-ai-approach/",
+      "time_published": "20260727T091659",
+      "authors": [
+        "Shan Ahmed Khan"
+      ],
+      "summary": "Apple Inc. (NASDAQ:AAPL) is nearing its all-time high as investors anticipate its July 30 earnings report, focusing on its lean AI approach compared to capital-intensive rivals like Alphabet. Apple's minimal capital expenditure and high R&D spending, alongside strong iPhone sales and services growth, are key highlights. The upcoming earnings call will address memory costs, iPhone demand, margin guidance, and capital allocation, especially given the impending CEO transition.",
+      "banner_image": "https://ts2.tech/wp-content/uploads/2026/07/apple-inc-nasdaqaapl-stock-rises-3-5-as-low-capex-ai-profile-draws-a-premium-featured.jpg",
+      "source": "TechStock\u00b2",
+      "category_within_source": "General",
+      "source_domain": "TechStock\u00b2",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.934864"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.828579"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.741269"
+        }
+      ],
+      "overall_sentiment_score": -0.158742,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.996528",
+          "ticker_sentiment_score": "0.301547",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "GOOGL",
+          "relevance_score": "0.744305",
+          "ticker_sentiment_score": "-0.423558",
+          "ticker_sentiment_label": "Bearish"
+        },
+        {
+          "ticker": "MSCI",
+          "relevance_score": "0.561671",
+          "ticker_sentiment_score": "-0.341180",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Caxton Associates LLP Makes New $1.11 Million Investment in Cirrus Logic, Inc. $CRUS",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-caxton-associates-llp-makes-new-111-million-investment-in-cirrus-logic-inc-crus-2026-07-27/",
+      "time_published": "20260727T083932",
+      "authors": [
+        "MarketBeat"
+      ],
+      "summary": "Caxton Associates LLP has invested $1.11 million in Cirrus Logic, Inc. by purchasing 7,683 shares. This semiconductor company, traded as NASDAQ:CRUS, recently reported strong quarterly earnings, beating analyst estimates with $1.95 EPS and revenue of $448.52 million. While institutional investors collectively own a significant portion of the company, insiders have recently sold shares totaling $3.58 million.",
+      "banner_image": "https://www.marketbeat.com/logos/cirrus-logic-inc-logo-1200x675.png?v=20240425091016",
+      "source": "MarketBeat",
+      "category_within_source": "General",
+      "source_domain": "MarketBeat",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.926958"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.806751"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.727744"
+        }
+      ],
+      "overall_sentiment_score": 0.187105,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "CRUS",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.231163",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.704617",
+          "ticker_sentiment_score": "0.114123",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Kaizen Financial Strategies Has $15.17 Million Stock Position in Apple Inc. $AAPL",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-kaizen-financial-strategies-has-1517-million-stock-position-in-apple-inc-aapl-2026-07-27/",
+      "time_published": "20260727T083759",
+      "authors": [
+        "MarketBeat"
+      ],
+      "summary": "Kaizen Financial Strategies has a significant $15.17 million stock position in Apple Inc. despite trimming its stake by 2.8% in the first quarter. The firm's 57,584 shares of Apple's stock represent 6.7% of its investment portfolio, making it their third-largest holding. Apple recently reported strong quarterly earnings, exceeding analyst expectations, and maintains a \"Moderate Buy\" consensus rating among analysts.",
+      "banner_image": "https://www.marketbeat.com/logos/apple-inc-logo-1200x675.png",
+      "source": "MarketBeat",
+      "category_within_source": "General",
+      "source_domain": "MarketBeat",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.932893"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.816859"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.714396"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.601942"
+        }
+      ],
+      "overall_sentiment_score": 0.523934,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.525018",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Daxor Corp (DXR) Earnings Forecast: Future EPS & Revenue Growth Estimates",
+      "url": "https://www.tradingkey.com/markets/stocks/dxr/earnings",
+      "time_published": "20260727T081019",
+      "authors": [],
+      "summary": "This article provides an earnings forecast for Daxor Corp (DXR), detailing analyst ratings and price targets. Based on two analysts, the consensus is a \"Buy\" with a target price of $22.50, representing a 115.31% upside. The article also includes peer comparisons for analyst ratings.",
+      "banner_image": "https://resource.tradingkey.com/cdn/images/logo/web-logo-dark.png",
+      "source": "TradingKey",
+      "category_within_source": "General",
+      "source_domain": "TradingKey",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.911419"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.832255"
+        }
+      ],
+      "overall_sentiment_score": 0.254397,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "DXR",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.432288",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.631734",
+          "ticker_sentiment_score": "0.139704",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Carnegie Investment Counsel Sells 21,257 Shares of Apple Inc. $AAPL",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-carnegie-investment-counsel-sells-21257-shares-of-apple-inc-aapl-2026-07-27/",
+      "time_published": "20260727T074804",
+      "authors": [
+        "MarketBeat"
+      ],
+      "summary": "Carnegie Investment Counsel reduced its stake in Apple Inc. by 3.1% in the first quarter, selling 21,257 shares but still holding 664,385 shares valued at $168.6 million. Apple remains a significant holding for the firm, representing 3.3% of its portfolio. Despite the sale, analyst sentiment remains positive with a \"Moderate Buy\" rating, supported by Apple's strong quarterly earnings and dividend increase.",
+      "banner_image": "https://www.marketbeat.com/logos/apple-inc-logo-1200x675.png",
+      "source": "MarketBeat",
+      "category_within_source": "General",
+      "source_domain": "MarketBeat",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.938755"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.913252"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.806185"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.729733"
+        }
+      ],
+      "overall_sentiment_score": 0.106889,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.146314",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "RTX",
+          "relevance_score": "0.611884",
+          "ticker_sentiment_score": "0.140457",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "LMT",
+          "relevance_score": "0.638592",
+          "ticker_sentiment_score": "0.119474",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Apple Inc. $AAPL Shares Purchased by ARQ Wealth Advisors LLC",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-apple-inc-aapl-shares-purchased-by-arq-wealth-advisors-llc-2026-07-27/",
+      "time_published": "20260727T072105",
+      "authors": [
+        "MarketBeat"
+      ],
+      "summary": "ARQ Wealth Advisors LLC significantly increased its holdings in Apple Inc. (NASDAQ:AAPL) during the first quarter, boosting its stake by 99.1%. This makes Apple its 24th largest position, accounting for 1.3% of its investment portfolio. The article also details other institutional investors' activities, insider transactions, recent analyst ratings, and the company's financial performance and dividend increase.",
+      "banner_image": "https://www.marketbeat.com/logos/apple-inc-logo-1200x675.png",
+      "source": "MarketBeat",
+      "category_within_source": "General",
+      "source_domain": "MarketBeat",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.926200"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.804820"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.704306"
+        }
+      ],
+      "overall_sentiment_score": 0.429861,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.398074",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Associated Banc Corp Has $144.87 Million Position in Apple Inc. $AAPL",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-associated-banc-corp-has-14487-million-position-in-apple-inc-aapl-2026-07-27/",
+      "time_published": "20260727T072005",
+      "authors": [
+        "MarketBeat"
+      ],
+      "summary": "Associated Banc Corp reduced its stake in Apple Inc. by 1.7% in the first quarter, now holding 570,828 shares valued at $144.87 million, which represents 3.8% of its portfolio. Major institutional investors like Vanguard and State Street also hold significant positions. Analysts maintain a \"Moderate Buy\" rating for Apple, with a consensus price target of $327.40, despite concerns about its valuation and upcoming earnings.",
+      "banner_image": "https://www.marketbeat.com/logos/apple-inc-logo-1200x675.png",
+      "source": "MarketBeat",
+      "category_within_source": "General",
+      "source_domain": "MarketBeat",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.906913"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.826395"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.704870"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.606550"
+        }
+      ],
+      "overall_sentiment_score": 0.155805,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.970289",
+          "ticker_sentiment_score": "0.227294",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "JPM",
+          "relevance_score": "0.639978",
+          "ticker_sentiment_score": "0.104419",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "New Concept Energy Inc (GBR) Earnings Forecast: Future EPS & Revenue Growth Estimates",
+      "url": "https://www.tradingkey.com/markets/stocks/gbr/earnings",
+      "time_published": "20260727T071028",
+      "authors": [],
+      "summary": "This article provides an earnings forecast for New Concept Energy Inc (GBR), focusing on future EPS and revenue growth estimates. It highlights key financial metrics such as market cap and stock price, and positions the information within TradingKey's analytical framework including overall financial health, valuation, and risk assessment. The page was updated on July 27, 2026.",
+      "banner_image": "https://resource.tradingkey.com/static/lseg/stocks/GBR.png",
+      "source": "TradingKey",
+      "category_within_source": "General",
+      "source_domain": "TradingKey",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.609865"
+        }
+      ],
+      "overall_sentiment_score": 0.104299,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "GBR",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.130105",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.620970",
+          "ticker_sentiment_score": "0.118508",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "GEV",
+          "relevance_score": "0.606440",
+          "ticker_sentiment_score": "0.105428",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "TPR",
+          "relevance_score": "0.613358",
+          "ticker_sentiment_score": "0.115061",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Alphabet, Microsoft, Meta Platforms, Apple and Amazon are part of Zacks Earnings Preview",
+      "url": "https://www.tradingview.com/news/zacks:fbe40c941094b:0-alphabet-microsoft-meta-platforms-apple-and-amazon-are-part-of-zacks-earnings-preview/",
+      "time_published": "20260727T070701",
+      "authors": [],
+      "summary": "This article from Zacks Earnings Preview highlights the upcoming earnings reports for major tech companies like Alphabet, Microsoft, Meta Platforms, Apple, and Amazon. It discusses Alphabet's recent Q2 results, characterized by a cloud surge, a significant unrealized gain from SpaceX, and an unexpected increase in capital expenditures leading to negative free cash flow. The report also provides an overview of the Q2 earnings season, emphasizing the outsized impact of the \"Mag 7\" companies, particularly Alphabet, Micron, and Nvidia, on overall S&P 500 earnings growth.",
+      "banner_image": null,
+      "source": "TradingView",
+      "category_within_source": "General",
+      "source_domain": "TradingView",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.901998"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.838337"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.711758"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.637871"
+        }
+      ],
+      "overall_sentiment_score": 0.062755,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.700111",
+          "ticker_sentiment_score": "0.142439",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "GOOGL",
+          "relevance_score": "0.900092",
+          "ticker_sentiment_score": "-0.240870",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "MSFT",
+          "relevance_score": "0.835022",
+          "ticker_sentiment_score": "0.104940",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "META",
+          "relevance_score": "0.723698",
+          "ticker_sentiment_score": "0.126968",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": "0.743674",
+          "ticker_sentiment_score": "0.119463",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Google Joins Apple, Microsoft, Nintendo In Price Hikes As Memory Costs Surge Sixfold: Retail Bulls Unfazed After Q2 Capex Blow",
+      "url": "https://stocktwits.com/news-articles/markets/equity/google-joins-apple-microsoft-nintendo-in-price-hikes-memory-costs-surge-sixfold-retail-unfaxed/cZZx4BgR7CO",
+      "time_published": "20260727T063704",
+      "authors": [
+        "Yuvraj Malik"
+      ],
+      "summary": "Google is set to raise prices for its Pixel devices, including the upcoming Pixel 11, due to a sixfold surge in memory chip costs. This follows similar price adjustments from other tech giants like Apple, Microsoft, and Nintendo. Despite Google's recent earnings report and a record 82% growth in its cloud unit, its stock dipped last week after the company increased its capital expenditure forecast, yet retail investor sentiment remains bullish.",
+      "banner_image": "https://news.stocktwits-cdn.com/Getty_Images_1488931983_jpg_2eb508eda9.webp",
+      "source": "Stocktwits",
+      "category_within_source": "General",
+      "source_domain": "Stocktwits",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.809820"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.705272"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.606363"
+        },
+        {
+          "topic": "economy_monetary",
+          "relevance_score": "0.618382"
+        }
+      ],
+      "overall_sentiment_score": 0.180529,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.733829",
+          "ticker_sentiment_score": "0.304846",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "GOOGL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.142401",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "MSFT",
+          "relevance_score": "0.613432",
+          "ticker_sentiment_score": "0.242708",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "S&P 500 On Track To Post Best Net Profit Margin Since 2009: Market Strategist Says Big Tech Is Driving An \u2018Unprecedented Boom\u2019",
+      "url": "https://www.tradingview.com/news/stocktwits:be75acf1d094b:0-s-p-500-on-track-to-post-best-net-profit-margin-since-2009-market-strategist-says-big-tech-is-driving-an-unprecedented-boom/",
+      "time_published": "20260727T051759",
+      "authors": [],
+      "summary": "The S&P 500 is projected to achieve its highest net profit margin since 2009, reaching 15.7% for Q2 2026, primarily driven by the \"unprecedented boom\" from Big Tech companies. Alphabet's significant earnings beat contributed substantially, and other tech giants like Amazon, Apple, Meta, and Microsoft are expected to show strong EPS growth. Despite a recent market dip, the overall S&P 500 has seen over 8% growth in 2026, with Q2 earnings forecast to increase by 38% year-on-year.",
+      "banner_image": null,
+      "source": "TradingView",
+      "category_within_source": "General",
+      "source_domain": "TradingView",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.916527"
+        }
+      ],
+      "overall_sentiment_score": 0.393707,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.911196",
+          "ticker_sentiment_score": "0.408801",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "GOOG",
+          "relevance_score": "0.739514",
+          "ticker_sentiment_score": "0.540713",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": "0.728078",
+          "ticker_sentiment_score": "0.327633",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "MSFT",
+          "relevance_score": "0.694745",
+          "ticker_sentiment_score": "0.313015",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Sonim Technologies Inc (SONM) Earnings Forecast: Future EPS & Revenue Growth Estimates",
+      "url": "https://www.tradingkey.com/markets/stocks/sonm/earnings",
+      "time_published": "20260727T014106",
+      "authors": [],
+      "summary": "This article provides an earnings forecast for Sonim Technologies Inc (SONM), outlining its future EPS and revenue growth estimates. It includes a snapshot of the company's current stock performance, market capitalization, and various analytical dimensions used by TradingKey to assess financial health, valuation, earnings forecast, price momentum, institutional confidence, and risk. The article also lists peer company comparisons based on ratings and the number of analysts covering them.",
+      "banner_image": "https://resource.tradingkey.com/static/lseg/stocks/SONM.png",
+      "source": "TradingKey",
+      "category_within_source": "General",
+      "source_domain": "TradingKey",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.931432"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.717027"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.626790"
+        }
+      ],
+      "overall_sentiment_score": 0.101267,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "SONM",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.151860",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.608530",
+          "ticker_sentiment_score": "0.000348",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "SCHF vs. SPGM: Which Global ETF Is the Better Buy for Investors?",
+      "url": "https://www.theglobeandmail.com/investing/markets/stocks/SCHW-N/pressreleases/3471991/schf-vs-spgm-which-global-etf-is-the-better-buy-for-investors/",
+      "time_published": "20260727T013922",
+      "authors": [
+        "Motley Fool"
+      ],
+      "summary": "This article compares two global ETFs, SCHF and SPGM, to help investors decide which is a better fit for their portfolio. SCHF focuses on developed international markets and has a lower expense ratio and higher dividend yield, while SPGM offers broader diversification across U.S., developed, and emerging markets. The choice depends on whether an investor already has U.S. exposure and how they want to construct their global equity portfolio.",
+      "banner_image": "https://barchart-news-media-prod.aws.barchart.com/FC/1e92195316c4c7d81acb31e6f4a9171e/pixel%3Fslug%3Dmotleyfoolgm-2026-7-27-schf-vs-spgm-which-global-etf-is-the-better-buy-for-investors",
+      "source": "The Globe and Mail",
+      "category_within_source": "General",
+      "source_domain": "The Globe and Mail",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.905444"
+        }
+      ],
+      "overall_sentiment_score": 0.315797,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "SCHF",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.231726",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": "0.603970",
+          "ticker_sentiment_score": "0.349997",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.598815",
+          "ticker_sentiment_score": "0.306922",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "DRDGOLD Ltd (DRD) Earnings Forecast: Future EPS & Revenue Growth Estimates",
+      "url": "https://www.tradingkey.com/markets/stocks/drd/earnings",
+      "time_published": "20260726T224044",
+      "authors": [],
+      "summary": "This article provides an earnings forecast for DRDGOLD Ltd (DRD), indicating a current earnings forecast score of 8.00 and an average analyst price target of $36.25, suggesting a 61.37% upside. Based on one analyst's rating, the stock is recommended as a \"Buy.\"",
+      "banner_image": "https://resource.tradingkey.com/static/lseg/stocks/DRD.png",
+      "source": "TradingKey",
+      "category_within_source": "General",
+      "source_domain": "TradingKey",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.934747"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.725657"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.643382"
+        }
+      ],
+      "overall_sentiment_score": 0.350754,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "DRD",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.849676",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "NEM",
+          "relevance_score": "0.710017",
+          "ticker_sentiment_score": "0.116239",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.601243",
+          "ticker_sentiment_score": "0.100089",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Cayson Acquisition Corp (CAPN) Institutional Confidence",
+      "url": "https://www.tradingkey.com/markets/stocks/capn/sentiment",
+      "time_published": "20260726T184030",
+      "authors": [],
+      "summary": "This article provides details on the institutional confidence in Cayson Acquisition Corp (CAPN), listing major shareholders and their shares held. It highlights the company's current stock performance, market capitalization, and P/E TTM ratio. The data presented aims to offer insights into institutional ownership and activity for current and prospective investors.",
+      "banner_image": "https://resource.tradingkey.com/static/lseg/stocks/CAPN.png",
+      "source": "TradingKey",
+      "category_within_source": "General",
+      "source_domain": "TradingKey",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.914915"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.819918"
+        }
+      ],
+      "overall_sentiment_score": 0.132766,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "CAPN",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.149466",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "MSFT",
+          "relevance_score": "0.620387",
+          "ticker_sentiment_score": "0.144691",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.621050",
+          "ticker_sentiment_score": "0.135072",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": "0.635346",
+          "ticker_sentiment_score": "0.108616",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "GOOGL",
+          "relevance_score": "0.605065",
+          "ticker_sentiment_score": "0.142357",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "NNDM|Nano Dimension Ltd|Price:1.470|",
+      "url": "https://www.tradingkey.com/markets/stocks/nndm",
+      "time_published": "20260726T161054",
+      "authors": [],
+      "summary": "This article provides a detailed stock analysis of Nano Dimension Ltd (NNDM), highlighting its financial health, growth potential, and market performance. The company specializes in Additively Manufactured Electronics (AME) and boasts high revenue and profit growth, though its stock price is currently in a sideways trend. Key insights indicate healthy fundamentals and high institutional ownership, but with a medium-term expectation for the stock price to trend downwards.",
+      "banner_image": "https://resource.tradingkey.com/static/lseg/stocks/NNDM.png",
+      "source": "TradingKey",
+      "category_within_source": "General",
+      "source_domain": "TradingKey",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.801686"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.925213"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.833889"
+        }
+      ],
+      "overall_sentiment_score": 0.111822,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "NNDM",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.148944",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": "0.602046",
+          "ticker_sentiment_score": "0.123179",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.616065",
+          "ticker_sentiment_score": "0.137425",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AMAT",
+          "relevance_score": "0.617302",
+          "ticker_sentiment_score": "0.108273",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "MU",
+          "relevance_score": "0.609389",
+          "ticker_sentiment_score": "0.123210",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Qualcomm plans to increase prices by double digits",
+      "url": "https://www.taipeitimes.com/News/biz/archives/2026/07/27/2003861423",
+      "time_published": "20260726T160851",
+      "authors": [
+        "Bloomberg"
+      ],
+      "summary": "Qualcomm, a major smartphone processor maker, is set to increase its prices by double digits for products shipped after September 1st, citing rising supplier costs. This move is expected to impact the tech industry broadly, as Qualcomm faces historic supply shortages and is a key customer of TSMC and supplier to companies like Samsung and Xiaomi. The company has experienced declining sales due to memory chip shortages affecting smartphone production.",
+      "banner_image": "https://img.taipeitimes.com/images/2026/07/27/P09-260727-314.jpg",
+      "source": "Taipei Times",
+      "category_within_source": "General",
+      "source_domain": "Taipei Times",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.920969"
+        },
+        {
+          "topic": "manufacturing",
+          "relevance_score": "0.739387"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.648856"
+        }
+      ],
+      "overall_sentiment_score": 0.178636,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "QCOM",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.280151",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.746271",
+          "ticker_sentiment_score": "0.102206",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "META",
+          "relevance_score": "0.643037",
+          "ticker_sentiment_score": "0.113328",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": "0.646699",
+          "ticker_sentiment_score": "0.116652",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "INTC",
+          "relevance_score": "0.614455",
+          "ticker_sentiment_score": "0.100984",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "12 Stocks With Double-Digit Implied Earnings Moves - Apple (NASDAQ:AAPL), Meta Platforms (NASDAQ:META)",
+      "url": "https://www.benzinga.com/markets/market-summary/26/07/60685935/earnings-volatility-watch-12-stocks-with-double-digit-implied-moves-this-week",
+      "time_published": "20260726T122959",
+      "authors": [
+        "Piero Cingari",
+        "Benzinga Staff Writer"
+      ],
+      "summary": "This article identifies 12 U.S.-listed companies with market caps over $50 billion that have double-digit implied earnings moves this week, according to Benzinga Pro data. While major tech companies like Apple and Meta Platforms are reporting, the largest expected mover is fuel cell manufacturer Bloom Energy with a 27.25% implied move. The article details reporting dates, consensus estimates, and key indicators to watch for each of the 12 listed stocks.",
+      "banner_image": "https://cdn.benzinga.com/cdn-cgi/image/width=1300,format=auto,quality=85/files/images/story/2025/07/24/article-header-background-image.png",
+      "source": "Benzinga",
+      "category_within_source": "General",
+      "source_domain": "Benzinga",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.918993"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.807329"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.630829"
+        }
+      ],
+      "overall_sentiment_score": 0.035661,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.300252",
+          "ticker_sentiment_score": "0.007169",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Apple Hits Record Highs, Eyes Foldable Market Share, Tim Cook's Final Earnings Call and More: This Week i",
+      "url": "https://www.benzinga.com/markets/tech/26/07/60685866/apple-hits-record-highs-eyes-foldable-market-share-and-preps-for-tim-cooks-final-earnings-call-this-week-in-appleverse",
+      "time_published": "20260726T110000",
+      "authors": [
+        "Mohd Haider"
+      ],
+      "summary": "Apple Inc. is experiencing a momentous week, with its stock reaching record highs and anticipation building for Tim Cook's final earnings call as CEO. The company is also making significant moves to enter the foldable phone market, with projections suggesting it could capture a substantial share in its first year. Additionally, a former Apple executive discussed Steve Jobs's leadership style, clarifying common misconceptions.",
+      "banner_image": "https://cdn.benzinga.com/cdn-cgi/image/width=1300,format=auto,quality=85/files/images/story/2025/07/24/article-header-background-image.png",
+      "source": "Benzinga",
+      "category_within_source": "General",
+      "source_domain": "Benzinga",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.929289"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.805922"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.723059"
+        }
+      ],
+      "overall_sentiment_score": 0.403317,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.433479",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "NioCorp Developments Ltd (NB) Earnings Forecast: Future EPS & Revenue Growth Estimates",
+      "url": "https://www.tradingkey.com/markets/stocks/nb/earnings",
+      "time_published": "20260726T104045",
+      "authors": [],
+      "summary": "This article provides an earnings forecast for NioCorp Developments Ltd (NB), detailing analyst ratings, target prices, and historical EPS performance. Based on 5 analysts, the stock has a \"Buy\" consensus with a target price of USD 11.62, representing a 166.63% upside. The report also highlights past EPS figures and future expectations.",
+      "banner_image": "https://resource.tradingkey.com/cdn/images/tools/empty.png",
+      "source": "TradingKey",
+      "category_within_source": "General",
+      "source_domain": "TradingKey",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.935682"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.704427"
+        }
+      ],
+      "overall_sentiment_score": 0.194275,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "NB",
+          "relevance_score": "0.990771",
+          "ticker_sentiment_score": "0.322317",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "FCX",
+          "relevance_score": "0.681925",
+          "ticker_sentiment_score": "0.110281",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.568759",
+          "ticker_sentiment_score": "0.143111",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Intel Corporation (INTC) Just Had Its Best Quarter in 15 Years. Is the Turnaround Finally Real?",
+      "url": "https://ca.finance.yahoo.com/news/intel-corporation-intc-just-had-102227136.html",
+      "time_published": "20260726T102225",
+      "authors": [
+        "Fatima Gulzar"
+      ],
+      "summary": "Intel Corporation experienced its best quarter in nearly 15 years, with sales up 25% and adjusted profit double analyst expectations, largely driven by a 59% jump in data center chip sales due to \"agentic AI.\" Despite this positive performance and a significant stock increase year-to-date, share prices were down 28% in July before the report. The article discusses both the bull and bear cases for Intel's turnaround, highlighting strong demand and foundry growth on one hand, and increased spending, unconfirmed major deals, and PC business vulnerabilities on the other, suggesting that future quarters will be crucial to confirm a durable comeback.",
+      "banner_image": "https://s.yimg.com/lo/mysterio/api/EAF3E6CA131EFE36D30CC3D8A0042A0D9F16A6A9C65CD550E5558DDAC60DA4CA/subgraphmysterio/resizefill_w125_h48;quality_100;format_webp/https:%2F%2Fs.yimg.com%2Fos%2Fcreatr-uploaded-images%2F2020-12%2Fd7df1000-34e4-11eb-b6ae-ac87660fe5ee",
+      "source": "Yahoo! Finance Canada",
+      "category_within_source": "General",
+      "source_domain": "Yahoo! Finance Canada",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.921631"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.800674"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.604913"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.647225"
+        }
+      ],
+      "overall_sentiment_score": 0.300215,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INTC",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.400342",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": "0.609367",
+          "ticker_sentiment_score": "0.306555",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.602592",
+          "ticker_sentiment_score": "0.210742",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Apple Inc. $AAPL Shares Acquired by Midwest Trust Co",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-apple-inc-aapl-shares-acquired-by-midwest-trust-co-2026-07-26/",
+      "time_published": "20260726T084959",
+      "authors": [
+        "MarketBeat"
+      ],
+      "summary": "Midwest Trust Co has increased its stake in Apple Inc. (NASDAQ:AAPL) by 0.5% during the first quarter, making it their largest holding. Other institutional investors have also adjusted their positions in Apple, with several raising their stakes. The article also provides news sentiment, insider transaction details, and analyst ratings for Apple, along with its recent stock performance and dividend information.",
+      "banner_image": "https://www.marketbeat.com/logos/apple-inc-logo-1200x675.png",
+      "source": "MarketBeat",
+      "category_within_source": "General",
+      "source_domain": "MarketBeat",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.905899"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.836545"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.714611"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.804839"
+        }
+      ],
+      "overall_sentiment_score": 0.456702,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "AAPL",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.480793",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Principal Financial Group Inc. Buys 19,605 Shares of Skyworks Solutions, Inc. $SWKS",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-principal-financial-group-inc-buys-19605-shares-of-skyworks-solutions-inc-swks-2026-07-26/",
+      "time_published": "20260726T084931",
+      "authors": [
+        "MarketBeat"
+      ],
+      "summary": "Principal Financial Group Inc. increased its stake in Skyworks Solutions by 11.1% in the first quarter, now owning 196,181 shares valued at $10.5 million. Skyworks Solutions (NASDAQ:SWKS) is heavily owned by institutional investors, making up 85.43% of its shares. The company recently reported an earnings beat, announced a 4.7% dividend yield, and analysts currently hold a consensus \"Hold\" rating with an average target price of $77.47.",
+      "banner_image": "https://www.marketbeat.com/logos/skyworks-solutions-inc-logo-1200x675.png?v=20240202075224",
+      "source": "MarketBeat",
+      "category_within_source": "General",
+      "source_domain": "MarketBeat",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.916978"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.815783"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.730794"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.608127"
+        }
+      ],
+      "overall_sentiment_score": 0.204615,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "SWKS",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.136173",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "PFG",
+          "relevance_score": "0.730467",
+          "ticker_sentiment_score": "0.140510",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": "0.647053",
+          "ticker_sentiment_score": "0.337573",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    }
+  ]
+}

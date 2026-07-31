@@ -1,0 +1,56 @@
+{
+  "run_at_utc": "2026-07-30T23:52:34.134201+00:00",
+  "config": {
+    "scheme": "rank",
+    "n_groups": 5,
+    "max_weight": 0.05,
+    "gross": 2.0,
+    "aum": 10000000.0,
+    "linear_bps": 5.0,
+    "impact_c": 0.5,
+    "no_sector_neutral": false
+  },
+  "cost_model": "linear bps + Almgren square-root impact on own ADV",
+  "results": {
+    "ElasticNet": {
+      "weeks": 96,
+      "gross_ann_return_pct": 9.88,
+      "gross_ann_vol_pct": 11.74,
+      "gross_sharpe": 0.842,
+      "gross_max_drawdown_pct": -12.56,
+      "gross_sortino": 1.194,
+      "gross_calmar": 0.787,
+      "net_ann_return_pct": 3.9,
+      "net_ann_vol_pct": 11.72,
+      "net_sharpe": 0.333,
+      "net_max_drawdown_pct": -13.31,
+      "net_sortino": 0.469,
+      "net_calmar": 0.293,
+      "mean_weekly_turnover_pct": 24.6,
+      "annual_turnover_x": 12.8,
+      "mean_weekly_cost_bps": 11.5,
+      "cost_drag_ann_pct": 5.98,
+      "note_ir_vs_sharpe": "dollar- and sector-neutral book: benchmark exposure ~0, so IR \u2248 Sharpe \u2014 they are one number, not two"
+    },
+    "LightGBM": {
+      "weeks": 96,
+      "gross_ann_return_pct": 2.99,
+      "gross_ann_vol_pct": 7.97,
+      "gross_sharpe": 0.376,
+      "gross_max_drawdown_pct": -10.07,
+      "gross_sortino": 0.541,
+      "gross_calmar": 0.297,
+      "net_ann_return_pct": -41.16,
+      "net_ann_vol_pct": 8.23,
+      "net_sharpe": -5.003,
+      "net_max_drawdown_pct": -52.71,
+      "net_sortino": -6.327,
+      "net_calmar": -0.781,
+      "mean_weekly_turnover_pct": 105.31,
+      "annual_turnover_x": 54.8,
+      "mean_weekly_cost_bps": 84.91,
+      "cost_drag_ann_pct": 44.15,
+      "note_ir_vs_sharpe": "dollar- and sector-neutral book: benchmark exposure ~0, so IR \u2248 Sharpe \u2014 they are one number, not two"
+    }
+  }
+}

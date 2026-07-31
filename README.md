@@ -155,6 +155,39 @@ construction to add the news-derived features.
 - [ ] Implementation shortfall: paper vs. realized Sharpe
 - [ ] Friday presentation
 
+## Getting started (fresh clone)
+
+Four commands, ~5 minutes. Verified from a clean clone.
+
+```bash
+python3.11 -m venv .venv
+./.venv/bin/pip install -r requirements.txt
+./.venv/bin/python code/pull_prices.py     # ~2 min, no rate limit
+./code/run_pipeline.sh                     # panel -> features -> models -> portfolio
+```
+
+Then optionally:
+
+```bash
+./.venv/bin/python code/model_nested.py    # nested CV (the headline numbers)
+./.venv/bin/python code/strategy.py        # turnover-aware backtest
+./.venv/bin/python code/build_slides.py    # regenerate slides.html
+./.venv/bin/python -m pytest tests/ -q     # 45 tests
+```
+
+**macOS note:** LightGBM needs the OpenMP runtime — `brew install libomp`.
+
+### What ships with the repo, and what doesn't
+
+| | Committed? | Why |
+|---|---|---|
+| `data/raw/trends_single/` | **yes** (~350 KB) | Cost hours of rate-limited pulling — Google caps ~19 requests per ~2.5h window **per IP**. Not casually reproducible. |
+| `data/raw/prices/` | no (26 MB) | Re-pulls from yfinance in ~2 min, unthrottled. |
+| `data/processed/` | no | Fully derived — regenerate with `run_pipeline.sh`. |
+
+`run_pipeline.sh` checks these preconditions and tells you exactly what to run
+if something is missing.
+
 **New to the repo?** Jump to [Setup](#setup), then [Pulling raw data](#pulling-raw-data).
 
 ---

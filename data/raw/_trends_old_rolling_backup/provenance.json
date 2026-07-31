@@ -1,0 +1,451 @@
+{
+  "pulled_at_utc": "2026-07-27T23:50:23.496403+00:00",
+  "source": "Google Trends via pytrends",
+  "timeframe": "today 5-y",
+  "anchor_keyword": "stock market",
+  "note": "Interest is relative (0-100), normalised within each request. Each batch includes the anchor keyword; rescale by the batch anchor (_anchor_batch<N>.csv) to compare across batches.",
+  "tickers": {
+    "AAPL": {
+      "keyword": "Apple",
+      "batch": 1,
+      "anchor_file": "_anchor_batch1.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/AAPL.csv"
+    },
+    "MSFT": {
+      "keyword": "Microsoft",
+      "batch": 1,
+      "anchor_file": "_anchor_batch1.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/MSFT.csv"
+    },
+    "NVDA": {
+      "keyword": "Nvidia",
+      "batch": 1,
+      "anchor_file": "_anchor_batch1.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/NVDA.csv"
+    },
+    "AVGO": {
+      "keyword": "Broadcom",
+      "batch": 1,
+      "anchor_file": "_anchor_batch1.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/AVGO.csv"
+    },
+    "ORCL": {
+      "keyword": "Oracle",
+      "batch": 2,
+      "anchor_file": "_anchor_batch2.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/ORCL.csv"
+    },
+    "CRM": {
+      "keyword": "Salesforce",
+      "batch": 2,
+      "anchor_file": "_anchor_batch2.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/CRM.csv"
+    },
+    "AMD": {
+      "keyword": "AMD",
+      "batch": 2,
+      "anchor_file": "_anchor_batch2.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/AMD.csv"
+    },
+    "CSCO": {
+      "keyword": "Cisco",
+      "batch": 2,
+      "anchor_file": "_anchor_batch2.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/CSCO.csv"
+    },
+    "GOOGL": {
+      "keyword": "Google",
+      "batch": 3,
+      "anchor_file": "_anchor_batch3.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/GOOGL.csv"
+    },
+    "META": {
+      "keyword": "Meta",
+      "batch": 3,
+      "anchor_file": "_anchor_batch3.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/META.csv"
+    },
+    "NFLX": {
+      "keyword": "Netflix",
+      "batch": 3,
+      "anchor_file": "_anchor_batch3.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/NFLX.csv"
+    },
+    "TMUS": {
+      "keyword": "T-Mobile",
+      "batch": 3,
+      "anchor_file": "_anchor_batch3.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/TMUS.csv"
+    },
+    "DIS": {
+      "keyword": "Disney",
+      "batch": 4,
+      "anchor_file": "_anchor_batch4.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/DIS.csv"
+    },
+    "CMCSA": {
+      "keyword": "Comcast",
+      "batch": 4,
+      "anchor_file": "_anchor_batch4.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/CMCSA.csv"
+    },
+    "VZ": {
+      "keyword": "Verizon",
+      "batch": 4,
+      "anchor_file": "_anchor_batch4.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/VZ.csv"
+    },
+    "T": {
+      "keyword": "AT&T",
+      "batch": 4,
+      "anchor_file": "_anchor_batch4.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/T.csv"
+    },
+    "AMZN": {
+      "keyword": "Amazon",
+      "batch": 5,
+      "anchor_file": "_anchor_batch5.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/AMZN.csv"
+    },
+    "TSLA": {
+      "keyword": "Tesla",
+      "batch": 5,
+      "anchor_file": "_anchor_batch5.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/TSLA.csv"
+    },
+    "HD": {
+      "keyword": "Home Depot",
+      "batch": 5,
+      "anchor_file": "_anchor_batch5.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/HD.csv"
+    },
+    "MCD": {
+      "keyword": "McDonald's",
+      "batch": 5,
+      "anchor_file": "_anchor_batch5.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/MCD.csv"
+    },
+    "NKE": {
+      "keyword": "Nike",
+      "batch": 6,
+      "anchor_file": "_anchor_batch6.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/NKE.csv"
+    },
+    "LOW": {
+      "keyword": "Lowe's",
+      "batch": 6,
+      "anchor_file": "_anchor_batch6.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/LOW.csv"
+    },
+    "SBUX": {
+      "keyword": "Starbucks",
+      "batch": 6,
+      "anchor_file": "_anchor_batch6.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/SBUX.csv"
+    },
+    "BKNG": {
+      "keyword": "Booking.com",
+      "batch": 6,
+      "anchor_file": "_anchor_batch6.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/BKNG.csv"
+    },
+    "WMT": {
+      "keyword": "Walmart",
+      "batch": 7,
+      "anchor_file": "_anchor_batch7.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/WMT.csv"
+    },
+    "PG": {
+      "keyword": "Procter & Gamble",
+      "batch": 7,
+      "anchor_file": "_anchor_batch7.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/PG.csv"
+    },
+    "COST": {
+      "keyword": "Costco",
+      "batch": 7,
+      "anchor_file": "_anchor_batch7.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/COST.csv"
+    },
+    "KO": {
+      "keyword": "Coca-Cola",
+      "batch": 7,
+      "anchor_file": "_anchor_batch7.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/KO.csv"
+    },
+    "PEP": {
+      "keyword": "Pepsi",
+      "batch": 8,
+      "anchor_file": "_anchor_batch8.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/PEP.csv"
+    },
+    "PM": {
+      "keyword": "Philip Morris",
+      "batch": 8,
+      "anchor_file": "_anchor_batch8.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/PM.csv"
+    },
+    "MO": {
+      "keyword": "Altria",
+      "batch": 8,
+      "anchor_file": "_anchor_batch8.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/MO.csv"
+    },
+    "MDLZ": {
+      "keyword": "Mondelez",
+      "batch": 8,
+      "anchor_file": "_anchor_batch8.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/MDLZ.csv"
+    },
+    "BRK-B": {
+      "keyword": "Berkshire Hathaway",
+      "batch": 9,
+      "anchor_file": "_anchor_batch9.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/BRK-B.csv"
+    },
+    "JPM": {
+      "keyword": "JPMorgan",
+      "batch": 9,
+      "anchor_file": "_anchor_batch9.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/JPM.csv"
+    },
+    "V": {
+      "keyword": "Visa",
+      "batch": 9,
+      "anchor_file": "_anchor_batch9.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/V.csv"
+    },
+    "MA": {
+      "keyword": "Mastercard",
+      "batch": 9,
+      "anchor_file": "_anchor_batch9.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/MA.csv"
+    },
+    "BAC": {
+      "keyword": "Bank of America",
+      "batch": 10,
+      "anchor_file": "_anchor_batch10.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/BAC.csv"
+    },
+    "WFC": {
+      "keyword": "Wells Fargo",
+      "batch": 10,
+      "anchor_file": "_anchor_batch10.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/WFC.csv"
+    },
+    "GS": {
+      "keyword": "Goldman Sachs",
+      "batch": 10,
+      "anchor_file": "_anchor_batch10.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/GS.csv"
+    },
+    "MS": {
+      "keyword": "Morgan Stanley",
+      "batch": 10,
+      "anchor_file": "_anchor_batch10.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/MS.csv"
+    },
+    "LLY": {
+      "keyword": "Eli Lilly",
+      "batch": 11,
+      "anchor_file": "_anchor_batch11.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/LLY.csv"
+    },
+    "UNH": {
+      "keyword": "UnitedHealth",
+      "batch": 11,
+      "anchor_file": "_anchor_batch11.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/UNH.csv"
+    },
+    "JNJ": {
+      "keyword": "Johnson & Johnson",
+      "batch": 11,
+      "anchor_file": "_anchor_batch11.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/JNJ.csv"
+    },
+    "MRK": {
+      "keyword": "Merck",
+      "batch": 11,
+      "anchor_file": "_anchor_batch11.csv",
+      "rows": 262,
+      "first_date": "2021-07-25",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/MRK.csv"
+    }
+  },
+  "failures": [
+    "ABBV",
+    "TMO",
+    "ABT",
+    "PFE",
+    "GE",
+    "CAT",
+    "RTX",
+    "UNP",
+    "HON",
+    "BA",
+    "UPS",
+    "DE",
+    "XOM",
+    "CVX",
+    "COP",
+    "SLB",
+    "EOG",
+    "MPC",
+    "PSX",
+    "WMB",
+    "LIN",
+    "SHW",
+    "FCX",
+    "ECL",
+    "NEM",
+    "APD",
+    "DOW",
+    "NUE",
+    "PLD",
+    "AMT",
+    "EQIX",
+    "WELL",
+    "SPG",
+    "PSA",
+    "O",
+    "CCI",
+    "NEE",
+    "SO",
+    "DUK",
+    "CEG",
+    "SRE",
+    "AEP",
+    "D",
+    "EXC"
+  ]
+}

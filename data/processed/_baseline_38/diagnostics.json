@@ -1,0 +1,118 @@
+{
+  "run_at_utc": "2026-07-30T22:17:17.665997+00:00",
+  "residual_diagnostics": {
+    "ElasticNet": {
+      "durbin_watson": 2.206,
+      "dw_interpretation": "~2 = none; <2 positive autocorr; >2 negative",
+      "residual_acf_lag1": -0.1164,
+      "ljung_box": {
+        "lag_1": {
+          "stat": 1.309,
+          "p_value": 0.2525
+        },
+        "lag_4": {
+          "stat": 2.543,
+          "p_value": 0.6369
+        },
+        "lag_8": {
+          "stat": 4.681,
+          "p_value": 0.7911
+        }
+      },
+      "breusch_pagan": {
+        "stat": 218.929,
+        "p_value": 0.0,
+        "reject_homoskedastic": true
+      },
+      "jarque_bera": {
+        "stat": 174.553,
+        "p_value": 0.0,
+        "skew": -1.45,
+        "kurtosis": 8.935,
+        "reject_normal": true
+      },
+      "reading": "No significant first-order autocorrelation in the weekly residual: no obvious unmodelled serial structure at this frequency."
+    },
+    "LightGBM": {
+      "durbin_watson": 2.192,
+      "dw_interpretation": "~2 = none; <2 positive autocorr; >2 negative",
+      "residual_acf_lag1": -0.1118,
+      "ljung_box": {
+        "lag_1": {
+          "stat": 1.216,
+          "p_value": 0.2701
+        },
+        "lag_4": {
+          "stat": 2.917,
+          "p_value": 0.5718
+        },
+        "lag_8": {
+          "stat": 6.997,
+          "p_value": 0.537
+        }
+      },
+      "breusch_pagan": {
+        "stat": 57.065,
+        "p_value": 0.0,
+        "reject_homoskedastic": true
+      },
+      "jarque_bera": {
+        "stat": 263.551,
+        "p_value": 0.0,
+        "skew": -1.664,
+        "kurtosis": 10.404,
+        "reject_normal": true
+      },
+      "reading": "No significant first-order autocorrelation in the weekly residual: no obvious unmodelled serial structure at this frequency."
+    }
+  },
+  "deflated_sharpe": {
+    "elasticnet": {
+      "n_periods": 96,
+      "sharpe_per_period": 0.1167,
+      "sharpe_annualised": 0.841,
+      "skew": -0.302,
+      "kurtosis": 3.234,
+      "n_trials_assumed": 12,
+      "expected_max_sharpe_under_noise": 0.1744,
+      "deflated_sharpe_prob": 0.2907,
+      "passes_at_95pct": false
+    },
+    "lightgbm": {
+      "n_periods": 96,
+      "sharpe_per_period": -0.0251,
+      "sharpe_annualised": -0.181,
+      "skew": -0.366,
+      "kurtosis": 3.755,
+      "n_trials_assumed": 12,
+      "expected_max_sharpe_under_noise": 0.1701,
+      "deflated_sharpe_prob": 0.0281,
+      "passes_at_95pct": false
+    }
+  },
+  "effective_breadth": {
+    "n_names": 88,
+    "mean_pairwise_correlation": 0.25,
+    "effective_independent_bets": 10.5,
+    "breadth_ratio_pct": 11.9,
+    "note": "Breadth in IR \u2248 IC\u00b7\u221abreadth counts INDEPENDENT bets. Quoting \u221a88 overstates the achievable IR."
+  },
+  "fundamental_law": {
+    "ElasticNet": {
+      "mean_rank_ic": 0.0421,
+      "effective_names": 10.5,
+      "rebalances_per_year": 52,
+      "breadth_BR": 546.0,
+      "implied_annual_IR": 0.984,
+      "naive_IR_using_all_88": 2.848
+    },
+    "LightGBM": {
+      "mean_rank_ic": 0.0151,
+      "effective_names": 10.5,
+      "rebalances_per_year": 52,
+      "breadth_BR": 546.0,
+      "implied_annual_IR": 0.353,
+      "naive_IR_using_all_88": 1.021
+    }
+  }
+}

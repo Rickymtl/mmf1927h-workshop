@@ -1,0 +1,46 @@
+{
+  "pulled_at_utc": "2026-07-28T13:28:08.488016+00:00",
+  "source": "Google Trends via pytrends",
+  "timeframe": "2021-08-01 2026-07-27",
+  "anchor_keyword": "stock market",
+  "note": "Interest is relative (0-100), normalised within each request. Each batch includes the anchor keyword; rescale by the batch anchor (_anchor_batch<N>.csv) to compare across batches.",
+  "tickers": {
+    "SRE": {
+      "keyword": "Sempra",
+      "batch": 1,
+      "anchor_file": "_anchor_batch1.csv",
+      "rows": 261,
+      "first_date": "2021-08-01",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/SRE.csv"
+    },
+    "AEP": {
+      "keyword": "American Electric Power",
+      "batch": 1,
+      "anchor_file": "_anchor_batch1.csv",
+      "rows": 261,
+      "first_date": "2021-08-01",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/AEP.csv"
+    },
+    "D": {
+      "keyword": "Dominion Energy",
+      "batch": 1,
+      "anchor_file": "_anchor_batch1.csv",
+      "rows": 261,
+      "first_date": "2021-08-01",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/D.csv"
+    },
+    "EXC": {
+      "keyword": "Exelon",
+      "batch": 1,
+      "anchor_file": "_anchor_batch1.csv",
+      "rows": 261,
+      "first_date": "2021-08-01",
+      "last_date": "2026-07-26",
+      "file": "data/raw/trends/EXC.csv"
+    }
+  },
+  "failures": []
+}

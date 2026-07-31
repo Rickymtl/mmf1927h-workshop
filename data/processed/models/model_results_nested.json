@@ -1,0 +1,148 @@
+{
+  "run_at_utc": "2026-07-30T23:53:40.213936+00:00",
+  "scheme": "nested CV \u2014 inner selects params, outer reports",
+  "results": {
+    "ElasticNet": {
+      "model": "ElasticNet",
+      "weeks_evaluated": 102,
+      "mean_rank_ic": 0.0446,
+      "median_rank_ic": 0.0554,
+      "std_rank_ic": 0.2392,
+      "ic_ir": 0.186,
+      "ic_t_stat": 1.88,
+      "pct_weeks_positive_ic": 53.9,
+      "hit_rate_pct": 52.15,
+      "n_predictions": 8976
+    },
+    "LightGBM": {
+      "model": "LightGBM",
+      "weeks_evaluated": 102,
+      "mean_rank_ic": 0.0313,
+      "median_rank_ic": 0.0403,
+      "std_rank_ic": 0.1237,
+      "ic_ir": 0.253,
+      "ic_t_stat": 2.56,
+      "pct_weeks_positive_ic": 64.7,
+      "hit_rate_pct": 51.64,
+      "n_predictions": 8976
+    },
+    "enet_coefficients": [
+      {
+        "feature": "asvi",
+        "category": "external/macro-analog",
+        "coef": 0.00014876924979516818
+      },
+      {
+        "feature": "trends_z_26",
+        "category": "external/macro-analog",
+        "coef": -0.0003586660161199096
+      },
+      {
+        "feature": "trends_chg_4",
+        "category": "external/macro-analog",
+        "coef": -7.649571095712842e-05
+      },
+      {
+        "feature": "trends_vol_13",
+        "category": "external/statistical",
+        "coef": -0.00014493472973330538
+      },
+      {
+        "feature": "mom_52_4",
+        "category": "internal/fundamental",
+        "coef": 0.000625130442443416
+      },
+      {
+        "feature": "mom_12_1",
+        "category": "internal/fundamental",
+        "coef": -0.00020072394210597468
+      },
+      {
+        "feature": "rvol_13",
+        "category": "internal/statistical",
+        "coef": 0.0010148023790540917
+      },
+      {
+        "feature": "ivol_26",
+        "category": "internal/statistical",
+        "coef": 0.00012961610273668584
+      },
+      {
+        "feature": "rev_1",
+        "category": "internal/fundamental",
+        "coef": -0.0001638468399595642
+      }
+    ],
+    "_summary": {
+      "nonzero_coefficients": 9,
+      "trends_features_retained": [
+        "asvi",
+        "trends_z_26",
+        "trends_chg_4",
+        "trends_vol_13"
+      ],
+      "n_trends_features": 4,
+      "total_fits": 342,
+      "selected_params": {
+        "ElasticNet": [
+          {
+            "alpha": 0.001,
+            "l1_ratio": 0.9
+          },
+          {
+            "alpha": 0.001,
+            "l1_ratio": 0.1
+          },
+          {
+            "alpha": 0.0001,
+            "l1_ratio": 0.9
+          },
+          {
+            "alpha": 0.0001,
+            "l1_ratio": 0.1
+          },
+          {
+            "alpha": 1e-07,
+            "l1_ratio": 0.5
+          },
+          {
+            "alpha": 0.001,
+            "l1_ratio": 0.1
+          }
+        ],
+        "LightGBM": [
+          {
+            "num_leaves": 31,
+            "learning_rate": 0.03,
+            "min_child_samples": 50
+          },
+          {
+            "num_leaves": 31,
+            "learning_rate": 0.03,
+            "min_child_samples": 50
+          },
+          {
+            "num_leaves": 31,
+            "learning_rate": 0.03,
+            "min_child_samples": 50
+          },
+          {
+            "num_leaves": 31,
+            "learning_rate": 0.03,
+            "min_child_samples": 150
+          },
+          {
+            "num_leaves": 31,
+            "learning_rate": 0.03,
+            "min_child_samples": 150
+          },
+          {
+            "num_leaves": 31,
+            "learning_rate": 0.03,
+            "min_child_samples": 150
+          }
+        ]
+      }
+    }
+  }
+}

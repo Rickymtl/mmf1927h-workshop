@@ -1,0 +1,539 @@
+{
+  "pulled_at_utc": "2026-07-27T23:32:30.412217+00:00",
+  "source": "Yahoo Finance via yfinance",
+  "yfinance_version": "1.5.2",
+  "start": "2015-01-01",
+  "end": "2026-07-27",
+  "interval": "1d",
+  "tickers": {
+    "AAPL": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/AAPL.csv"
+    },
+    "MSFT": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/MSFT.csv"
+    },
+    "NVDA": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/NVDA.csv"
+    },
+    "AVGO": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/AVGO.csv"
+    },
+    "ORCL": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/ORCL.csv"
+    },
+    "CRM": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/CRM.csv"
+    },
+    "AMD": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/AMD.csv"
+    },
+    "CSCO": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/CSCO.csv"
+    },
+    "GOOGL": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/GOOGL.csv"
+    },
+    "META": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/META.csv"
+    },
+    "NFLX": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/NFLX.csv"
+    },
+    "TMUS": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/TMUS.csv"
+    },
+    "DIS": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/DIS.csv"
+    },
+    "CMCSA": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/CMCSA.csv"
+    },
+    "VZ": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/VZ.csv"
+    },
+    "T": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/T.csv"
+    },
+    "AMZN": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/AMZN.csv"
+    },
+    "TSLA": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/TSLA.csv"
+    },
+    "HD": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/HD.csv"
+    },
+    "MCD": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/MCD.csv"
+    },
+    "NKE": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/NKE.csv"
+    },
+    "LOW": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/LOW.csv"
+    },
+    "SBUX": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/SBUX.csv"
+    },
+    "BKNG": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/BKNG.csv"
+    },
+    "WMT": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/WMT.csv"
+    },
+    "PG": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/PG.csv"
+    },
+    "COST": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/COST.csv"
+    },
+    "KO": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/KO.csv"
+    },
+    "PEP": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/PEP.csv"
+    },
+    "PM": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/PM.csv"
+    },
+    "MO": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/MO.csv"
+    },
+    "MDLZ": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/MDLZ.csv"
+    },
+    "BRK-B": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/BRK-B.csv"
+    },
+    "JPM": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/JPM.csv"
+    },
+    "V": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/V.csv"
+    },
+    "MA": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/MA.csv"
+    },
+    "BAC": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/BAC.csv"
+    },
+    "WFC": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/WFC.csv"
+    },
+    "GS": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/GS.csv"
+    },
+    "MS": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/MS.csv"
+    },
+    "LLY": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/LLY.csv"
+    },
+    "UNH": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/UNH.csv"
+    },
+    "JNJ": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/JNJ.csv"
+    },
+    "MRK": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/MRK.csv"
+    },
+    "ABBV": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/ABBV.csv"
+    },
+    "TMO": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/TMO.csv"
+    },
+    "ABT": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/ABT.csv"
+    },
+    "PFE": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/PFE.csv"
+    },
+    "GE": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/GE.csv"
+    },
+    "CAT": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/CAT.csv"
+    },
+    "RTX": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/RTX.csv"
+    },
+    "UNP": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/UNP.csv"
+    },
+    "HON": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/HON.csv"
+    },
+    "BA": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/BA.csv"
+    },
+    "UPS": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/UPS.csv"
+    },
+    "DE": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/DE.csv"
+    },
+    "XOM": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/XOM.csv"
+    },
+    "CVX": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/CVX.csv"
+    },
+    "COP": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/COP.csv"
+    },
+    "SLB": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/SLB.csv"
+    },
+    "EOG": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/EOG.csv"
+    },
+    "MPC": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/MPC.csv"
+    },
+    "PSX": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/PSX.csv"
+    },
+    "WMB": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/WMB.csv"
+    },
+    "LIN": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/LIN.csv"
+    },
+    "SHW": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/SHW.csv"
+    },
+    "FCX": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/FCX.csv"
+    },
+    "ECL": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/ECL.csv"
+    },
+    "NEM": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/NEM.csv"
+    },
+    "APD": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/APD.csv"
+    },
+    "DOW": {
+      "rows": 1847,
+      "first_date": "2019-03-20",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/DOW.csv"
+    },
+    "NUE": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/NUE.csv"
+    },
+    "PLD": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/PLD.csv"
+    },
+    "AMT": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/AMT.csv"
+    },
+    "EQIX": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/EQIX.csv"
+    },
+    "WELL": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/WELL.csv"
+    },
+    "SPG": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/SPG.csv"
+    },
+    "PSA": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/PSA.csv"
+    },
+    "O": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/O.csv"
+    },
+    "CCI": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/CCI.csv"
+    },
+    "NEE": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/NEE.csv"
+    },
+    "SO": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/SO.csv"
+    },
+    "DUK": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/DUK.csv"
+    },
+    "CEG": {
+      "rows": 1132,
+      "first_date": "2022-01-19",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/CEG.csv"
+    },
+    "SRE": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/SRE.csv"
+    },
+    "AEP": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/AEP.csv"
+    },
+    "D": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/D.csv"
+    },
+    "EXC": {
+      "rows": 2906,
+      "first_date": "2015-01-02",
+      "last_date": "2026-07-24",
+      "file": "data/raw/prices/EXC.csv"
+    }
+  },
+  "failures": []
+}
