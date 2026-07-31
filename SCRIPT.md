@@ -368,20 +368,15 @@ Advance slides with → or click. Timings are cumulative from zero.
 
 ### [SLIDE 22 — Close] 12:20
 
-> With another week: fix the Trends bucket alignment first — it's the only open
-> item that could change whether the result is real. Then meta-labelling for the
-> turnover problem — a *learned* sizing layer rather than the three heuristics
-> we have now. Then a point-in-time universe **and** sector membership, an
-> ensemble of the two models, and daily Trends via stitched windows.
->
-> **What we'd defend tonight: a sourcing bug we found by testing our own
-> assumption instead of trusting it, a cost analysis that says turnover — not
-> predictive power — is the binding constraint, and a result we're reporting as
-> a null. What we wouldn't claim is that the pipeline is point-in-time correct
-> end to end. It isn't. We found one look-ahead late and put it on the
-> limitations slide rather than hope nobody asked.**
+> **To summarise: a sourcing bug we found by testing our own assumption instead
+> of trusting it, a cost analysis that says turnover — not predictive power — is
+> the binding constraint, and a result we're reporting as a null.**
 >
 > Thank you — happy to take questions.
+
+> **Deliberately not on this slide:** the "with one more week" roadmap. It's
+> prepared in the Q&A sheet if asked, but putting it on screen invites
+> questions about work we didn't do. Don't volunteer it.
 
 ---
 

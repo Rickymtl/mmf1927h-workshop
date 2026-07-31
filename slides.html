@@ -76,6 +76,9 @@ code{font-family:ui-monospace,Menlo,monospace;background:#21262d;padding:1px 5px
 .slide.hero .inner{border-left:4px solid #f0b72f;padding-left:2vw}
 .slide.close .inner{border-left:4px solid #3fb950;padding-left:2vw}
 .thanks{margin-top:1.3em;font-size:clamp(17px,2vw,26px);font-weight:700;color:#f0b72f}
+.thanks-big{font-size:clamp(44px,6.5vw,88px);font-weight:800;letter-spacing:-.025em;color:#f0b72f;margin:0}
+.slide.close .sub{margin-top:.15em}
+.slide.close .names{margin-top:2.4em}
 #nav{position:fixed;bottom:14px;right:18px;font-size:12px;color:#6e7681;font-family:ui-monospace,Menlo,monospace;z-index:9}
 #bar{position:fixed;top:0;left:0;height:2.5px;background:#f0b72f;transition:width .18s;z-index:9}
 @media print{
@@ -431,27 +434,11 @@ not estimated</td><td>overstates net</td><td>disclosed</td></tr>
 <td>full curve reported · acknowledged</td></tr>
 </table>
 <div class="note">Every number in this deck is reproducible from the repo:
-<code>./code/run_pipeline.sh</code></div></div></section><section class="slide close"><div class="inner"><h2>What we'd do with one more week</h2>
-<ol class="big-list">
-<li><b>Fix the Trends bucket alignment</b> — the only open item that could
-change whether the result is real. One line, then re-run everything.</li>
-<li><b>Meta-labelling</b> for turnover — <code>strategy.py</code> attacks it
-with three heuristics; meta-labelling replaces them with a <i>learned</i>
-position-sizing layer sitting on the binding constraint.</li>
-<li><b>Point-in-time universe <i>and</i> sector membership</b> — removes two
-disclosed limitations instead of restating them.</li>
-<li><b>Ensemble</b> Elastic Net and LightGBM — complementary blind spots,
-uncorrelated errors.</li>
-<li><b>Daily Trends</b> via stitched &lt;9-month windows — 7× the observations,
-and it dissolves item 1 entirely.</li>
-</ol>
-<div class="callout ok-c"><b>What we'd defend:</b> a sourcing bug we found by
-testing our own assumption rather than trusting it, a cost analysis that says
-turnover — not predictive power — is the binding constraint, and a result we
-report honestly as a null. <b>What we wouldn't claim:</b> that the pipeline is
-point-in-time correct end to end. It has one look-ahead we found late, and we
-put it on the limitations slide instead of hoping nobody asked.</div>
-<p class="thanks">Thank you — questions?</p></div></section><div id="nav"></div>
+<code>./code/run_pipeline.sh</code></div></div></section><section class="slide close"><div class="inner">
+<h1 class="thanks-big">Thank you</h1>
+<p class="sub">Questions?</p>
+<p class="names">Ricky Mao · Saier Ma · Tim Yuan · Nick Sun · Aaron Hou</p>
+<p class="repo">github.com/Rickymtl/mmf1927h-workshop</p></div></section><div id="nav"></div>
 <script>
 const s=[...document.querySelectorAll('.slide')];let i=0;
 const nav=document.getElementById('nav'),bar=document.getElementById('bar');
