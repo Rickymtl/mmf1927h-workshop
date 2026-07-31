@@ -31,18 +31,21 @@ tmp/
 # Course PDFs (kept local, not published)
 *.pdf
 
-# Pulled data (regenerable via code/pull_data.py; created at runtime by the scripts)
-data/
-
-# EXCEPTION: the Trends pull is committed. It is only ~350 KB, but it cost
-# hours of rate-limited pulling to obtain (Google caps ~19 requests per ~2.5h
-# window per IP) and cannot be casually regenerated. Prices are NOT committed —
-# they are 26 MB and re-pull from yfinance in about two minutes, unthrottled.
-!data/
+# Pulled & derived data — ignored, with ONE exception.
+#
+# Negation must be done level by level: un-ignoring a directory wholesale
+# (`!data/`) re-includes everything beneath it, which is how 26 MB of prices,
+# every derived output, and the old broken anchored Trends pull all got
+# committed by accident.
+data/*
 !data/raw/
+data/raw/*
+
+# EXCEPTION: the single-request Trends pull (~350 KB). It cost hours of
+# rate-limited pulling — Google caps ~19 requests per ~2.5h window per IP —
+# so it is not casually reproducible. Prices (26 MB) are NOT committed: they
+# re-pull from yfinance in ~2 minutes, unthrottled.
 !data/raw/trends_single/
-!data/raw/trends_single/*.csv
-!data/raw/trends_single/manifest.json
 
 # ── GSD baseline (auto-generated) ──
 .gsd
