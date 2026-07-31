@@ -370,10 +370,50 @@ Da, Engelberg & Gao use ticker symbols for the same purpose; we use
 `"<name> stock"` because several of our tickers are themselves ambiguous single
 letters (T, D, O).
 
-The trade-off, and it is a real one: `"Walmart stock"` has far less search
-volume than `"Walmart"`, so it risks reintroducing the low-resolution problem
-that one-request-per-ticker solved. **Resolution must be checked before the
-disambiguated series is used** — see §7.5.4.
+The trade-off we worried about — `"Walmart stock"` having too little volume,
+reintroducing the quantisation problem — **did not materialise**: the 16 new
+series have 25–56 distinct values (median 46), comfortably usable.
+
+### 7.5.4 Did it work? Yes on measurement, no on prediction
+
+**The keyword fix worked exactly as intended, on the axis we designed it for.**
+Coupling with the firm's own trading activity, before and after:
+
+| Ticker | brand keyword | `"<name> stock"` | Δ |
+|--------|--------------|------------------|------|
+| Costco | −0.316 | **0.615** | +0.930 |
+| Walmart | −0.336 | **0.559** | +0.895 |
+| Nike | −0.112 | **0.735** | +0.847 |
+| McDonald's | −0.308 | **0.507** | +0.816 |
+| Netflix | −0.053 | **0.758** | +0.811 |
+| *(all 16)* | **−0.095** | **+0.592** | **+0.687** |
+
+**Every one of the 16 improved** — paired t = 17.6, p < 10⁻⁶. The corrected
+series now couple *more* tightly than the names that were never contaminated
+(0.592 vs 0.340), which is strong confirmation of the shopping-intent
+mechanism.
+
+**And it made no difference to the model.**
+
+| | brand keywords | disambiguated |
+|---|---|---|
+| Elastic Net IC / t | 0.0446 / 1.88 | 0.0448 / 1.95 |
+| LightGBM IC / t | 0.0313 / 2.56 | 0.0306 / 2.17 |
+| Strategy net Sharpe | 0.645 | 0.602 |
+
+Differences are small and within sampling noise, and LightGBM's t-statistic
+moved slightly *down*.
+
+**We report this rather than quietly keeping whichever version scored better.**
+Two things follow. First, a variable can be demonstrably contaminated on one
+axis and still carry the same predictive content — "cleaner data" does not
+automatically mean "better model", and we would have assumed otherwise.
+Second, choosing the dataset *after* seeing both sets of results would be
+precisely the selection bias this report criticises elsewhere.
+
+**We therefore present the disambiguated version as primary**, because it is
+justified *ex ante* on measurement grounds, not because it scored better — it
+did not.
 
 ## 8. Disclosed limitations
 

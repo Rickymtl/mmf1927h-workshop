@@ -19,8 +19,13 @@ feature we build is a *within-ticker* anomaly, which cancels the scale factor
 exactly.  So no rescaling step is needed at all.
 
 Source preference per ticker (``--source best``, the default):
-    1. ``data/raw/trends_single/``  — one-request-per-ticker (preferred)
-    2. ``data/raw/trends/``         — legacy anchored batch pull (fallback)
+    1. ``data/raw/trends_disambig/`` — investor-intent keyword ("<name> stock")
+       for the 16 consumer-facing names whose brand keyword was contaminated
+       by shopping traffic.  Verified: mean corr(Δlog SVI, Δlog dollar volume)
+       rose from -0.095 to +0.592 across those 16, improving for every one
+       (paired t = 17.6, p < 1e-6).
+    2. ``data/raw/trends_single/``   — one-request-per-ticker
+    3. ``data/raw/trends/``          — legacy anchored batch pull (fallback)
 
 Writes ``data/processed/trends_rescaled/<TICKER>.csv`` with the column name
 ``build_panel.py`` expects, plus ``trends_source.json`` recording which pull
@@ -43,6 +48,7 @@ if str(_code_dir) not in sys.path:
 from paths import PROCESSED_DIR, RAW_DIR, rel, utc_now_iso
 
 SINGLE_DIR = RAW_DIR / "trends_single"
+DISAMBIG_DIR = RAW_DIR / "trends_disambig"
 ANCHORED_DIR = RAW_DIR / "trends"
 OUT_DIR = PROCESSED_DIR / "trends_rescaled"
 
@@ -65,14 +71,20 @@ def _available(directory: Path) -> dict[str, Path]:
 
 
 def prepare(source: str = "best") -> dict:
-    single, anchored = _available(SINGLE_DIR), _available(ANCHORED_DIR)
+    single = _available(SINGLE_DIR)
+    anchored = _available(ANCHORED_DIR)
+    disambig = _available(DISAMBIG_DIR)
     if source == "single":
         chosen = {t: ("single", p) for t, p in single.items()}
     elif source == "anchored":
         chosen = {t: ("anchored", p) for t, p in anchored.items()}
-    else:
+    elif source == "disambig":
+        chosen = {t: ("single", p) for t, p in single.items()}
+        chosen.update({t: ("disambig", p) for t, p in disambig.items()})
+    else:  # best
         chosen = {t: ("anchored", p) for t, p in anchored.items()}
         chosen.update({t: ("single", p) for t, p in single.items()})
+        chosen.update({t: ("disambig", p) for t, p in disambig.items()})
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for stale in OUT_DIR.glob("*.csv"):
@@ -95,20 +107,23 @@ def prepare(source: str = "best") -> dict:
         }
 
     n_single = sum(1 for m in manifest.values() if m["source"] == "single")
+    n_disambig = sum(1 for m in manifest.values() if m["source"] == "disambig")
     record = {
         "prepared_at_utc": utc_now_iso(),
         "source_mode": source,
         "note": "No rescaling applied; see module docstring.",
         "n_tickers": len(manifest),
         "n_from_single_request": n_single,
-        "n_from_anchored_legacy": len(manifest) - n_single,
+        "n_from_disambiguated_keyword": n_disambig,
+        "n_from_anchored_legacy": len(manifest) - n_single - n_disambig,
         "n_constant_columns": sum(1 for m in manifest.values() if m["constant"]),
         "tickers": manifest,
     }
     (OUT_DIR / "trends_source.json").write_text(json.dumps(record, indent=2))
 
     print(f"[trends] staged {len(manifest)} tickers -> {rel(OUT_DIR)}")
-    print(f"  single-request: {n_single}   legacy anchored: {len(manifest) - n_single}")
+    print(f"  single-request: {n_single}   disambiguated: {n_disambig}   "
+          f"legacy anchored: {len(manifest) - n_single - n_disambig}")
     print(f"  constant (zero-information) columns: {record['n_constant_columns']}")
     med = pd.Series([m["distinct"] for m in manifest.values()]).median()
     print(f"  median distinct values: {med:.0f}")
@@ -118,7 +133,8 @@ def prepare(source: str = "best") -> dict:
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--source", choices=["best", "single", "anchored"], default="best",
+    p.add_argument("--source", choices=["best", "single", "anchored", "disambig"],
+                   default="best",
                    help="Which raw pull to stage (default: best available per ticker).")
     args = p.parse_args(argv)
     prepare(args.source)
