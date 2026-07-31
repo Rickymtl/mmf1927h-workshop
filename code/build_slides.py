@@ -141,16 +141,23 @@ evaluation.</li>
 slide("", "Feature set", "SEGMENT 2 · FEATURE &amp; MODEL", """
 <table class="t">
 <tr><th>Feature</th><th>Category</th><th>Construction</th></tr>
-<tr class="hl"><td>asvi</td><td>External · macro-analog</td><td>log SVI − log median(SVI, prior 8w) &nbsp;<b>← paper</b></td></tr>
-<tr class="hl"><td>trends_z_26</td><td>External · macro-analog</td><td>z-score of log SVI vs own trailing 26w</td></tr>
-<tr class="hl"><td>trends_chg_4</td><td>External · macro-analog</td><td>log change in SVI over 4w</td></tr>
+<tr class="hl"><td>asvi</td><td>External · alt-data</td><td>log SVI − log median(SVI, prior 8w) &nbsp;<b>← paper</b></td></tr>
+<tr class="hl"><td>trends_z_26</td><td>External · alt-data</td><td>z-score of log SVI vs own trailing 26w</td></tr>
+<tr class="hl"><td>trends_chg_4</td><td>External · alt-data</td><td>log change in SVI over 4w</td></tr>
 <tr class="hl"><td>trends_vol_13</td><td>External · statistical</td><td>std dev of ΔlogSVI, trailing 13w</td></tr>
-<tr><td>mom_52_4</td><td>Internal · fundamental</td><td>cumulative return t−52 → t−4</td></tr>
-<tr><td>mom_12_1</td><td>Internal · fundamental</td><td>cumulative return t−12 → t−1</td></tr>
+<tr><td>mom_52_4</td><td>Internal · fundamental</td><td>cum. return t−51w → t−4w (<b>~11 months</b>)</td></tr>
+<tr><td>mom_12_1</td><td>Internal · fundamental</td><td>cum. return t−11w → t−1w (<b>~3 months, not 12</b>)</td></tr>
 <tr><td>rvol_13</td><td>Internal · statistical</td><td>std dev of weekly returns, 13w</td></tr>
 <tr><td>ivol_26</td><td>Internal · statistical</td><td>std dev of market-model residuals, 26w</td></tr>
 <tr><td>rev_1</td><td>Internal · fundamental</td><td>prior week return (reversal control)</td></tr>
-</table>""")
+</table>
+<div class="note"><b>Every window is in WEEKS.</b> <code>mom_12_1</code> is a
+12-<i>week</i> (~3-month) feature, not the 12-month Jegadeesh-Titman factor its
+name resembles — that one is <code>mom_52_4</code>. The Trends block is tagged
+<i>alt-data</i>, not <i>macro</i>: a macro factor takes the same value for every
+name on a date, and per-ticker search interest does not. So <b>the macro and
+PCA buckets are genuinely empty</b> — we disclosed that rather than relabel our
+way out of it.</div>""")
 
 # 7 ASVI
 slide("", "Paper-derived feature — ASVI", "SEGMENT 2", """
@@ -412,31 +419,48 @@ risk</b>. Our standard errors should be read as optimistic.</p></div>
 slide("", "Disclosed limitations", "SEGMENT 3", """
 <table class="t">
 <tr><th>Limitation</th><th>Direction</th><th>Status</th></tr>
-<tr><td><b>Survivorship bias</b> — mid-2025 membership snapshot</td><td>overstates returns</td><td>disclosed, not corrected</td></tr>
-<tr><td><b>Not statistically significant</b> — DSR 0.12</td><td>—</td><td>stated plainly</td></tr>
-<tr><td><b>Keyword ambiguity</b> — “Apple”, “Amazon”, “Visa”</td><td>adds noise</td><td>unquantified</td></tr>
-<tr><td><b>Short-side frictions</b> — borrow &amp; recall not modelled</td><td>overstates net</td><td>disclosed</td></tr>
-<tr><td><b>Smoothing window k=4</b> searched over 5 values</td><td>mild optimism</td><td>full curve reported</td></tr>
-<tr><td><b>Crowding</b> — built entirely from free public data</td><td>partially crowded</td><td>acknowledged</td></tr>
+<tr class="hl"><td><b>Trends bucket look-ahead</b> — Google's weekly bucket runs
+Sun→Sat; we map it to the Friday <i>inside</i> it, so week <i>t</i> carries
+Saturday <i>t+1</i>. 1 of 7 days, and it reaches <code>asvi</code> directly</td>
+<td>plausibly overstates</td><td>disclosed, not corrected — one-line fix,
+invalidates every number here</td></tr>
+<tr class="hl"><td><b>Sector labels not point-in-time</b> — V and MA moved
+IT → Financials on 2023-03-17; we label them Financials for all 60 months</td>
+<td>hits neutralisation, not the raw signal</td><td>disclosed, not corrected</td></tr>
+<tr><td><b>Survivorship bias</b> — mid-2025 membership snapshot</td><td>overstates returns</td><td>disclosed; robustness check designed, not run</td></tr>
+<tr><td><b>Deflated Sharpe fails at 95%</b> — IC t = 2.56 clears 2.0, DSR does not</td><td>—</td><td>stated plainly; N = 342 fits / 19 configs, both reported</td></tr>
+<tr><td><b>Beta-neutrality not applied</b> — 2 of Day 4's 3 constraints; residual beta unmeasured</td><td>unknown</td><td>disclosed</td></tr>
+<tr><td><b>Macro &amp; PCA risk-model buckets empty</b>; no VIF / keep-drop report</td><td>narrows F</td><td>open</td></tr>
+<tr><td><b>Short-side frictions</b> — borrow &amp; recall not modelled; capacity not estimated</td><td>overstates net</td><td>disclosed</td></tr>
+<tr><td><b>Keyword ambiguity</b> — “Apple”, “Amazon”, “Visa”</td><td>adds noise</td><td><b>quantified &amp; acted on</b> — t = −4.03, 16 names re-pulled, no model impact</td></tr>
+<tr><td><b>Smoothing window k=4</b> searched over 5 values · <b>Crowding</b> — free public data</td><td>mild optimism</td><td>full curve reported · acknowledged</td></tr>
 </table>
 <div class="note">Disclosed limitations are not penalised; undisclosed ones
-are. Every number above is reproducible from the repo:
+are. The top two rows are ours to volunteer — nobody in the room found them.
+Every number above is reproducible from the repo:
 <code>./code/run_pipeline.sh</code></div>""")
 
 # 18 close
 slide("close", "What we'd do with one more week", "", """
 <ol class="big-list">
-<li><b>Turnover in the objective</b>, not as a post-hoc filter — the cost
-analysis says that is where the return is.</li>
+<li><b>Fix the Trends bucket alignment</b> — the only open item that could
+change whether the result is real. One line, then re-run everything.</li>
+<li><b>Meta-labelling</b> for turnover — <code>strategy.py</code> attacks it
+with three heuristics; meta-labelling replaces them with a <i>learned</i>
+position-sizing layer sitting on the binding constraint.</li>
+<li><b>Point-in-time universe <i>and</i> sector membership</b> — removes two
+disclosed limitations instead of restating them.</li>
 <li><b>Ensemble</b> Elastic Net and LightGBM — complementary blind spots,
 uncorrelated errors.</li>
-<li><b>Point-in-time universe</b> to remove survivorship bias rather than
-disclose it.</li>
-<li><b>Daily Trends</b> via stitched &lt;9-month windows — 7× the observations.</li>
+<li><b>Daily Trends</b> via stitched &lt;9-month windows — 7× the observations,
+and it dissolves item 1 entirely.</li>
 </ol>
-<div class="callout ok-c"><b>What we'd defend:</b> a pipeline that is
-point-in-time correct end to end, a sourcing bug we found by testing our own
-assumption rather than trusting it, and a result we report honestly as a null.</div>
+<div class="callout ok-c"><b>What we'd defend:</b> a sourcing bug we found by
+testing our own assumption rather than trusting it, a cost analysis that says
+turnover — not predictive power — is the binding constraint, and a result we
+report honestly as a null. <b>What we wouldn't claim:</b> that the pipeline is
+point-in-time correct end to end. It has one look-ahead we found late, and we
+put it on the limitations slide instead of hoping nobody asked.</div>
 <p class="thanks">Thank you — questions?</p>""")
 
 CSS = """

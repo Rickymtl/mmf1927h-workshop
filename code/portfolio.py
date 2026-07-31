@@ -6,9 +6,44 @@ explicitly (Day 4, "From Ranked Signal to Positions"):
   1. **Score & rank** — rank the universe each Friday by predicted return.
   2. **Choose construction** — decile long-short, or rank-weighted (smoother
      turnover).  Both are provided; the choice is a stated modelling decision.
-  3. **Apply neutrality** — dollar-, sector- and beta-neutrality imposed *at
-     construction time* as explicit constraints, not checked for afterwards.
+  3. **Apply neutrality** — dollar- and sector-neutrality imposed *at
+     construction time*, not checked for afterwards.
   4. **Apply limits** — single-name cap and gross-exposure normalisation.
+
+What is and is not neutralised
+------------------------------
+Day 4 lists three neutrality constraints: dollar, sector and beta.  **We apply
+two of the three.**
+
+* **Dollar-neutral** — always.  Long $ = short $; the constraint we never relax.
+* **Sector-neutral** — always, by demeaning within GICS sector each date.
+* **Beta-neutral** — **not applied.**  ``beta_neutral`` defaults to ``False``
+  and the panel carries no ``beta`` column, so the branch in ``_neutralise``
+  never executes.  The rationale: the universe is 88 US mega-caps whose betas
+  cluster tightly around 1, so a dollar-neutral rank-weighted book already has
+  small residual market beta.  This is a **stated simplification, not a claim
+  that residual beta is zero** — we have not measured it.  Wiring in a rolling
+  52-week market beta and switching the flag on is the correct fix and is
+  listed under "with one more week" in ``REPORT.md``.
+
+Two constructions live in this repo
+-----------------------------------
+``portfolio.py`` (this file) is the **baseline**: full rebalance to target
+weights every Friday.  ``strategy.py`` implements three **turnover-aware**
+variants on top of the same weights, costs and constraints.  Numbers from the
+two are not interchangeable — ``REPORT.md`` §6.2 quotes this file, §7.5.4
+quotes ``strategy.py``.
+
+Neutrality is approximate, not exact
+------------------------------------
+The constraints are applied as **sequential projections**, not as constraints
+inside a solver.  ``_apply_limits`` clips to the single-name cap and then
+re-demeans to restore dollar-neutrality — which does **not** restore exact
+within-sector zeros.  So sector-neutrality holds up to the residual introduced
+by capping.  Day 4 asks for neutrality constructed at optimisation time (a
+constrained solver, e.g. ``cvxpy``); sequential projection is the cheaper
+approximation we chose, and the residual sector exposure it leaves is a
+disclosed simplification rather than a checked-and-passed property.
 
 Then evaluates the book on Sharpe / IR, max drawdown and turnover read
 together, and — critically — **net of transaction costs**.
@@ -37,6 +72,15 @@ The long-short book assumes shorting is available and costless beyond the
 modelled spread/impact.  Borrow fees and recall risk are **not** modelled;
 for a large-cap universe borrow is typically cheap, but this is a disclosed
 simplification, not a claim that it is free.
+
+Note on sector labels
+---------------------
+``sector`` comes from ``universe.py``, a **static mid-2025 GICS snapshot**
+applied to the whole horizon.  GICS reclassifications inside the sample window
+therefore mislabel some names for part of it — concretely, Visa and Mastercard
+moved from Information Technology to Financials on 2023-03-17, so for the first
+~20 months of a 60-month sample the sector-neutrality constraint here groups
+them incorrectly.  Disclosed in ``REPORT.md`` §8 and ``DATA_QUALITY.md`` §5.
 """
 
 from __future__ import annotations

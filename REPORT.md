@@ -131,8 +131,16 @@ Built by `code/build_panel.py` → `data/processed/panel/panel_weekly.parquet`.
 - **Winsorization:** per-date cross-sectional, p1/p99. Capped, never trimmed.
 - **Standardization:** per-date percentile rank, matching Rank-IC evaluation.
 - **Minimum history:** 52 weeks before a name enters, so rolling features are
-  not estimated on near-empty windows.
+  not estimated on near-empty windows. Sample is **261 weeks** per name
+  (2021-08-01 → 2026-07-26); 52 weeks is the burn-in threshold, not the
+  sample length.
 - **CEG** (2022 spin-off) enters on its first valid date; never backfilled.
+- **Sector labels are a static mid-2025 GICS snapshot**, not point-in-time.
+  Day 2's cleaning checklist asks for as-of-date sector classification and we
+  do not have it. Concretely, Visa and Mastercard were Information Technology
+  until 2023-03-17 and Financials after; we label them Financials throughout.
+  This affects the sector-neutrality constraint in §6.2 and the Financials /
+  IT rows of §7.5.1. Disclosed, not corrected (§8 item 3).
 
 Full detail in [`DATA_QUALITY.md`](DATA_QUALITY.md).
 
@@ -141,17 +149,39 @@ Full detail in [`DATA_QUALITY.md`](DATA_QUALITY.md).
 `code/features.py`. Every feature is computed from information available on or
 before its own Friday; the target is the **following** week's return.
 
-| Feature | Category | Construction |
+**Every window is in WEEKS.** `mom_12_1` is a *12-week* (~3-month) feature,
+**not** the 12-month Jegadeesh-Titman factor its name resembles — that one is
+`mom_52_4`. The names are kept for continuity with earlier commits.
+
+| Feature | Category | Construction (weeks) |
 |---------|----------|--------------|
-| `asvi` | External · macro-analog | log SVI − log median(SVI, prior 8w) **(paper)** |
-| `trends_z_26` | External · macro-analog | z-score of log SVI vs. own trailing 26w |
-| `trends_chg_4` | External · macro-analog | log change in SVI over 4w |
+| `asvi` | External · alt-data | log SVI − log median(SVI, prior 8w) **(paper)** |
+| `trends_z_26` | External · alt-data | z-score of log SVI vs. own trailing 26w |
+| `trends_chg_4` | External · alt-data | log change in SVI over 4w |
 | `trends_vol_13` | External · statistical | std. dev. of ΔlogSVI, trailing 13w |
-| `mom_52_4` | Internal · fundamental | cumulative return t−52 → t−4 |
-| `mom_12_1` | Internal · fundamental | cumulative return t−12 → t−1 |
+| `mom_52_4` | Internal · fundamental | cum. return t−51w → t−4w (**~11 months**) |
+| `mom_12_1` | Internal · fundamental | cum. return t−11w → t−1w (**~3 months**) |
 | `rvol_13` | Internal · statistical | std. dev. of weekly returns, trailing 13w |
 | `ivol_26` | Internal · statistical | std. dev. of market-model residuals, 26w |
 | `rev_1` | Internal · fundamental | prior week's return (reversal control) |
+
+**On the `alt-data` tag, and the two empty buckets.** Day 3 defines a *macro*
+factor as an observable series taking the same value for every name on a date.
+Per-ticker search interest does not, so the Trends block is external but not
+macro. Tagging it `macro-analog` — as an earlier draft did — would have made
+the risk-model table look complete when it is not. **As built, F covers the
+fundamental bucket plus an alt-data block; the macro bucket (no
+rate-sensitivity beta) and the statistical bucket in its Day 3 sense (no PCA
+factors — `rvol`/`ivol` are volatility features, not PC loadings) are empty.**
+Disclosed in §8 rather than relabelled.
+
+**Horizon ladder.** The price block spans 1w (`rev_1`) → 11w (`mom_12_1`) →
+48w (`mom_52_4`); the ~4-week rung is empty. Adding it was considered and not
+done: Day 3 warns that momentum variants are correlated by construction and
+destabilise penalised-regression coefficients, and the price block already
+outnumbers the Trends block carrying the thesis. Recorded as a decision rather
+than left silent — though properly it should be settled by the VIF analysis in
+#23, which is not done (§8 item 6).
 
 ### Paper-derived feature — ASVI
 
@@ -172,6 +202,18 @@ The panel is sorted `(ticker, week)` before any `groupby().rolling()`;
 every rolling statistic is `.shift(1)`-ed; `center=True` and `.shift(-1)`
 appear nowhere except in creating the target itself.
 
+> ⚠️ **One exception, disclosed rather than claimed away.** Google Trends
+> weekly buckets are labelled with their week-*start* Sunday and cover Sunday
+> through **Saturday**. `build_panel.py` maps a bucket to Sunday + 5 days, i.e.
+> to the Friday *inside* it — so the value carried by week-ending-Friday `t`
+> includes Saturday `t+1`, one day that was not observable at that Friday's
+> close and that falls inside the target window (Friday `t` close → Friday
+> `t+1` close). The rolling *baselines* are `.shift(1)`-ed, but the
+> current-week level entering `asvi`, `trends_z_26` and `trends_chg_4` is not,
+> so the contamination reaches the headline feature. Magnitude: 1 of 7 days.
+> Direction: plausibly favourable, since Friday-evening or weekend news lifts
+> both weekend search volume and the following Monday's move. See §8 item 1.
+
 ## 5. Models & validation
 
 Two models on an identical feature set, per the course requirement — and the
@@ -187,8 +229,11 @@ the training tail whose label window overlaps the test block) and an
 time and leak on an autocorrelated panel.
 
 Nested CV: 6 outer folds x 3 inner folds, **102 out-of-sample weeks**.
-342 total model fits — the trials count feeding the Deflated Sharpe
-correction in §7.
+Grid: 15 Elastic Net configurations (`alpha` x `l1_ratio`) and 4 LightGBM
+configurations = **19 distinct configurations**, giving **342 total model
+fits** once inner and outer folds are counted. Both numbers feed the Deflated
+Sharpe discussion in §7 — 342 as the conservative trials count, 19 as the
+defensible lower bound.
 
 ## 6. Results
 
@@ -242,6 +287,28 @@ $10M notional.
 | Max drawdown | −13.3% | −52.7% |
 | Weekly turnover | 24.6% | **105.3%** |
 | Cost drag (annual) | 5.98% | 44.2% |
+| Implied transfer coefficient | 0.63 | — |
+
+> **Which construction these numbers come from.** The table above is the
+> **baseline** book in `code/portfolio.py`: rebalanced fully to target weights
+> every Friday. `code/strategy.py` implements three *turnover-aware* variants
+> (signal smoothing, partial weight adjustment, no-trade band) on the same
+> weights, constraints and cost model — those numbers appear in §7.5.4 and are
+> **not** interchangeable with these. Any Sharpe quoted in this report is
+> labelled with which of the two produced it.
+
+**Neutrality, stated precisely.** Dollar- and sector-neutral. **Beta-neutral
+is not applied** — the flag exists in `portfolio.py` but defaults off and the
+panel carries no `beta` column. Rationale: 88 US mega-caps have betas
+clustered near 1, so a dollar-neutral rank-weighted book should carry small
+residual market beta. We have **not measured** that residual, so this is a
+stated simplification rather than a verified property. Two of Day 4's three
+neutrality constraints, disclosed as such.
+
+The constraints are also applied as **sequential projections**, not inside a
+constrained solver: `_apply_limits` clips to the 5% cap and then re-demeans to
+restore dollar-neutrality, which does not restore exact within-sector zeros.
+Sector-neutrality therefore holds up to the residual introduced by capping.
 
 **The central tension of this project:** LightGBM has the *best signal*
 (t = 2.56) and the *worst portfolio* (net Sharpe −5.0). At 105% weekly
@@ -255,26 +322,50 @@ binding constraint is turnover, not predictive power.
 0.34 gross-to-net. A gross-only number would have overstated the result by
 ~2.5×. This is Implementation Shortfall, measured rather than acknowledged.
 
-**(b) LightGBM fails in the textbook way.** 109.5% weekly turnover means the
+**(b) LightGBM fails in the textbook way.** 105.3% weekly turnover means the
 book flips entirely each week: the predictions are not stable enough to hold,
-so costs turn a mildly negative gross return into −45% net. Elevated turnover
-as a symptom of a noisy signal chasing rank changes that are estimation noise.
-We report it rather than quietly dropping the model.
+so costs turn a modest positive gross return (Sharpe 0.376) into −41.2%
+annualised net. Elevated turnover as a symptom of a noisy signal chasing rank
+changes that are estimation noise. We report it rather than quietly dropping
+the model.
+
+**Transfer coefficient.** Day 4 asks any project reporting a gross backtest IR
+to name its TC. Value added scales with TC², so TC ≈ √(IR_net / IR_gross).
+For Elastic Net that is √(0.333 / 0.842) ≈ **0.63** — i.e. frictions cost us
+roughly 60% of the paper portfolio's value added before a single fee. This is
+an implied TC backed out of realised numbers, not an independently estimated
+one, but it puts the gross-to-net gap in the vocabulary the deck uses.
 
 **(c) Effective breadth is 10.5, not 88.** Mean pairwise return correlation is
 0.25; the participation ratio of the correlation spectrum gives ~10.5
 independent bets — **12% of headcount**. Via IR ≈ IC·√BR that implies an
 achievable IR of **0.98**, against **2.85** if one naively used N = 88.
 
-### Significance — the result is not yet significant
+### Significance — the IC clears, the Deflated Sharpe does not
 
-- IC t-stat **1.84**, below the conventional 2.0.
-- **Deflated Sharpe Ratio = 0.29**, failing at 95%. Under ~12 configurations
-  tried, the expected maximum Sharpe from pure noise is 0.17, and our gross
-  0.84 does not clear that bar with enough confidence.
+Two tests, two different answers, and the second is the binding one:
 
-We present this as a **weak, cost-sensitive signal that does not yet reject
-the null**, not as alpha.
+- **Rank IC t-stat.** LightGBM **t = 2.56** *does* clear the conventional 2.0.
+  Elastic Net **t = 1.88** does not.
+- **Deflated Sharpe Ratio.** **Fails at 95%.** `model_nested.py` performs
+  **342 model fits**, which raises E[max Sharpe | pure noise] to ≈ **0.30**.
+  Our gross 0.84 does not clear that noise-inflated bar with enough confidence.
+
+**On the trials count.** Strictly, 342 nested-CV fits are *not* 342
+independent strategy trials — they are **19 distinct configurations**
+(15 Elastic Net + 4 LightGBM) each refitted across inner and outer folds. A
+defensible lower bound is therefore N = 19. We report the larger number
+deliberately: a larger N raises the bar, and since our conclusion is that the
+signal does **not** clear it, the stricter choice only makes that conclusion
+more robust. `code/diagnostics.py --trials 19` gives the lower bound; the
+verdict is unchanged. Reporting both is more honest than picking whichever N
+produces the preferred answer.
+
+**The reading we take.** A single-metric "significant" claim would be
+selective: the IC t-stat clears because it does not price in how hard we
+searched, and the Deflated Sharpe exists precisely to price that in. We
+therefore present this as a **weak, cost-sensitive signal that does not yet
+reject the null**, not as alpha.
 
 ### Residual diagnostics (ε)
 
@@ -320,6 +411,15 @@ precisely so this could not be cherry-picked.
 A second caveat compounds it: at **N = 8 names per sector per week**, Spearman
 correlation is a very weak statistic — Day 1's small-N warning, relocated from
 the universe to the sub-universe.
+
+A third caveat is specific to two rows. Sector membership comes from a **static
+mid-2025 GICS snapshot**, and GICS reclassified inside our window: **Visa and
+Mastercard moved from Information Technology to Financials on 2023-03-17**. For
+the first ~20 of 60 months they sit in the wrong bucket here, so the
+**Financials** (0.030) and **Information Technology** (−0.025) rows are
+contaminated for roughly a third of the sample. Neither is close to
+significance, so this does not change the conclusion — but it is a real defect
+in those two numbers rather than a hypothetical one. §8 item 3.
 
 **Conclusion: no sector-specific strategy is supported by this data.** Reported
 as a null, not as "Materials looks promising."
@@ -399,7 +499,13 @@ mechanism.
 |---|---|---|
 | Elastic Net IC / t | 0.0446 / 1.88 | 0.0448 / 1.95 |
 | LightGBM IC / t | 0.0313 / 2.56 | 0.0306 / 2.17 |
-| Strategy net Sharpe | 0.645 | 0.602 |
+| Net Sharpe — `strategy.py`, signal-smoothed | 0.645 | 0.602 |
+
+> The Sharpe row above comes from the **turnover-aware** construction in
+> `code/strategy.py`, not from the baseline book in §6.2 (Elastic Net net
+> Sharpe 0.333). The two are different construction policies on the same
+> signal and are not comparable to each other; both are reported because the
+> gap between them *is* the turnover finding.
 
 Differences are small and within sampling noise, and LightGBM's t-statistic
 moved slightly *down*.
@@ -417,16 +523,28 @@ did not.
 
 ## 8. Disclosed limitations
 
-| Limitation | Direction | Status |
-|------------|-----------|--------|
-| **Survivorship bias** — universe is a mid-2025 membership snapshot | Overstates returns | Disclosed, not corrected |
-| **Not statistically significant** — t = 1.84, DSR = 0.29 | — | Stated plainly |
-| **Trends keyword ambiguity** — "Apple", "Amazon", "Visa" catch non-company searches | Adds noise | Unquantified |
-| **Short-side frictions** — borrow cost and recall not modelled | Overstates net | Disclosed |
-| **Back-adjusted prices** — Yahoo restates history | Small at weekly | Disclosed |
-| **No point-in-time index membership** | Survivorship variant | Disclosed |
-| **Crowding** — signal built entirely from free public data | Partially crowded | Acknowledged |
-| **Elastic Net `alpha` untuned** — nested CV not completed | Unknown | Open |
+| # | Limitation | Direction | Status |
+|---|------------|-----------|--------|
+| 1 | **Trends bucket look-ahead** — Google Trends weekly buckets run Sun→Sat and are mapped to the Friday *inside* the bucket, so week `t`'s search value includes Saturday `t+1`: 1 of 7 days that was not observable at that Friday's close, and that falls inside the target window. The rolling baselines are `.shift(1)`-ed but the current-week level is not, so it reaches `asvi` directly. | Plausibly overstates — weekend search and the following Monday's move share a common news cause | **Disclosed, not corrected.** Fix is `+12d` instead of `+5d` in `build_panel.py`; it invalidates every number here, so it is item 1 under §10 |
+| 2 | **Survivorship bias** — universe is a mid-2025 membership snapshot (NVDA, AVGO, LLY, CEG, GE were not top-8 in 2021) | Overstates returns | Disclosed, quantified by name; robustness check designed but **not executed** |
+| 3 | **Sector labels are not point-in-time** — `universe.py` is a static mid-2025 GICS snapshot. Concretely: **Visa and Mastercard moved from Information Technology to Financials on 2023-03-17**, so for the first ~20 of 60 months they are grouped wrongly. Affects the sector-neutrality constraint and the Financials / IT rows of §7.5.1. | Unknown sign; affects neutralisation quality, not the raw signal | **Disclosed, not corrected** |
+| 4 | **Deflated Sharpe fails at 95%** — LightGBM IC t = 2.56 clears 2.0, but DSR does not clear E[max SR \| noise] ≈ 0.30 under 342 fits (19 distinct configurations) | — | Stated plainly; both trial counts reported |
+| 5 | **Macro and statistical risk-model buckets are empty** — no rate-sensitivity beta, no PCA factors. The feature set covers the fundamental bucket plus an alt-data block. | Narrows F | **Disclosed, not relabelled** |
+| 6 | **No feature-selection report** — no VIF / correlation-cluster table, no keep/drop summary against the five criteria (issue #23) | Multicollinearity unmeasured | Open |
+| 7 | **Beta-neutrality not applied** — 2 of Day 4's 3 neutrality constraints; residual market beta not measured. Constraints are sequential projections, not solver constraints, so sector-neutrality is approximate after capping. | Unknown | Disclosed |
+| 8 | **Short-side frictions** — borrow cost and recall risk not modelled | Overstates net | Disclosed |
+| 9 | **Capacity not estimated** — ADV data is in the pipeline but no capacity number is stated | — | Open |
+| 10 | **SHAP not produced** — LightGBM interpreted via gain-based importance only, which is biased toward continuous/high-cardinality features | — | Open |
+| 11 | **Trends keyword ambiguity** | Adds noise | **Quantified and acted on** — see §7.5.2–7.5.4: mechanism identified (consumer-brand search intent, t = −4.03, p = 0.0008), 16 names re-pulled with `" stock"` appended, coupling −0.095 → +0.592 (paired t = 17.6). Model impact: none |
+| 12 | **Back-adjusted prices** — Yahoo restates history | Small at weekly | Disclosed, verified on three splits |
+| 13 | **Crowding** — signal built entirely from free public data | Partially crowded | Acknowledged |
+| 14 | **`mom_12_1` is a 12-*week* feature**, not the 12-month Jegadeesh-Titman factor its name resembles; the ~4-week momentum rung is empty | Naming hazard, not a bias | Documented in `features.py` and §4 |
+
+> **Two items removed from earlier drafts of this table because they were
+> stale.** "Elastic Net `alpha` untuned — nested CV not completed" is no longer
+> true: `model_nested.py` selects `alpha` in an inner loop (chosen ≈ 1e-4) and
+> §6.1 reports the nested results. "Trends keyword ambiguity — unquantified" is
+> no longer true either: §7.5.2–7.5.4 quantify it in three sub-sections.
 
 ## 9. What the data fix changed
 
@@ -447,12 +565,36 @@ This is the strongest evidence in the report that the sourcing diagnosis in
 
 ## 10. With one more week
 
-1. **Nested CV** for hyperparameters, so `alpha` is selected without leaking.
-2. **Ensemble** Elastic Net and LightGBM rather than picking one.
-3. **Turnover control** in the objective — the cost analysis says this is where
-   the return actually is.
-4. **Point-in-time universe** to remove survivorship bias rather than disclose it.
-5. **Daily Trends** via stitched <9-month windows — 7× the observations.
+Ordered by expected value, not by ease.
+
+1. **Fix the Trends bucket alignment** (§8 item 1). One line — `+12d` instead
+   of `+5d` — then re-run everything. This is first because it is the only
+   open item that could change whether the reported result is real.
+2. **Meta-labelling** (López de Prado, *AFML* ch. 3) for the turnover problem.
+   `strategy.py` already attacks it with three *heuristics* — signal smoothing,
+   partial weight adjustment, a no-trade band. Meta-labelling replaces the
+   heuristic with a *learned* layer: a second model, trained only where the
+   primary model made a call and using features the primary never saw
+   (prediction confidence, recent hit rate, regime), predicts whether to act
+   at all. That is a learned position-sizing layer sitting exactly on the
+   binding constraint.
+3. **Point-in-time universe and sector membership** — removes §8 items 2 and 3
+   rather than disclosing them, and lets the survivorship robustness check
+   actually run.
+4. **Ensemble** Elastic Net and LightGBM. Their failure modes are
+   complementary (low turnover / low IC-IR vs. high IC-IR / unusable
+   turnover), which is the textbook case for combining rather than choosing.
+5. **Feature-selection report** (#23) — VIF and correlation clustering across
+   the 9 features, keep/drop against the five criteria. This is also how the
+   empty ~4-week momentum rung should be decided, rather than by assertion.
+6. **Daily Trends** via stitched <9-month windows — 7× the observations, and
+   it dissolves the bucket-alignment problem in item 1 entirely.
+7. **PCA statistical risk model** (#18) and a **rate-sensitivity beta**, to
+   populate the two empty risk-model buckets.
+
+> Items 1 and 2 in earlier drafts were "nested CV" and "turnover control in the
+> objective". Both are **done** — `model_nested.py` and `strategy.py` — and
+> have been removed from this list.
 
 ## References
 

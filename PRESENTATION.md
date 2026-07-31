@@ -116,9 +116,25 @@ Jarque-Bera both reject: heteroskedastic, skew −1.45, kurtosis 8.9. Sharpe
 language understates tail risk.
 
 **Slide 17 — Disclosed limitations**
-Survivorship bias (mid-2025 snapshot), keyword ambiguity, short-side frictions
-not modelled, no turnover control, crowding. Disclosed limitations aren't
-penalised; undisclosed ones are.
+Lead with the two that cost us most to admit, not the boilerplate:
+
+1. **Trends bucket look-ahead.** Google Trends weekly buckets run Sunday→
+   Saturday; we map them to the Friday *inside* the bucket, so week *t*'s
+   search value contains Saturday *t+1* — 1 of 7 days that wasn't knowable at
+   that Friday's close, and it reaches `asvi` directly. Direction plausibly
+   favourable. One-line fix, but it invalidates every number on these slides,
+   so we disclosed rather than rushed it.
+2. **Sector labels aren't point-in-time.** Visa and Mastercard moved from IT to
+   Financials on 2023-03-17; we label them Financials for all 60 months. Hits
+   the sector-neutrality constraint and two rows of the sector-IC table.
+
+Then: survivorship bias (mid-2025 snapshot), beta-neutrality not applied
+(2 of Day 4's 3 constraints), macro and PCA risk-model buckets empty, no
+feature-selection/VIF report, capacity not estimated, short-side frictions not
+modelled, crowding.
+
+> Disclosed limitations aren't penalised; undisclosed ones are. Say the first
+> two out loud — nobody in the room will have found them, and that's the point.
 
 ---
 
@@ -133,8 +149,10 @@ The anchor bought nothing and cost 57% of the universe.
 
 **"Your IC isn't significant. So what have you got?"**
 A correctly-built pipeline, an honest null result, and a diagnosed instrument
-bug that most groups using Trends will have shipped silently. We'd rather report
-t = 1.84 than a deflated Sharpe we can't defend.
+bug that most groups using Trends will have shipped silently. Note the IC
+t-stat of 2.56 *does* clear 2.0 — we're the ones telling you the Deflated
+Sharpe doesn't, because a raw t-stat that ignores how hard we searched isn't a
+number we'd defend.
 
 **"How do you know it isn't leakage?"**
 Purged + embargoed walk-forward; every rolling stat `.shift(1)`-ed; panel sorted
@@ -160,9 +178,31 @@ Survivorship bias is the big one — a current-membership universe already knows
 who survived, so returns are biased up. We disclose rather than correct it.
 
 **"What would you do with one more week?"**
-Turnover-aware construction first — the cost analysis says that is where the
-return is, not in more signal. Then ensemble the two models, a point-in-time
-universe, and daily Trends via stitched <9-month windows.
+Fix the Trends bucket alignment first — it's the only open item that could
+change whether the result is real. Then **meta-labelling** for the turnover
+problem: `strategy.py` already attacks it with three heuristics, but
+meta-labelling replaces the heuristic with a learned layer — a second model,
+trained only where the primary made a call, using features the primary never
+saw, deciding whether to act at all. That's a learned position-sizing layer
+sitting on the binding constraint. Then a point-in-time universe **and sector
+membership**, an ensemble of the two models, the VIF/keep-drop report we owe,
+and daily Trends via stitched <9-month windows.
+
+**"Is your ASVI just short-term reversal in disguise?"**
+Fair challenge and we can't fully rule it out. High-attention weeks are often
+high-|return| weeks, and at a one-week horizon reversal dominates the
+cross-section. We carry `rev_1` as a control and the Elastic Net retains all
+four Trends coefficients alongside it, but we did **not** orthogonalise ASVI
+against reversal and volatility and re-measure the IC. That's the specific test
+that would settle it, and it's honest to say we haven't run it.
+
+**"Why is `mom_12_1` a 12-week feature with a 12-month name?"**
+Legacy naming from an earlier commit — every window in our panel is in weeks.
+`mom_12_1` is ~3 months; the ~12-month Jegadeesh-Titman factor is `mom_52_4`.
+The ~4-week rung is deliberately empty: Day 3 warns that momentum variants are
+correlated by construction and destabilise penalised-regression coefficients,
+and the price block already outnumbers the Trends block carrying the thesis.
+Properly that should be settled by a VIF table, which we owe and don't have.
 
 ---
 
