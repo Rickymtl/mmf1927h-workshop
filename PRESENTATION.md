@@ -177,17 +177,6 @@ improvement can only have come from the Trends block.
 Survivorship bias is the big one — a current-membership universe already knows
 who survived, so returns are biased up. We disclose rather than correct it.
 
-**"What would you do with one more week?"**
-Fix the Trends bucket alignment first — it's the only open item that could
-change whether the result is real. Then **meta-labelling** for the turnover
-problem: `strategy.py` already attacks it with three heuristics, but
-meta-labelling replaces the heuristic with a learned layer — a second model,
-trained only where the primary made a call, using features the primary never
-saw, deciding whether to act at all. That's a learned position-sizing layer
-sitting on the binding constraint. Then a point-in-time universe **and sector
-membership**, an ensemble of the two models, the VIF/keep-drop report we owe,
-and daily Trends via stitched <9-month windows.
-
 **"Is your ASVI just short-term reversal in disguise?"**
 Fair challenge and we can't fully rule it out. High-attention weeks are often
 high-|return| weeks, and at a one-week horizon reversal dominates the
