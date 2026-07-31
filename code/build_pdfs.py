@@ -66,7 +66,13 @@ def slide_css(s: float = 1.0) -> str:
 @page {{ size: 280mm 157mm; margin: 0; }}
 html, body {{ background: #0d1117 !important; }}
 #nav, #bar {{ display: none !important; }}
-.slide {{ display: block !important; width: 280mm; height: 157mm;
+/* Vertical centring. WeasyPrint DOES implement flexbox — an earlier comment
+   here blamed flex for slides splitting across pages, but the real culprit was
+   CSS Grid (see the .cols2/.split rules below). `display:table` + table-cell is
+   NOT a substitute: WeasyPrint ignores vertical-align on table cells, leaving
+   content pinned to the top with a large void beneath. */
+.slide {{ display: flex !important; align-items: center;
+         width: 280mm; height: 157mm;
          padding: {9*s:.1f}mm {13*s:.1f}mm; overflow: hidden;
          page-break-after: always; page-break-inside: avoid; }}
 .slide:last-of-type {{ page-break-after: auto; }}

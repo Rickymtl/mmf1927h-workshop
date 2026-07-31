@@ -289,7 +289,7 @@ slide("", "Backtest — 102 out-of-sample weeks", "SEGMENT 3 · BACKTEST", f"""
 </svg>
 <div class="axis-lbl"><span>drawdown, net</span><span>trough −14.9%</span></div>
 </div>
-<div class="strip">Dollar- and sector-neutral · 5% single-name cap · 2.0 gross ·
+<div class="strip">Dollar- and sector-neutral · 5% name cap (realised 6.9%) · 2.0 gross ·
 costs = 5bp linear + Almgren square-root impact on each name's own ADV · $10M notional</div>""")
 
 # 14 breadth
