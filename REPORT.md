@@ -525,7 +525,7 @@ did not.
 
 | # | Limitation | Direction | Status |
 |---|------------|-----------|--------|
-| 1 | **Trends bucket look-ahead** — Google Trends weekly buckets run Sun→Sat and are mapped to the Friday *inside* the bucket, so week `t`'s search value includes Saturday `t+1`: 1 of 7 days that was not observable at that Friday's close, and that falls inside the target window. The rolling baselines are `.shift(1)`-ed but the current-week level is not, so it reaches `asvi` directly. | Plausibly overstates — weekend search and the following Monday's move share a common news cause | **Disclosed, not corrected.** Fix is `+12d` instead of `+5d` in `build_panel.py`; it invalidates every number here, so it is item 1 under §10 |
+| 1 | **Trends bucket look-ahead** — Google Trends weekly buckets run Sun→Sat and are mapped to the Friday *inside* the bucket, so week `t`'s search value includes Saturday `t+1`: 1 of 7 days that was not observable at that Friday's close, and that falls inside the target window. The rolling baselines are `.shift(1)`-ed but the current-week level is not, so it reaches `asvi` directly. | Plausibly overstates — weekend search and the following Monday's move share a common news cause | **Disclosed, not corrected.** Fix is `+12d` instead of `+5d` in `build_panel.py`; it invalidates every number here |
 | 2 | **Survivorship bias** — universe is a mid-2025 membership snapshot (NVDA, AVGO, LLY, CEG, GE were not top-8 in 2021) | Overstates returns | Disclosed, quantified by name; robustness check designed but **not executed** |
 | 3 | **Sector labels are not point-in-time** — `universe.py` is a static mid-2025 GICS snapshot. Concretely: **Visa and Mastercard moved from Information Technology to Financials on 2023-03-17**, so for the first ~20 of 60 months they are grouped wrongly. Affects the sector-neutrality constraint and the Financials / IT rows of §7.5.1. | Unknown sign; affects neutralisation quality, not the raw signal | **Disclosed, not corrected** |
 | 4 | **Deflated Sharpe fails at 95%** — LightGBM IC t = 2.56 clears 2.0, but DSR does not clear E[max SR \| noise] ≈ 0.30 under 342 fits (19 distinct configurations) | — | Stated plainly; both trial counts reported |
@@ -562,39 +562,6 @@ the effect of the sourcing bug — the code, universe and horizon are unchanged:
 The instrument artifact was suppressing the very signal the project is about.
 This is the strongest evidence in the report that the sourcing diagnosis in
 §2.3 was correct, rather than a rationalisation after the fact.
-
-## 10. With one more week
-
-Ordered by expected value, not by ease.
-
-1. **Fix the Trends bucket alignment** (§8 item 1). One line — `+12d` instead
-   of `+5d` — then re-run everything. This is first because it is the only
-   open item that could change whether the reported result is real.
-2. **Meta-labelling** (López de Prado, *AFML* ch. 3) for the turnover problem.
-   `strategy.py` already attacks it with three *heuristics* — signal smoothing,
-   partial weight adjustment, a no-trade band. Meta-labelling replaces the
-   heuristic with a *learned* layer: a second model, trained only where the
-   primary model made a call and using features the primary never saw
-   (prediction confidence, recent hit rate, regime), predicts whether to act
-   at all. That is a learned position-sizing layer sitting exactly on the
-   binding constraint.
-3. **Point-in-time universe and sector membership** — removes §8 items 2 and 3
-   rather than disclosing them, and lets the survivorship robustness check
-   actually run.
-4. **Ensemble** Elastic Net and LightGBM. Their failure modes are
-   complementary (low turnover / low IC-IR vs. high IC-IR / unusable
-   turnover), which is the textbook case for combining rather than choosing.
-5. **Feature-selection report** (#23) — VIF and correlation clustering across
-   the 9 features, keep/drop against the five criteria. This is also how the
-   empty ~4-week momentum rung should be decided, rather than by assertion.
-6. **Daily Trends** via stitched <9-month windows — 7× the observations, and
-   it dissolves the bucket-alignment problem in item 1 entirely.
-7. **PCA statistical risk model** (#18) and a **rate-sensitivity beta**, to
-   populate the two empty risk-model buckets.
-
-> Items 1 and 2 in earlier drafts were "nested CV" and "turnover control in the
-> objective". Both are **done** — `model_nested.py` and `strategy.py` — and
-> have been removed from this list.
 
 ## References
 
