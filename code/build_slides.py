@@ -265,14 +265,19 @@ the finding is not a tuned artifact: net Sharpe stays positive at
 barely helps — banding treats the symptom, smoothing treats the cause.</div>""")
 
 # 13 equity curve
+# NOTE: stroke/fill are inline presentation attributes, not CSS classes.
+# WeasyPrint renders SVG with its own engine and does not apply the HTML
+# document's stylesheet inside <svg>, so class-based strokes silently became
+# fill:black blobs in the PDF export. Inline attributes work in both.
 slide("", "Backtest — 102 out-of-sample weeks", "SEGMENT 3 · BACKTEST", f"""
 <div class="chart">
 <svg viewBox="0 0 760 200" preserveAspectRatio="none" class="eq-svg">
   <line x1="0" y1="{200 - (1.0-P['lo'])/(P['hi']-P['lo'])*200:.1f}" x2="760"
-        y2="{200 - (1.0-P['lo'])/(P['hi']-P['lo'])*200:.1f}" class="axis"/>
-  <path d="{P['smooth_gross']}" class="l-gross"/>
-  <path d="{P['base_net']}" class="l-base"/>
-  <path d="{P['smooth_net']}" class="l-net"/>
+        y2="{200 - (1.0-P['lo'])/(P['hi']-P['lo'])*200:.1f}"
+        stroke="#30363d" stroke-width="1" stroke-dasharray="3 3"/>
+  <path d="{P['smooth_gross']}" fill="none" stroke="#6ea8fe" stroke-width="1.6" opacity="0.62"/>
+  <path d="{P['base_net']}" fill="none" stroke="#7d8590" stroke-width="1.7" stroke-dasharray="5 4"/>
+  <path d="{P['smooth_net']}" fill="none" stroke="#3fb950" stroke-width="2.6"/>
 </svg>
 <div class="legend"><span class="k net"></span>smoothed, net of cost
 <span class="k base"></span>baseline, net <span class="k gross"></span>smoothed, gross</div>
@@ -280,7 +285,7 @@ slide("", "Backtest — 102 out-of-sample weeks", "SEGMENT 3 · BACKTEST", f"""
 </div>
 <div class="chart dd">
 <svg viewBox="0 0 760 110" preserveAspectRatio="none" class="eq-svg">
-  <path d="{P['dd']}" class="l-dd"/>
+  <path d="{P['dd']}" fill="none" stroke="#f85149" stroke-width="1.9"/>
 </svg>
 <div class="axis-lbl"><span>drawdown, net</span><span>trough −14.9%</span></div>
 </div>
