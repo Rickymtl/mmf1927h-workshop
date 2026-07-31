@@ -2,7 +2,7 @@
 
 **MMF1927H · Day 5 · 15 minutes (12–13 speaking + Q&A)**
 
-> 20 slides. Aaron carries the two follow-up analyses (sector, keyword
+> 21 slides. Aaron carries the two follow-up analyses (sector, keyword
 > ambiguity) — if you are running long, **slide 16 is the one to cut**; the
 > keyword finding is stronger and more memorable.
 
@@ -12,7 +12,7 @@
 | 2 | **Saier Ma** | 4–5 | 2:30 | The anchor bug & the panel |
 | 3 | **Tim Yuan** | 6–9 | 2:30 | Features, ASVI, validation design |
 | 4 | **Nick Sun** | 10–13 | 2:45 | Results, turnover, the strategy |
-| 5 | **Aaron Hou** | 14–20 | 2:45 | Honest reading, follow-ups & close |
+| 5 | **Aaron Hou** | 14–21 | 3:00 | Honest reading, follow-ups & close |
 | — | all | — | 3:00 | Q&A |
 
 **How to use this.** The prose is what to say, not what to read aloud
@@ -309,7 +309,24 @@ Advance slides with → or click. Timings are cumulative from zero.
 > **We've re-pulled the 16 contaminated names as "name plus stock" to force
 > investor intent.**
 
-### [SLIDE 18 — Residual diagnostics] 11:45
+### [SLIDE 18 — Did the fix work?] 11:40
+
+> Yes — on the axis we designed it for. **All sixteen improved. Mean coupling
+> went from minus 0.095 to plus 0.59, paired t of 17.6.** They now couple more
+> tightly than the names that were never contaminated.
+>
+> **And it made no difference to the model.** IC 0.031 to 0.031, net Sharpe
+> 0.65 to 0.60 — within noise, and LightGBM's t-stat actually ticked down.
+>
+> **We're presenting the disambiguated version anyway, because it's justified
+> in advance rather than because it scored better — it didn't.** Picking the
+> dataset after seeing both results is exactly the selection bias we spend the
+> rest of this deck warning about.
+>
+> The lesson we'll take: **cleaner data on one axis doesn't automatically mean
+> a better model, and we'd have assumed it would.**
+
+### [SLIDE 19 — Residual diagnostics] 11:55
 
 > Quickly on ε. Durbin-Watson 2.21, Ljung-Box p of 0.25 — **no autocorrelation
 > left, so nothing obvious we failed to model.**
@@ -318,7 +335,7 @@ Advance slides with → or click. Timings are cumulative from zero.
 > −1.45, kurtosis 8.9. **Fat tails mean our Sharpe and drawdown language
 > understates tail risk — our standard errors should be read as optimistic.**
 
-### [SLIDE 19 — Limitations] 12:00
+### [SLIDE 20 — Limitations] 12:10
 
 > Disclosed, not discovered in Q&A: survivorship bias — our universe is a
 > current-membership snapshot, which biases returns up. Keyword ambiguity.
@@ -326,7 +343,7 @@ Advance slides with → or click. Timings are cumulative from zero.
 > over five candidates. And the signal is built from entirely free public data,
 > so **assume it's at least partially crowded.**
 
-### [SLIDE 20 — Close] 12:15
+### [SLIDE 21 — Close] 12:20
 
 > With another week: turnover **inside** the objective rather than as a
 > post-hoc filter, ensemble the two models, a point-in-time universe, and daily

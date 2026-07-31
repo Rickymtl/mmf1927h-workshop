@@ -367,6 +367,30 @@ that traffic swamps the attention signal. B2B and industrial names have no
 consumer-search channel, so their search <i>is</i> investor attention.
 <b>Fix: 16 contaminated names re-pulled as “&lt;name&gt; stock”.</b></div>""")
 
+# 15d did the fix work
+slide("", "Did the fix work? Yes, and no", "SEGMENT 3 · FOLLOW-UP", """
+<div class="split">
+<table class="t compact">
+<tr><th>Ticker</th><th>brand</th><th>“+ stock”</th><th>Δ</th></tr>
+<tr><td>Costco</td><td class="no">−0.316</td><td class="ok">0.615</td><td>+0.930</td></tr>
+<tr><td>Walmart</td><td class="no">−0.336</td><td class="ok">0.559</td><td>+0.895</td></tr>
+<tr><td>Nike</td><td class="no">−0.112</td><td class="ok">0.735</td><td>+0.847</td></tr>
+<tr><td>McDonald&rsquo;s</td><td class="no">−0.308</td><td class="ok">0.507</td><td>+0.816</td></tr>
+<tr class="hl"><td><b>all 16</b></td><td class="no"><b>−0.095</b></td><td class="ok"><b>+0.592</b></td><td><b>+0.687</b></td></tr>
+</table>
+<div class="stats">
+<div class="stat"><span class="big ok">16 / 16</span><span>improved — paired t = 17.6, p &lt; 10⁻⁶</span></div>
+<div class="stat"><span class="big">0.0313 → 0.0306</span><span>LightGBM IC — unchanged</span></div>
+<div class="stat"><span class="big">0.645 → 0.602</span><span>net Sharpe — unchanged</span></div>
+</div></div>
+<div class="callout"><b>The measurement worked. The model didn&rsquo;t move.</b>
+A variable can be demonstrably contaminated on one axis and still carry the
+same predictive content — “cleaner data” does not automatically mean “better
+model”, and we would have assumed otherwise.
+<b>We present the disambiguated version as primary because it is justified in
+advance, not because it scored better — it didn&rsquo;t.</b> Picking the dataset
+after seeing both results is the selection bias we criticise elsewhere.</div>""")
+
 # 16 residuals
 slide("", "ε under interrogation", "SEGMENT 3", """
 <table class="t">
